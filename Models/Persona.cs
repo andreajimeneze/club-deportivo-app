@@ -15,6 +15,9 @@ namespace ClubDeportivoApp
         private string email;
         private string telefono;
 
+        public Persona()
+        { }
+
         public Persona(string nombre, string apellido, string dni)
         {
             this.Nombre = nombre;
