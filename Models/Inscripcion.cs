@@ -8,8 +8,16 @@ namespace ClubDeportivoApp.Models
 {
     internal class Inscripcion
     {
-        private int id;
-        private DateTime fechaInscripcion;
-        private int socioId;
+        public int Id { get; set; }
+        public DateTime FechaInscripcion { get; set; }
+        public int SocioId { get; set; }
+
+        public Inscripcion() { }
+
+        public Inscripcion(DateTime fechaInscripcion, int socioId)
+        {
+            this.FechaInscripcion = fechaInscripcion;
+            this.SocioId = socioId;
+        }
     }
 }

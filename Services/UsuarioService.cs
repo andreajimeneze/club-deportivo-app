@@ -17,9 +17,7 @@ namespace ClubDeportivoApp.Services
             this.repository = repository;
         }
         public string LoginService(string username, string password)
-        {
-
-
+        { 
             Usuario usuario = repository.LoginRepository(username, password);
 
             if (usuario == null)
@@ -32,7 +30,7 @@ namespace ClubDeportivoApp.Services
                 return "Usuario no autorizado";
             }
 
-            return "Usuario logueado con éxito"; ;
+            return "Usuario logueado con éxito"; 
         }
     }
 }

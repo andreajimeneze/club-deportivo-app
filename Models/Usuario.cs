@@ -6,12 +6,25 @@ using System.Threading.Tasks;
 
 namespace ClubDeportivoApp.Models
 {
-    internal class Usuario
+    internal class Usuario : Persona
     {
-        public int Id { get; set; }
-        public string Nombre { get; set; }
-        public string Password { get; private set; }
+ 
+        public string Username { get; set; }
+        public string Password { get; set; }
         public int RolId { get; set; }
         public bool Activo { get; set; }
+
+        public Usuario() { }
+        
+        public Usuario(string nombre, string apellido, string dni)
+           : base(nombre, apellido, dni)
+        {
+        }
+
+        public Usuario(string username, int rolId)
+        {
+            this.Username = username;
+            this.RolId = rolId;
+        }
     }
 }

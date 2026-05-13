@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,18 +9,23 @@ namespace ClubDeportivoApp.Models
 {
     internal class Cuota
     {
-        private int id;
-        private string mesVigencia;
-        private DateTime fechaVencimiento;
-        private string estadoPago;
-        private int socioId;
-        private List<Pago> pagos;
+        public int Id { get; set; }
+        public string MesVigencia { get; set; }
+        public DateTime FechaVencimiento { get; set; }
+        public string EstadoPago { get; set; }
+        public int SocioId { get; set; }
+        public List<Pago> Pagos { get; set; }
 
-        public int Id { get => id; set => id = value; }
-        public string MesVigencia { get => mesVigencia; set => mesVigencia = value; }
-        public DateTime FechaVencimiento { get => fechaVencimiento; set => fechaVencimiento = value; }
-        public string EstadoPago { get => estadoPago; set => estadoPago = value; }
-        public int SocioId { get => socioId; set => socioId = value; }
-        internal List<Pago> Pagos { get => pagos; set => pagos = value; }
+       public Cuota() {
+            List<Pago> pagos = new List<Pago>();
+                }
+
+       public Cuota(string mesVigencia, DateTime fechaVencimiento, string estadoPago, int socioId)
+        {
+            this.MesVigencia = mesVigencia;
+            this.FechaVencimiento = fechaVencimiento;
+            this.EstadoPago = estadoPago;
+            this.SocioId = socioId;
+        }
     }
 }

@@ -158,7 +158,8 @@ namespace ClubDeportivoApp
         private System.Windows.Forms.TextBox txtUsername;
         private System.Windows.Forms.TextBox txtPassword;
         private Button btnLogin;
-        //private System.Windows.Forms.Button btnLogin;
+
+
     }
 }
 

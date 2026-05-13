@@ -1,6 +1,6 @@
 use club_deportivo;
 
-DROP DATABASE IF EXISTS Club_deportivo;
+DROP DATABASE IF EXISTS club_deportivo;
 
 CREATE DATABASE club_deportivo;
 
@@ -15,30 +15,6 @@ CREATE TABLE roles(
     nombre VARCHAR(30)
 );
 
-INSERT INTO roles(nombre)  VALUES
-('admin'),
-('user');
-
--- =========================================
--- TABLA USUARIOS
--- =========================================
-
-CREATE TABLE usuarios(
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(20),
-    password VARCHAR(20),
-    rol_id INT,
-    activo BOOLEAN DEFAULT TRUE,
-
-    CONSTRAINT fk_usuarios_roles
-    FOREIGN KEY(role_id)
-    REFERENCES roles(id)
-);
-
-INSERT INTO usuario(nombre, password, rol_id)
-VALUES
-('Andrea Jiménez','1234', 1);
-
 -- =========================================
 -- TABLA PERSONAS
 -- =========================================
@@ -49,6 +25,27 @@ CREATE TABLE personas(
     apellido VARCHAR(40),
     dni INT UNIQUE
 );
+
+
+-- =========================================
+-- TABLA USUARIOS
+-- =========================================
+
+CREATE TABLE usuarios(
+    persona_id INT PRIMARY KEY,
+    username VARCHAR(20),
+    password VARCHAR(20),
+    rol_id INT,
+    activo BOOLEAN DEFAULT TRUE,
+
+	CONSTRAINT fk_usuarios_personas
+    FOREIGN KEY(persona_id)
+    REFERENCES personas(id),
+    CONSTRAINT fk_usuarios_roles
+    FOREIGN KEY(rol_id)
+    REFERENCES roles(id)
+);
+
 
 -- =========================================
 -- TABLA SOCIOS
@@ -73,7 +70,7 @@ CREATE TABLE no_socios(
     
     CONSTRAINT fk_no_socios_personas
     FOREIGN KEY(persona_id)
-    REFERENCES persona(id)
+    REFERENCES personas(id)
 );
 
 -- =========================================
@@ -87,7 +84,7 @@ CREATE TABLE inscripciones(
 
     CONSTRAINT fk_inscripciones_socios
     FOREIGN KEY(socio_id)
-    REFERENCES socios(id)
+    REFERENCES socios(persona_id)
 );
 
 -- =========================================
@@ -115,9 +112,9 @@ CREATE TABLE cuota(
     fecha_vencimiento DATE,
     estado_pago VARCHAR(20),
 
-    CONSTRAINT fk_cuotaS_socioS
+    CONSTRAINT fk_cuotas_socios
     FOREIGN KEY(socio_id)
-    REFERENCES socios(id)
+    REFERENCES socios(persona_id)
 );
 
 -- =========================================
@@ -131,11 +128,26 @@ CREATE TABLE pagos(
     monto FLOAT,
     tipo_pago VARCHAR(30),
     metodo_pago VARCHAR(30),
+    no_socio_id INT,
 
     CONSTRAINT fk_pagos_cuotas
     FOREIGN KEY(cuota_id)
-    REFERENCES cuota(id)
+    REFERENCES cuota(id),
+	CONSTRAINT fk_pagos_no_socios
+    FOREIGN KEY(no_socio_id)
+    REFERENCES no_socios(persona_id)
+    
 );
 
+INSERT INTO roles(nombre)  VALUES
+('admin'),
+('user');
 
+INSERT INTO personas(nombre, apellido, dni) VALUES
+('Andrea', 'Jiménez', '24753731'),
+('Angélica', 'Dos Reis', '38333222');
 
+INSERT INTO usuarios(persona_id, username, password, rol_id)
+VALUES
+(1, 'andrea','1234', 1),
+(2, 'angelica', '5678', 2);

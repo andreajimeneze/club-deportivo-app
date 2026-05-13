@@ -8,14 +8,27 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MySqlConnector;
+using ClubDeportivoApp.Models;
+using ClubDeportivoApp.Services;
+using ClubDeportivoApp.Repositories;
+using System.Drawing.Text;
+using System.Security.Cryptography.X509Certificates;
 
 namespace ClubDeportivoApp
 {
     public partial class Form1 : Form
     {
+       
+        private UsuarioService service;
+        private ConexionMySql conexion;
+
+     
         public Form1()
         {
             InitializeComponent();
+            conexion = new ConexionMySql();
+            UsuarioRepository repository = new UsuarioRepository(conexion);
+            service = new UsuarioService(repository);
         }
 
         private void txtUsername_keyPress(object sender, KeyPressEventArgs e)
@@ -30,13 +43,12 @@ namespace ClubDeportivoApp
 
         private void btnLogin_click(object sender, EventArgs e)
         {
-            string connStr = "server=localhost;database=club_deportivo;user=root;password=condor28;";
+            string username = txtUsername.Text;
+            string password = txtPassword.Text;
 
-            using (MySqlConnection conn = new MySqlConnection(connStr))
-            {
-                conn.Open();
-                MessageBox.Show("Conexión exitosa");
-            }
+            string resultado = service.LoginService(username, password);
+
+            MessageBox.Show(resultado);            
         }
     }
 }

@@ -10,5 +10,11 @@ namespace ClubDeportivoApp.Models
     {
         public int Id { get; set; }
         public string Nombre { get; set; }
+    
+
+    public Rol(string nombre)
+        {
+            this.Nombre = nombre;
+        }
     }
 }
