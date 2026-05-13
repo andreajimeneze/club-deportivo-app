@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ClubDeportivoApp.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,6 +18,8 @@ namespace ClubDeportivoApp
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
+
+            Socio andrea = new Socio("Andrea", "Jiménez", "24753731");
         }
     }
 }

@@ -21,8 +21,8 @@ namespace ClubDeportivoApp
         public Persona(string nombre, string apellido, string dni)
         {
             this.Nombre = nombre;
-            this.apellido = apellido;
-            this.dni = dni;
+            this.Apellido = apellido;
+            this.Dni = dni;
         }
 
         public Persona(string nombre, string apellido, string dni, string direccion, string email, string telefono) : this(nombre, apellido, dni)
@@ -33,6 +33,12 @@ namespace ClubDeportivoApp
         }
 
         public string Nombre { get => nombre; set => nombre = value; }
+        public string Apellido { get => apellido; set => apellido = value; }
+        public string Dni { get => dni; set => dni = value; }
 
+        public override string ToString()
+        {
+            return $"{apellido}, {nombre}, {dni}";
+        }
     }
 }

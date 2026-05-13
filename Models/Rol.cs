@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace ClubDeportivoApp.Models
 {
-    internal class Inscripcion
+    internal class Rol
     {
-        private int id;
-        private DateTime fechaInscripcion;
-        private int socioId;
+        public int Id { get; set; }
+        public string Nombre { get; set; }
     }
 }
