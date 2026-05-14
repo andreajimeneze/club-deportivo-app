@@ -20,7 +20,7 @@ namespace ClubDeportivoApp
                 "; Database=" + database + "; Username=" + username
                 + "; Password=" + password;
 
-            
+
         }
 
         public MySqlConnection GetMySqlConnection()
@@ -29,7 +29,7 @@ namespace ClubDeportivoApp
 
             conn.Open();
             return conn;
-      
+
         }
 
     }

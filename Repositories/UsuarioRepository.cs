@@ -1,12 +1,6 @@
 ﻿using ClubDeportivoApp.Models;
 using MySql.Data.MySqlClient;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Remoting.Messaging;
-using System.Text;
-using System.Threading.Tasks;
-using ClubDeportivoApp;
+using System.Data;
 
 namespace ClubDeportivoApp.Repositories
 {
@@ -14,38 +8,68 @@ namespace ClubDeportivoApp.Repositories
     {
         private readonly ConexionMySql _conexionDatabase;
 
-        public UsuarioRepository(ConexionMySql conexionDatabase)
+        public UsuarioRepository(
+            ConexionMySql conexionDatabase
+        )
         {
             _conexionDatabase = conexionDatabase;
         }
 
-        public Usuario LoginRepository(string username, string password)
+        public Usuario LoginRepository(
+            string username,
+            string password
+        )
         {
             Usuario usuario = null;
 
-            using (MySqlConnection conn = _conexionDatabase.GetMySqlConnection())
+            using (
+                MySqlConnection conn =
+                _conexionDatabase.GetMySqlConnection()
+            )
             {
-
-                string query = @"SELECT u.username, u.rol_id FROM usuarios u JOIN roles r ON r.id = u.rol_id WHERE u.username = @username AND u.password = @password";
-
-                using (var cmd = new MySqlCommand(query, conn))
+                using (
+                    MySqlCommand cmd =
+                    new MySqlCommand("LoginUsuario", conn)
+                )
                 {
-                    cmd.Parameters.AddWithValue("@username", username);
-                    cmd.Parameters.AddWithValue("@password", password);
+                    cmd.CommandType =
+                        CommandType.StoredProcedure;
 
-                    using(var reader = cmd.ExecuteReader())
+                    cmd.Parameters.AddWithValue(
+                        "p_username",
+                        username
+                    );
+
+                    cmd.Parameters.AddWithValue(
+                        "p_password",
+                        password
+                    );
+
+                    using (
+                        MySqlDataReader reader =
+                        cmd.ExecuteReader()
+                    )
                     {
-                        if(reader.Read())
+                        if (reader.Read())
                         {
                             usuario = new Usuario();
-                            usuario.Username = reader.GetString("username");
-                            usuario.RolId = reader.GetInt32("rol_id");
+
+                            usuario.Id =
+                                reader.GetInt32("id");
+
+                            usuario.Username =
+                                reader.GetString("username");
+
+                            usuario.RolId =
+                                reader.GetInt32("rol_id");
+
+                            usuario.Activo =
+                                reader.GetBoolean("activo");
                         }
                     }
                 }
+                return usuario;
             }
-            return usuario;
-        } 
-   
+        }
     }
 }

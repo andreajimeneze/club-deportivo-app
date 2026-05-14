@@ -22,7 +22,7 @@ namespace ClubDeportivoApp.Services
 
             if (usuario == null)
             {
-                return "Usuario o contraseña no válidas";
+                return "Usuario o contraseña no válidos";
             }
 
             if (usuario.RolId != 1)
