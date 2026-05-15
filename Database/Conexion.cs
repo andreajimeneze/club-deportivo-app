@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ClubDeportivoApp
 {
-    internal class Conexion
+    public class Conexion
     {
         protected string server = "localhost";
         protected string database = "club_deportivo";

@@ -8,6 +8,7 @@ namespace ClubDeportivoApp.Models
 {
     internal class NoSocio : Persona
     {
+        public int Id { get; set; }
         public bool accesoDiario { get; set; }
         
         public NoSocio() { }

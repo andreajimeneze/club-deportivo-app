@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace ClubDeportivoApp
 {
-    internal class ConexionMySql : Conexion
+    public class ConexionMySql : Conexion
     {
         private MySqlConnection conn;
         private string cadenaConexion;

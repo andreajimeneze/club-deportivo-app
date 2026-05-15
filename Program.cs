@@ -17,7 +17,7 @@ namespace ClubDeportivoApp
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new LoginForm());
 
             Socio andrea = new Socio("Andrea", "Jiménez", "24753731");
         }

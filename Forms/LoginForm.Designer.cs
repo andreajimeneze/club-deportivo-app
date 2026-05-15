@@ -2,7 +2,7 @@
 
 namespace ClubDeportivoApp
 {
-    partial class Form1 : Form
+    partial class LoginForm : Form
     {
         /// <summary>
         /// Variable del diseñador necesaria.
