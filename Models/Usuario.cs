@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ClubDeportivoApp.Models
 {
-    internal class Usuario : Persona
+    public class Usuario : Persona
     {
  
         public string Username { get; set; }

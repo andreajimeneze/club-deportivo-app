@@ -1,6 +1,8 @@
-﻿namespace ClubDeportivoApp
+﻿using System.Windows.Forms;
+
+namespace ClubDeportivoApp
 {
-    partial class Dashboard
+    public partial class Dashboard : Form
     {
         /// <summary>
         /// Required designer variable.
@@ -29,11 +31,11 @@
         private void InitializeComponent()
         {
             this.btnRegistro = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.btnCarnet = new System.Windows.Forms.Button();
             this.btnCuotas = new System.Windows.Forms.Button();
             this.btnMorosos = new System.Windows.Forms.Button();
+            this.labelUsuario = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnRegistro
@@ -51,17 +53,6 @@
             this.btnRegistro.TabIndex = 0;
             this.btnRegistro.Text = "Registrar Socio - No Socio";
             this.btnRegistro.UseVisualStyleBackColor = false;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(742, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(128, 18);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Bienvenido, admin";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // label2
             // 
@@ -125,6 +116,17 @@
             this.btnMorosos.UseVisualStyleBackColor = false;
             this.btnMorosos.Click += new System.EventHandler(this.btnMorosos_Click);
             // 
+            // labelUsuario
+            // 
+            this.labelUsuario.AutoSize = true;
+            this.labelUsuario.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelUsuario.Location = new System.Drawing.Point(730, 9);
+            this.labelUsuario.Name = "labelUsuario";
+            this.labelUsuario.Size = new System.Drawing.Size(88, 18);
+            this.labelUsuario.TabIndex = 9;
+            this.labelUsuario.Text = "Bienvenido, ";
+            this.labelUsuario.Click += new System.EventHandler(this.label1_Click_1);
+            // 
             // Dashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 16F);
@@ -132,16 +134,17 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(235)))), ((int)(((byte)(222)))));
             this.ClientSize = new System.Drawing.Size(900, 450);
             this.ControlBox = false;
+            this.Controls.Add(this.labelUsuario);
             this.Controls.Add(this.btnMorosos);
             this.Controls.Add(this.btnCuotas);
             this.Controls.Add(this.btnCarnet);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.btnRegistro);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "Dashboard";
             this.Text = "Club Deportivo ";
+            this.Load += new System.EventHandler(this.Dashboard_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -150,10 +153,11 @@
         #endregion
 
         private System.Windows.Forms.Button btnRegistro;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblUsuario;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnCarnet;
         private System.Windows.Forms.Button btnCuotas;
         private System.Windows.Forms.Button btnMorosos;
+        private Label labelUsuario;
     }
 }

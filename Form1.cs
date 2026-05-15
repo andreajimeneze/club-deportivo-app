@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MySqlConnector;
+using ClubDeportivoApp;
 using ClubDeportivoApp.Models;
 using ClubDeportivoApp.Services;
 using ClubDeportivoApp.Repositories;
@@ -21,6 +22,8 @@ namespace ClubDeportivoApp
        
         private UsuarioService service;
         private ConexionMySql conexion;
+        private int intentosFallidos = 0;
+        private const int maxIntentos = 3;
 
      
         public Form1()
@@ -43,12 +46,40 @@ namespace ClubDeportivoApp
 
         private void btnLogin_click(object sender, EventArgs e)
         {
-            string username = txtUsername.Text;
-            string password = txtPassword.Text;
+            var repo = new UsuarioRepository(new ConexionMySql());
+            var service = new UsuarioService(repo);
 
-            string resultado = service.LoginService(username, password);
+            string username = txtUsername.Text.Trim();
+            string password = txtPassword.Text.Trim();
 
-            MessageBox.Show(resultado);            
+           Usuario usuario = service.LoginService(username, password);
+
+            if(usuario != null)
+            {
+                Dashboard dashboard = new Dashboard(usuario);
+                
+                dashboard.Show();
+                this.Hide();
+            }
+            else
+            {
+                intentosFallidos++;
+                MessageBox.Show("Credenciales no válidas", 
+                    "Error de login", 
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);  
+                
+                if(intentosFallidos >= maxIntentos)
+                {
+                    MessageBox.Show("Ha superado el límite de intentos permitidos",
+                        "Acceso bloqueado",
+                        MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                    this.Hide();
+                }
+            }
+
+
         }
     }
 }
