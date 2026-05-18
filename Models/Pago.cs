@@ -13,7 +13,7 @@ namespace ClubDeportivoApp.Models
         public decimal Monto { get; set; }
         public string TipoPago { get; set; }
         public string MetodoPago { get; set; }
-        //public int NumPago { get; set; }
+        public int NumPago { get; set; }
         public int CuotaId { get; set; }
         public int NoSocioId { get; set; }
 
