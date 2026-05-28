@@ -1,4 +1,6 @@
-﻿using ClubDeportivoApp.Models;
+﻿using ClubDeportivoApp.Forms;
+using ClubDeportivoApp.Models;
+using ClubDeportivoApp.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,6 +16,7 @@ namespace ClubDeportivoApp
     public partial class Dashboard : Form
     {
         internal Usuario Usuario { get; set; }
+        protected ConexionMySql _conexion;
 
         public Dashboard(Usuario usuario)
         {
@@ -55,6 +58,12 @@ namespace ClubDeportivoApp
         private void label1_Click_1(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnRegistro_Click_1(object sender, EventArgs e)
+        {
+            Registro registro = new Registro();
+            registro.Show();            
         }
     }
 }

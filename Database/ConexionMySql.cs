@@ -25,7 +25,7 @@ namespace ClubDeportivoApp
 
         public MySqlConnection GetMySqlConnection()
         {
-            MySqlConnection conn = new MySqlConnection(cadenaConexion);
+            conn = new MySqlConnection(cadenaConexion);
 
             conn.Open();
             return conn;

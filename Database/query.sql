@@ -172,70 +172,60 @@ VALUES
 
 DELIMITER //
 
-CREATE PROCEDURE NuevoSocio(
+CREATE PROCEDURE RegistrarPersonaBasico(
     IN p_nombre VARCHAR(30),
     IN p_apellido VARCHAR(40),
     IN p_dni INT,
+    IN p_es_socio BOOLEAN,
     OUT rta INT
 )
 
 BEGIN
 
     DECLARE existe INT DEFAULT 0;
-    DECLARE nueva_persona INT;
-    DECLARE nuevo_socio INT;
+    DECLARE v_persona_id INT;
+    DECLARE v_id_generado INT;
 
+    -- verificar si existe persona
     SELECT COUNT(*)
     INTO existe
     FROM personas
     WHERE dni = p_dni;
 
-    IF existe = 0 THEN
-
-        INSERT INTO personas(
-            nombre,
-            apellido,
-            dni
-        )
-        VALUES(
-            p_nombre,
-            p_apellido,
-            p_dni
-        );
-
-        SET nueva_persona = LAST_INSERT_ID();
-
-        INSERT INTO socios(
-            persona_id,
-            estado
-        )
-        VALUES(
-            nueva_persona,
-            TRUE
-        );
-
-        SET nuevo_socio = LAST_INSERT_ID();
-
-        INSERT INTO inscripciones(
-            socio_id,
-            fecha_inscripcion
-        )
-        VALUES(
-            nuevo_socio,
-            CURDATE()
-        );
-
-        SET rta = nuevo_socio;
-
+    IF existe > 0 THEN
+        SET rta = -1;
     ELSE
 
-        SET rta = -1;
+        -- insertar persona
+        INSERT INTO personas(nombre, apellido, dni)
+        VALUES(p_nombre, p_apellido, p_dni);
+
+        SET v_persona_id = LAST_INSERT_ID();
+
+        -- si es socio
+        IF p_es_socio = TRUE THEN
+
+            INSERT INTO socios(persona_id, estado)
+            VALUES(v_persona_id, TRUE);
+
+            SET v_id_generado = LAST_INSERT_ID();
+
+        -- si es no socio
+        ELSE
+
+            INSERT INTO no_socios(persona_id, acceso_diario)
+            VALUES(v_persona_id, TRUE);
+
+            SET v_id_generado = LAST_INSERT_ID();
+
+        END IF;
+
+        SET rta = v_id_generado;
 
     END IF;
 
-END //
-
-DELIMITER ;
+END 
+// DELIMITER ;
 
 -- =========================================
 -- PROCEDIMIENTO LOGIN

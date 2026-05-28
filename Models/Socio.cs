@@ -9,12 +9,13 @@ namespace ClubDeportivoApp.Models
 {
     internal class Socio : Persona
     {
-        public int id { get; set; }
+        public new int Id { get; set; }
         public bool Estado { get; set; }
-      
+
         public Socio(string nombre, string apellido, string dni)
             : base(nombre, apellido, dni)
         {
+            Estado = true;
         }
     }
 }

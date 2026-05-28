@@ -20,6 +20,7 @@ namespace ClubDeportivoApp.Models
             List<Pago> pagos = new List<Pago>();
                 }
 
+      
        public Cuota(string mesVigencia, DateTime fechaVencimiento, string estadoPago, int socioId)
         {
             this.MesVigencia = mesVigencia;

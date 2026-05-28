@@ -8,7 +8,7 @@ namespace ClubDeportivoApp.Models
 {
     public class Usuario : Persona
     {
-        public int Id { get; set; }
+        public new int Id { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
         public int RolId { get; set; }

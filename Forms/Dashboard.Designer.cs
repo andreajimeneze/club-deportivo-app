@@ -53,6 +53,7 @@ namespace ClubDeportivoApp
             this.btnRegistro.TabIndex = 0;
             this.btnRegistro.Text = "Registrar Socio - No Socio";
             this.btnRegistro.UseVisualStyleBackColor = false;
+            this.btnRegistro.Click += new System.EventHandler(this.btnRegistro_Click_1);
             // 
             // label2
             // 
@@ -153,7 +154,7 @@ namespace ClubDeportivoApp
         #endregion
 
         private System.Windows.Forms.Button btnRegistro;
-        private System.Windows.Forms.Label lblUsuario;
+        //private System.Windows.Forms.Label lblUsuario;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnCarnet;
         private System.Windows.Forms.Button btnCuotas;
