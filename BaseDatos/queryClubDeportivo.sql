@@ -25,6 +25,20 @@ CREATE TABLE personas(
 );
 
 -- =========================================
+-- TABLA CLIENTES
+-- =========================================
+
+CREATE TABLE clientes(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    persona_id INT NOT NULL UNIQUE,
+    aptoFisico BOOLEAN NOT NULL DEFAULT TRUE,
+
+    CONSTRAINT fk_clientes_personas
+    FOREIGN KEY(persona_id)
+    REFERENCES personas(id)
+);
+
+-- =========================================
 -- TABLA USUARIOS
 -- =========================================
 
@@ -51,12 +65,12 @@ CREATE TABLE usuarios(
 
 CREATE TABLE socios(
     id INT AUTO_INCREMENT PRIMARY KEY,
-    persona_id INT NOT NULL UNIQUE,
+    cliente_id INT NOT NULL UNIQUE,
     estado BOOLEAN DEFAULT TRUE,
 
-    CONSTRAINT fk_socios_personas
-    FOREIGN KEY(persona_id)
-    REFERENCES personas(id)
+    CONSTRAINT fk_socios_clientes
+    FOREIGN KEY(cliente_id)
+    REFERENCES clientes(id)
 );
 
 -- =========================================
@@ -65,12 +79,12 @@ CREATE TABLE socios(
 
 CREATE TABLE no_socios(
     id INT AUTO_INCREMENT PRIMARY KEY,
-    persona_id INT NOT NULL UNIQUE,
+    cliente_id INT NOT NULL UNIQUE,
     acceso_diario BOOLEAN DEFAULT FALSE,
 
-    CONSTRAINT fk_no_socios_personas
-    FOREIGN KEY(persona_id)
-    REFERENCES personas(id)
+    CONSTRAINT fk_no_socios_clientes
+    FOREIGN KEY(cliente_id)
+    REFERENCES clientes(id)
 );
 
 -- =========================================
@@ -93,7 +107,7 @@ CREATE TABLE inscripciones(
 
 CREATE TABLE carnet(
     id INT AUTO_INCREMENT PRIMARY KEY,
-    inscripcion_id INT NOT NULL,
+    inscripcion_id INT NOT NULL UNIQUE,
     estado BOOLEAN DEFAULT TRUE,
 
     CONSTRAINT fk_carnet_inscripciones
@@ -105,7 +119,7 @@ CREATE TABLE carnet(
 -- TABLA CUOTAS
 -- =========================================
 
-CREATE TABLE cuota(
+CREATE TABLE cuotas(
     id INT AUTO_INCREMENT PRIMARY KEY,
     socio_id INT NOT NULL,
     mes_vigencia VARCHAR(20) NOT NULL,
@@ -135,7 +149,7 @@ CREATE TABLE pagos(
 
     CONSTRAINT fk_pagos_cuotas
     FOREIGN KEY(cuota_id)
-    REFERENCES cuota(id),
+    REFERENCES cuotas(id),
 
     CONSTRAINT fk_pagos_no_socios
     FOREIGN KEY(no_socio_id)
@@ -167,15 +181,16 @@ VALUES
 (2, 'angelica', '5678', 2);
 
 -- =========================================
--- PROCEDIMIENTO NUEVO SOCIO
+-- PROCEDIMIENTO REGISTRAR CLIENTE
 -- =========================================
 
 DELIMITER //
 
-CREATE PROCEDURE RegistrarPersonaBasico(
+CREATE PROCEDURE RegistrarCliente(
     IN p_nombre VARCHAR(30),
     IN p_apellido VARCHAR(40),
     IN p_dni INT,
+    IN p_aptoFisico BOOLEAN,
     IN p_es_socio BOOLEAN,
     OUT rta INT
 )
@@ -184,16 +199,19 @@ BEGIN
 
     DECLARE existe INT DEFAULT 0;
     DECLARE v_persona_id INT;
+    DECLARE v_cliente_id INT;
     DECLARE v_id_generado INT;
 
-    -- verificar si existe persona
+    -- verificar si ya existe persona
     SELECT COUNT(*)
     INTO existe
     FROM personas
     WHERE dni = p_dni;
 
     IF existe > 0 THEN
+
         SET rta = -1;
+
     ELSE
 
         -- insertar persona
@@ -202,30 +220,19 @@ BEGIN
 
         SET v_persona_id = LAST_INSERT_ID();
 
-        -- si es socio
-        IF p_es_socio = TRUE THEN
+        -- insertar cliente
+        INSERT INTO clientes(persona_id, aptoFisico)
+        VALUES(v_persona_id, p_aptoFisico);
 
-            INSERT INTO socios(persona_id, estado)
-            VALUES(v_persona_id, TRUE);
-
-            SET v_id_generado = LAST_INSERT_ID();
-
-        -- si es no socio
-        ELSE
-
-            INSERT INTO no_socios(persona_id, acceso_diario)
-            VALUES(v_persona_id, TRUE);
-
-            SET v_id_generado = LAST_INSERT_ID();
-
-        END IF;
+        SET v_cliente_id = LAST_INSERT_ID();
 
         SET rta = v_id_generado;
 
     END IF;
 
-END 
-// DELIMITER ;
+END //
+
+DELIMITER ;
 
 -- =========================================
 -- PROCEDIMIENTO LOGIN
@@ -244,7 +251,8 @@ BEGIN
         u.id,
         u.username,
         u.activo,
-        r.id,
+        r.id AS rol_id,
+        r.nombre AS rol,
         p.nombre,
         p.apellido,
         p.dni
@@ -256,6 +264,92 @@ BEGIN
     WHERE u.username = p_username
     AND u.password = p_password
     AND u.activo = TRUE;
+
+END //
+
+DELIMITER ;
+
+-- =========================================
+-- PROCEDIMIENTO ASIGNAR TIPO CLIENTE
+-- =========================================
+DELIMITER //
+
+CREATE PROCEDURE asignarTipoCliente(
+    IN p_cliente_id INT,
+    IN p_es_socio BOOLEAN
+)
+
+BEGIN
+
+    IF p_es_socio = TRUE THEN
+
+        INSERT INTO socios(cliente_id, estado)
+        VALUES(p_cliente_id, TRUE);
+
+    ELSE
+
+        INSERT INTO no_socios(cliente_id, acceso_diario)
+        VALUES(p_cliente_id, TRUE);
+
+    END IF;
+
+END //
+
+DELIMITER ;
+
+-- =========================================
+-- PROCEDIMIENTO FORMALIZAR INSCRIPCIÓN CLIENTE
+-- =========================================
+
+DELIMITER //
+
+CREATE PROCEDURE FormalizarInscripcion(
+    IN p_socio_id INT,
+    OUT rta INT
+)
+
+BEGIN
+
+    DECLARE existe INT DEFAULT 0;
+    DECLARE v_inscripcion_id INT;
+
+    -- verificar si ya tiene inscripción
+    SELECT COUNT(*)
+    INTO existe
+    FROM inscripciones
+    WHERE socio_id = p_socio_id;
+
+    IF existe > 0 THEN
+
+        SET rta = -1;
+
+    ELSE
+
+        -- crear inscripción
+        INSERT INTO inscripciones(
+            socio_id,
+            fecha_inscripcion
+        )
+        VALUES(
+            p_socio_id,
+            CURDATE()
+        );
+
+        SET v_inscripcion_id = LAST_INSERT_ID();
+
+        -- generar carnet automáticamente
+        INSERT INTO carnet(
+            inscripcion_id,
+            estado
+        )
+        VALUES(
+            v_inscripcion_id,
+            TRUE
+        );
+
+        SET rta = v_inscripcion_id;
+
+    END IF;
 
 END //
 
@@ -280,9 +374,11 @@ BEGIN
         c.fecha_vencimiento,
         c.estado_pago
     FROM personas p
+    INNER JOIN clientes cl
+        ON p.id = cl.persona_id
     INNER JOIN socios s
-        ON p.id = s.persona_id
-    INNER JOIN cuota c
+        ON cl.id = s.cliente_id
+    INNER JOIN cuotas c
         ON s.id = c.socio_id
     WHERE p.dni = p_dni;
 
@@ -320,7 +416,7 @@ BEGIN
         p_metodo_pago
     );
 
-    UPDATE cuota
+    UPDATE cuotas
     SET estado_pago = 'Pagado'
     WHERE id = p_cuota_id;
 

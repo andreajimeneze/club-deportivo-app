@@ -5,18 +5,18 @@ using System.Data;
 
 namespace ClubDeportivoApp.Repositories
 {
-    internal class InscripcionRepository
+    internal class RegistroRepo
     {
         // Atributo de la clase. Necesario para la conexión a la DB
         private readonly ConexionMySql _conexionDatabase;
 
         // Se realiza inyección de dependencias para la conexión.
-        public InscripcionRepository(ConexionMySql conexionDatabase)
+        public RegistroRepo(ConexionMySql conexionDatabase)
         {
             _conexionDatabase = conexionDatabase;
         }
 
-        public int RegistrarPersona(string nombre, string apellido, string dni, bool esSocio)
+        public int RegistrarCliente(string nombre, string apellido, string dni, bool aptoFisico)
         {
             using (
                 MySqlConnection conn =
@@ -25,7 +25,7 @@ namespace ClubDeportivoApp.Repositories
             {
                 using (
                     MySqlCommand cmd =
-                    new MySqlCommand("RegistrarPersonaBasico", conn)
+                    new MySqlCommand("RegistrarCliente", conn)
                 )
                 {
                     cmd.CommandType =
@@ -44,6 +44,9 @@ namespace ClubDeportivoApp.Repositories
                          "p_dni",
                          dni
                      );
+
+                    cmd.Parameters.AddWithValue(
+                        "p_aptoFisico", aptoFisico);
 
                     // parámetro OUT
                     MySqlParameter salida =
@@ -64,30 +67,17 @@ namespace ClubDeportivoApp.Repositories
             }
         }
     
-        public void AgregarASocio(int personaId)
+        public void AsignarTipoCliente(int clienteId, bool esSocio)
         {
             using (MySqlConnection conn = _conexionDatabase.GetMySqlConnection())
             {
-                using (MySqlCommand cmd = new MySqlCommand("agregarASocio", conn))
+                using (MySqlCommand cmd = new MySqlCommand("AsignarTipoCliente", conn))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
 
-                    cmd.Parameters.AddWithValue("p_id",
-                        personaId);
-                    cmd.ExecuteNonQuery();
-                }
-            }
-        }
-
-        public void AgregarANoSocio(int personaId)
-        {
-            using(MySqlConnection conn = _conexionDatabase.GetMySqlConnection())
-            {
-                using(MySqlCommand cmd = new MySqlCommand("agregarANoSocio", conn))
-                {
-                    cmd.CommandType = CommandType.StoredProcedure;
-
-                    cmd.Parameters.AddWithValue("p_id", personaId);
+                    cmd.Parameters.AddWithValue("p_cliente_id",
+                        clienteId);
+                    cmd.Parameters.AddWithValue("p_es_socio", esSocio);
                     cmd.ExecuteNonQuery();
                 }
             }

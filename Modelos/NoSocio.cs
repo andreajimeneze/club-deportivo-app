@@ -1,21 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace ClubDeportivoApp.Models
 {
-    internal class Socio : Persona
+    internal class NoSocio : Cliente
     {
         public new int Id { get; set; }
-        public bool Estado { get; set; }
+        public bool accesoDiario { get; set; }
+        
+        //public NoSocio() { }
 
-        public Socio(string nombre, string apellido, string dni)
+        public NoSocio(string nombre, string apellido, string dni)
             : base(nombre, apellido, dni)
         {
-            Estado = true;
+            accesoDiario = false;
         }
     }
 }

@@ -16,20 +16,12 @@ namespace ClubDeportivoApp.Models
 
         public string Dni { get; set; }
 
-        public Persona()
-        {
-        }
-
+        public Persona() { }
         public Persona(string nombre, string apellido, string dni)
         {
-            Nombre = nombre;
-            Apellido = apellido;
-            Dni = dni;
-        }
-
-        public override string ToString()
-        {
-            return $"{Apellido}, {Nombre}, {Dni}";
+            this.Nombre = nombre;
+            this.Apellido = apellido;
+            this.Dni = dni;
         }
     }
 }

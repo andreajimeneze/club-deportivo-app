@@ -107,48 +107,49 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Database\Conexion.cs" />
-    <Compile Include="Database\ConexionMySql.cs" />
-    <Compile Include="Forms\Dashboard.cs">
+    <Compile Include="BaseDatos\Conexion.cs" />
+    <Compile Include="BaseDatos\ConexionMySql.cs" />
+    <Compile Include="Formularios\Dashboard.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Dashboard.Designer.cs">
+    <Compile Include="Formularios\Dashboard.Designer.cs">
       <DependentUpon>Dashboard.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Registro.cs">
+    <Compile Include="Formularios\Registro.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Registro.Designer.cs">
+    <Compile Include="Formularios\Registro.Designer.cs">
       <DependentUpon>Registro.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Carnet.cs" />
-    <Compile Include="Models\Cuota.cs" />
-    <Compile Include="Models\Inscripcion.cs" />
-    <Compile Include="Models\Pago.cs" />
-    <Compile Include="Models\NoSocio.cs" />
-    <Compile Include="Models\Rol.cs" />
-    <Compile Include="Models\Socio.cs" />
-    <Compile Include="Models\Persona.cs" />
-    <Compile Include="Forms\LoginForm.cs">
+    <Compile Include="Modelos\Carnet.cs" />
+    <Compile Include="Modelos\Cuota.cs" />
+    <Compile Include="Modelos\Inscripcion.cs" />
+    <Compile Include="Modelos\Pago.cs" />
+    <Compile Include="Modelos\NoSocio.cs" />
+    <Compile Include="Modelos\Persona.cs" />
+    <Compile Include="Modelos\Rol.cs" />
+    <Compile Include="Modelos\Socio.cs" />
+    <Compile Include="Modelos\Cliente.cs" />
+    <Compile Include="Formularios\LoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\LoginForm.Designer.cs">
+    <Compile Include="Formularios\LoginForm.Designer.cs">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Usuario.cs" />
+    <Compile Include="Modelos\Usuario.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\InscripcionRepository.cs" />
-    <Compile Include="Repositories\LoginRepository.cs" />
-    <Compile Include="Services\InscripcionService.cs" />
-    <Compile Include="Services\LoginService.cs" />
-    <EmbeddedResource Include="Forms\Dashboard.resx">
+    <Compile Include="Repositorios\RegistroRepo.cs" />
+    <Compile Include="Repositorios\LoginRepo.cs" />
+    <Compile Include="Servicios\RegistroServ.cs" />
+    <Compile Include="Servicios\LoginServ.cs" />
+    <EmbeddedResource Include="Formularios\Dashboard.resx">
       <DependentUpon>Dashboard.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Registro.resx">
+    <EmbeddedResource Include="Formularios\Registro.resx">
       <DependentUpon>Registro.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\LoginForm.resx">
+    <EmbeddedResource Include="Formularios\LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -173,9 +174,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Database\query.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -8,17 +8,17 @@ using ClubDeportivoApp.Models;
 
 namespace ClubDeportivoApp.Services
 {
-    internal class LoginService
+    internal class LoginServ
     {
-        private LoginRepository repository;
+        private LoginRepo repository;
 
-        public LoginService(LoginRepository repository)
+        public LoginServ(LoginRepo repository)
         {
             this.repository = repository;
         }
         public Usuario Login(string username, string password)
         { 
-            Usuario usuario = repository.LoginRepo(username, password);
+            Usuario usuario = repository.LoguearUsuario(username, password);
 
             if (usuario == null)
             {

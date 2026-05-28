@@ -20,7 +20,7 @@ namespace ClubDeportivoApp
     public partial class LoginForm : Form
     {
        // Atributos de la clase Form
-        private LoginService service;
+        private LoginServ service;
         private ConexionMySql conexion;
         private int intentosFallidos = 0;
         private const int maxIntentos = 3;
@@ -35,8 +35,8 @@ namespace ClubDeportivoApp
         {
             InitializeComponent();          
             conexion = new ConexionMySql();
-            LoginRepository repository = new LoginRepository(conexion);
-            service = new LoginService(repository);
+            LoginRepo repository = new LoginRepo(conexion);
+            service = new LoginServ(repository);
         }
 
         private void txtUsername_keyPress(object sender, KeyPressEventArgs e)

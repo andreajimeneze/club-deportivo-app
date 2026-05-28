@@ -4,13 +4,13 @@ using System.Data;
 
 namespace ClubDeportivoApp.Repositories
 {
-    internal class LoginRepository
+    internal class LoginRepo
     {
         // Atributo de la clase. Necesario para la conexión a la DB
         private readonly ConexionMySql _conexionDatabase;
 
         // Se realiza inyección de dependencias para la conexión.
-        public LoginRepository(
+        public LoginRepo(
             ConexionMySql conexionDatabase
         )
         {
@@ -24,7 +24,7 @@ namespace ClubDeportivoApp.Repositories
         // 4. Ejecuta el procedimiento y obtiene los resultados con MySqlDataReader.
         // 5. Si se encuentra un registro, instancia un objeto Usuario y asigna sus propiedades.
         // 6. Retorna el objeto Usuario; si no hay coincidencia, retorna null.
-        public Usuario LoginRepo(
+        public Usuario LoguearUsuario(
             string username,
             string password
         )

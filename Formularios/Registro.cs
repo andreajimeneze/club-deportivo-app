@@ -14,16 +14,16 @@ namespace ClubDeportivoApp.Forms
 {
     public partial class Registro : Form
     {
-        protected string nombre;
-        protected string apellido;
-        protected string dni;
-        internal InscripcionService servicio;
+        internal string nombre;
+        internal string apellido;
+        internal string dni;
+        internal RegistroServ servicio;
         public Registro()
         {
             InitializeComponent();
             ConexionMySql conexion = new ConexionMySql();
-            InscripcionRepository repo = new InscripcionRepository(conexion);
-            servicio = new InscripcionService(repo);
+            RegistroRepo repo = new RegistroRepo(conexion);
+            servicio = new RegistroServ(repo);
         }
 
         private void label2_Click(object sender, EventArgs e)
@@ -47,9 +47,20 @@ namespace ClubDeportivoApp.Forms
             apellido = txtApellido.Text.Trim();
             dni = txtDni.Text.Trim();
             bool esSocio = rbSocio.Checked;
+            bool aptoFisico = cbAptoFisico.Checked;
 
-            servicio.realizarRegistro(nombre, apellido, dni, esSocio);
+            try { 
+               servicio.realizarRegistro(nombre, apellido, dni, aptoFisico, esSocio);
 
+               MessageBox.Show("Registro exitoso");
+               this.Hide();
+            } catch(Exception ex)
+            {
+                MessageBox.Show(
+                    ex.Message, "Error");
+            }
+
+            
         }
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
@@ -60,6 +71,31 @@ namespace ClubDeportivoApp.Forms
         private void label3_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void radioButton1_CheckedChanged_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cbAptoFisico_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            this.Hide();
         }
     }
 }
