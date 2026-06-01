@@ -79,7 +79,7 @@ namespace ClubDeportivoApp
             this.btnCarnet.Name = "btnCarnet";
             this.btnCarnet.Size = new System.Drawing.Size(580, 42);
             this.btnCarnet.TabIndex = 5;
-            this.btnCarnet.Text = "Entregar Carnet Socio";
+            this.btnCarnet.Text = "Reimprimir Carnet Socio";
             this.btnCarnet.UseVisualStyleBackColor = false;
             this.btnCarnet.Click += new System.EventHandler(this.btnRegistro_Click);
             // 
@@ -113,7 +113,7 @@ namespace ClubDeportivoApp
             this.btnMorosos.Name = "btnMorosos";
             this.btnMorosos.Size = new System.Drawing.Size(580, 42);
             this.btnMorosos.TabIndex = 7;
-            this.btnMorosos.Text = "Emitir Listado Morosos";
+            this.btnMorosos.Text = "Emitir Listado Vencimientos";
             this.btnMorosos.UseVisualStyleBackColor = false;
             this.btnMorosos.Click += new System.EventHandler(this.btnMorosos_Click);
             // 

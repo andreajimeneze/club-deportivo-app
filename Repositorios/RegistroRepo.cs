@@ -1,11 +1,12 @@
-﻿using ClubDeportivoApp.Models;
+﻿using ClubDeportivoApp.Interfaces;
+using ClubDeportivoApp.Models;
 using MySql.Data.MySqlClient;
 using System;
 using System.Data;
 
 namespace ClubDeportivoApp.Repositories
 {
-    internal class RegistroRepo
+    internal class RegistroRepo : IRegistro
     {
         // Atributo de la clase. Necesario para la conexión a la DB
         private readonly ConexionMySql _conexionDatabase;
@@ -67,18 +68,27 @@ namespace ClubDeportivoApp.Repositories
             }
         }
     
-        public void AsignarTipoCliente(int clienteId, bool esSocio)
+        public int AsignarTipoCliente(int clienteId, bool esSocio)
         {
             using (MySqlConnection conn = _conexionDatabase.GetMySqlConnection())
             {
-                using (MySqlCommand cmd = new MySqlCommand("AsignarTipoCliente", conn))
+                using (MySqlCommand cmd = new MySqlCommand("asignarTipoCliente", conn))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     cmd.Parameters.AddWithValue("p_cliente_id",
                         clienteId);
-                    cmd.Parameters.AddWithValue("p_es_socio", esSocio);
+
+                    cmd.Parameters.AddWithValue("p_es_socio",
+                        esSocio);
+
+                    MySqlParameter rtaParameter = new MySqlParameter("rta", MySqlDbType.Int32);
+
+                    rtaParameter.Direction = ParameterDirection.Output;
+                    cmd.Parameters.Add(rtaParameter);
+
                     cmd.ExecuteNonQuery();
+                    return Convert.ToInt32(rtaParameter.Value);
                 }
             }
         }

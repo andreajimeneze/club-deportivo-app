@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClubDeportivoApp.Models
+namespace ClubDeportivoApp.Modelos
 {
-    internal class Rol
+    internal class Actividad
     {
         public int Id { get; set; }
         public string Nombre { get; set; }

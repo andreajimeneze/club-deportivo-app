@@ -16,7 +16,7 @@ namespace ClubDeportivoApp.Services
             this.repo = repo;
         }
 
-        public void realizarRegistro(string nombre, string apellido, string dni, bool aptoFisico, bool esSocio)
+        public int realizarRegistro(string nombre, string apellido, string dni, bool aptoFisico, bool esSocio)
         {
             int clienteId = repo.RegistrarCliente(nombre, apellido, dni, aptoFisico);
 
@@ -31,7 +31,9 @@ namespace ClubDeportivoApp.Services
                 throw new Exception("Cliente debe presentar certificado para poder acceder a los servicios del club");
                
             }
-            repo.AsignarTipoCliente(clienteId, esSocio);
+             
+              return repo.AsignarTipoCliente(clienteId, esSocio);
+          
         }
     }
 }

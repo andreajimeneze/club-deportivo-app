@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ClubDeportivoApp.Interfaces;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,10 +8,9 @@ using System.Threading.Tasks;
 
 namespace ClubDeportivoApp.Models
 {
-    internal class Cuota
+    internal class Cuota : ICuota
     {
         public int Id { get; set; }
-        public string MesVigencia { get; set; }
         public DateTime FechaVencimiento { get; set; }
         public string EstadoPago { get; set; }
         public int SocioId { get; set; }
@@ -21,12 +21,31 @@ namespace ClubDeportivoApp.Models
                 }
 
       
-       public Cuota(string mesVigencia, DateTime fechaVencimiento, string estadoPago, int socioId)
+       public Cuota(DateTime fechaVencimiento, string estadoPago, int socioId)
         {
-            this.MesVigencia = mesVigencia;
             this.FechaVencimiento = fechaVencimiento;
             this.EstadoPago = estadoPago;
             this.SocioId = socioId;
+        }
+
+        public Cuota ObtenerCuota()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RegistrarCuota()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Cuota> ObtenerCuotasImpagasPorCliente()
+        {
+            throw new NotImplementedException();
+        }
+
+        Cuota ICuota.ObtenerCuotaPorId()
+        {
+            throw new NotImplementedException();
         }
     }
 }

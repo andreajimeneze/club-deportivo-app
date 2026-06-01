@@ -1,4 +1,5 @@
-﻿using ClubDeportivoApp.Repositories;
+﻿using ClubDeportivoApp.Formularios;
+using ClubDeportivoApp.Repositories;
 using ClubDeportivoApp.Services;
 using System;
 using System.Collections.Generic;
@@ -50,10 +51,21 @@ namespace ClubDeportivoApp.Forms
             bool aptoFisico = cbAptoFisico.Checked;
 
             try { 
-               servicio.realizarRegistro(nombre, apellido, dni, aptoFisico, esSocio);
+               int id = servicio.realizarRegistro(nombre, apellido, dni, aptoFisico, esSocio);
 
                MessageBox.Show("Registro exitoso");
-               this.Hide();
+                if(esSocio)
+                {
+                    InscripcionSocio inscripcionSocio = new InscripcionSocio(id);
+                    inscripcionSocio.Show();
+                    this.Hide();
+                } else
+                {
+                    InscripcionNoSocioForm inscripcionNoSocio = new InscripcionNoSocioForm(id);
+                    inscripcionNoSocio.Show();
+                    this.Hide();
+                }
+               
             } catch(Exception ex)
             {
                 MessageBox.Show(
@@ -95,7 +107,7 @@ namespace ClubDeportivoApp.Forms
 
         private void button3_Click(object sender, EventArgs e)
         {
-            this.Hide();
+           
         }
     }
 }

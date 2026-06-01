@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ClubDeportivoApp.Interfaces;
+using System;
 
 namespace ClubDeportivoApp.Models
 {
-    internal class Inscripcion
+    internal class Inscripcion : IInscripcion
     {
         public int Id { get; set; }
         public DateTime FechaInscripcion { get; set; }
@@ -14,10 +11,21 @@ namespace ClubDeportivoApp.Models
 
         public Inscripcion() { }
 
-        public Inscripcion(DateTime fechaInscripcion, int socioId)
+        public Inscripcion(int socioId)
         {
-            this.FechaInscripcion = fechaInscripcion;
+            this.FechaInscripcion = DateTime.Now;
             this.SocioId = socioId;
+        }
+
+
+        public Inscripcion FormalizarInscripcion()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Cuota EmitirCarnet()
+        {
+            throw new NotImplementedException();
         }
     }
 }

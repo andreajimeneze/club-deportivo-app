@@ -115,15 +115,35 @@
     <Compile Include="Formularios\Dashboard.Designer.cs">
       <DependentUpon>Dashboard.cs</DependentUpon>
     </Compile>
+    <Compile Include="Formularios\InscripcionNoSocioForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\InscripcionNoSocioForm.Designer.cs">
+      <DependentUpon>InscripcionNoSocioForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\InscripcionSocio.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\InscripcionSocio.Designer.cs">
+      <DependentUpon>InscripcionSocio.cs</DependentUpon>
+    </Compile>
     <Compile Include="Formularios\Registro.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Formularios\Registro.Designer.cs">
       <DependentUpon>Registro.cs</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\ICuota.cs" />
+    <Compile Include="Interfaces\IPago.cs" />
+    <Compile Include="Interfaces\Iinscripcion.cs" />
+    <Compile Include="Interfaces\IRegistro.cs" />
+    <Compile Include="Modelos\Actividad.cs" />
     <Compile Include="Modelos\Carnet.cs" />
+    <Compile Include="Modelos\ConceptoPago.cs" />
     <Compile Include="Modelos\Cuota.cs" />
     <Compile Include="Modelos\Inscripcion.cs" />
+    <Compile Include="Modelos\MetodoPago.cs" />
+    <Compile Include="Modelos\NoSocio_Actividad.cs" />
     <Compile Include="Modelos\Pago.cs" />
     <Compile Include="Modelos\NoSocio.cs" />
     <Compile Include="Modelos\Persona.cs" />
@@ -139,12 +159,22 @@
     <Compile Include="Modelos\Usuario.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositorios\InscripcionSocioRepo.cs" />
+    <Compile Include="Repositorios\ListadosMaestrosRepo.cs" />
     <Compile Include="Repositorios\RegistroRepo.cs" />
     <Compile Include="Repositorios\LoginRepo.cs" />
+    <Compile Include="Servicios\InscripcionSocioServ.cs" />
+    <Compile Include="Servicios\ListadosMaestrosServ.cs" />
     <Compile Include="Servicios\RegistroServ.cs" />
     <Compile Include="Servicios\LoginServ.cs" />
     <EmbeddedResource Include="Formularios\Dashboard.resx">
       <DependentUpon>Dashboard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\InscripcionNoSocioForm.resx">
+      <DependentUpon>InscripcionNoSocioForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\InscripcionSocio.resx">
+      <DependentUpon>InscripcionSocio.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\Registro.resx">
       <DependentUpon>Registro.cs</DependentUpon>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ClubDeportivoApp.Interfaces;
 
 namespace ClubDeportivoApp.Models
 {
@@ -25,5 +26,6 @@ namespace ClubDeportivoApp.Models
         {
             return $"{Apellido}, {Nombre}, {Dni}";
         }
+
     }
 }
