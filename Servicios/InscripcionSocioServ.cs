@@ -1,31 +1,29 @@
-﻿using ClubDeportivoApp.Repositorios;
+﻿using ClubDeportivoApp.Models;
+using ClubDeportivoApp.Repositorios;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace ClubDeportivoApp.Servicios
 {
     internal class InscripcionSocioServ
     {
-        private InscripcionSocioRepo repo;
+        private PagosRepo repo;
 
-        public InscripcionSocioServ(InscripcionSocioRepo repo)
+        public InscripcionSocioServ(PagosRepo repo)
         {
             this.repo = repo;
         }
 
-        public bool FormalizarInscripcion(int socioId, decimal monto, int conceptoId, int metodoId)
+        public bool FormalizarSocio(int socioId, decimal montoCuota, decimal montoAPagar)
         {
             try
             {
-                if (socioId <= 0 || monto <= 0 || conceptoId <= 0 || metodoId <= 0)
+                if (socioId <= 0 || montoCuota <= 0 || montoAPagar < montoCuota)
                 {
                     return false;
                 }
 
-                int result = repo.FormalizarSocioRepo(socioId, monto, conceptoId, metodoId);
+                int result = repo.FormalizarContrato(socioId, montoCuota);
 
                 if (result > 0)
                 {
@@ -37,6 +35,5 @@ namespace ClubDeportivoApp.Servicios
                 throw new Exception("Error service inscripción: " + ex.Message, ex);
             }
         }
-
     }
 }

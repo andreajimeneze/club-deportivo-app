@@ -1,6 +1,6 @@
 ﻿namespace ClubDeportivoApp.Forms
 {
-    partial class Registro
+    partial class RegistroClientesForm
     {
         /// <summary>
         /// Required designer variable.
@@ -20,6 +20,7 @@
             base.Dispose(disposing);
         }
 
+
         #region Windows Form Designer generated code
 
         /// <summary>
@@ -35,12 +36,13 @@
             this.txtApellido = new System.Windows.Forms.TextBox();
             this.txtDni = new System.Windows.Forms.TextBox();
             this.btnAceptar = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.btnVolver = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.rbSocio = new System.Windows.Forms.RadioButton();
             this.rbNoSocio = new System.Windows.Forms.RadioButton();
             this.label5 = new System.Windows.Forms.Label();
             this.cbAptoFisico = new System.Windows.Forms.CheckBox();
+            this.lblFechaHoy = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -62,7 +64,6 @@
             this.label2.Size = new System.Drawing.Size(68, 20);
             this.label2.TabIndex = 1;
             this.label2.Text = "Apellido";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // label3
             // 
@@ -73,7 +74,6 @@
             this.label3.Size = new System.Drawing.Size(38, 20);
             this.label3.TabIndex = 2;
             this.label3.Text = "DNI";
-            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // txtNombre
             // 
@@ -81,9 +81,8 @@
             this.txtNombre.MaximumSize = new System.Drawing.Size(300, 40);
             this.txtNombre.MinimumSize = new System.Drawing.Size(300, 40);
             this.txtNombre.Name = "txtNombre";
-            this.txtNombre.Size = new System.Drawing.Size(300, 40);
+            this.txtNombre.Size = new System.Drawing.Size(300, 22);
             this.txtNombre.TabIndex = 3;
-            this.txtNombre.TextChanged += new System.EventHandler(this.txtNombre_TextChanged);
             // 
             // txtApellido
             // 
@@ -91,7 +90,7 @@
             this.txtApellido.MaximumSize = new System.Drawing.Size(300, 40);
             this.txtApellido.MinimumSize = new System.Drawing.Size(300, 40);
             this.txtApellido.Name = "txtApellido";
-            this.txtApellido.Size = new System.Drawing.Size(300, 40);
+            this.txtApellido.Size = new System.Drawing.Size(300, 22);
             this.txtApellido.TabIndex = 4;
             // 
             // txtDni
@@ -100,7 +99,7 @@
             this.txtDni.MaximumSize = new System.Drawing.Size(300, 40);
             this.txtDni.MinimumSize = new System.Drawing.Size(300, 40);
             this.txtDni.Name = "txtDni";
-            this.txtDni.Size = new System.Drawing.Size(300, 40);
+            this.txtDni.Size = new System.Drawing.Size(300, 22);
             this.txtDni.TabIndex = 5;
             // 
             // btnAceptar
@@ -112,17 +111,17 @@
             this.btnAceptar.TabIndex = 7;
             this.btnAceptar.Text = "ACEPTAR";
             this.btnAceptar.UseVisualStyleBackColor = true;
-            this.btnAceptar.Click += new System.EventHandler(this.button2_Click);
+            this.btnAceptar.Click += new System.EventHandler(this.btnAceptar_Click);
             // 
-            // button3
+            // btnVolver
             // 
-            this.button3.Location = new System.Drawing.Point(579, 12);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(200, 40);
-            this.button3.TabIndex = 8;
-            this.button3.Text = "Volver a pantalla principal";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.btnVolver.Location = new System.Drawing.Point(579, 12);
+            this.btnVolver.Name = "btnVolver";
+            this.btnVolver.Size = new System.Drawing.Size(200, 40);
+            this.btnVolver.TabIndex = 8;
+            this.btnVolver.Text = "Volver a pantalla principal";
+            this.btnVolver.UseVisualStyleBackColor = true;
+            this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
             // 
             // label4
             // 
@@ -145,7 +144,6 @@
             this.rbSocio.TabStop = true;
             this.rbSocio.Text = "Socio";
             this.rbSocio.UseVisualStyleBackColor = true;
-            this.rbSocio.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
             // 
             // rbNoSocio
             // 
@@ -168,7 +166,6 @@
             this.label5.Size = new System.Drawing.Size(147, 18);
             this.label5.TabIndex = 12;
             this.label5.Text = "Presenta apto físico?";
-            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // cbAptoFisico
             // 
@@ -179,19 +176,29 @@
             this.cbAptoFisico.TabIndex = 13;
             this.cbAptoFisico.Text = "SÍ";
             this.cbAptoFisico.UseVisualStyleBackColor = true;
-            this.cbAptoFisico.CheckedChanged += new System.EventHandler(this.cbAptoFisico_CheckedChanged);
             // 
-            // Registro
+            // lblFechaHoy
+            // 
+            this.lblFechaHoy.AutoSize = true;
+            this.lblFechaHoy.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblFechaHoy.Location = new System.Drawing.Point(28, 22);
+            this.lblFechaHoy.Name = "lblFechaHoy";
+            this.lblFechaHoy.Size = new System.Drawing.Size(102, 18);
+            this.lblFechaHoy.TabIndex = 14;
+            this.lblFechaHoy.Text = "Fecha y hora: ";
+            // 
+            // RegistroClientesForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 517);
+            this.Controls.Add(this.lblFechaHoy);
             this.Controls.Add(this.cbAptoFisico);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.rbNoSocio);
             this.Controls.Add(this.rbSocio);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.button3);
+            this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.btnAceptar);
             this.Controls.Add(this.txtDni);
             this.Controls.Add(this.txtApellido);
@@ -199,9 +206,8 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Name = "Registro";
+            this.Name = "RegistroClientesForm";
             this.Text = "Registro";
-            this.Load += new System.EventHandler(this.Registro_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -216,11 +222,12 @@
         private System.Windows.Forms.TextBox txtApellido;
         private System.Windows.Forms.TextBox txtDni;
         private System.Windows.Forms.Button btnAceptar;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button btnVolver;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.RadioButton rbSocio;
         private System.Windows.Forms.RadioButton rbNoSocio;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.CheckBox cbAptoFisico;
+        private System.Windows.Forms.Label lblFechaHoy;
     }
 }

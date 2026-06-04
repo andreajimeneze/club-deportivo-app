@@ -1,9 +1,9 @@
-﻿using ClubDeportivoApp.Interfaces;
+﻿
 using System;
 
 namespace ClubDeportivoApp.Models
 {
-    internal class Inscripcion : IInscripcion
+    internal class Inscripcion 
     {
         public int Id { get; set; }
         public DateTime FechaInscripcion { get; set; }
@@ -15,17 +15,6 @@ namespace ClubDeportivoApp.Models
         {
             this.FechaInscripcion = DateTime.Now;
             this.SocioId = socioId;
-        }
-
-
-        public Inscripcion FormalizarInscripcion()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Cuota EmitirCarnet()
-        {
-            throw new NotImplementedException();
         }
     }
 }

@@ -39,6 +39,7 @@
             this.txtpago = new System.Windows.Forms.TextBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.lblFechaHoy = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // cbActividades
@@ -135,11 +136,22 @@
             this.label5.TabIndex = 12;
             this.label5.Text = "DNI No socio";
             // 
+            // lblFechaHoy
+            // 
+            this.lblFechaHoy.AutoSize = true;
+            this.lblFechaHoy.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblFechaHoy.Location = new System.Drawing.Point(45, 404);
+            this.lblFechaHoy.Name = "lblFechaHoy";
+            this.lblFechaHoy.Size = new System.Drawing.Size(102, 18);
+            this.lblFechaHoy.TabIndex = 16;
+            this.lblFechaHoy.Text = "Fecha y hora: ";
+            // 
             // InscripcionNoSocioForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.lblFechaHoy);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.txtpago);
@@ -172,5 +184,6 @@
         private System.Windows.Forms.TextBox txtpago;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label lblFechaHoy;
     }
 }

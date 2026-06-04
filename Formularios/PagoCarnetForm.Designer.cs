@@ -1,6 +1,6 @@
 ﻿namespace ClubDeportivoApp.Formularios
 {
-    partial class InscripcionSocio
+    partial class PagoCarnetForm
     {
         /// <summary>
         /// Required designer variable.
@@ -73,7 +73,6 @@
             this.cbConceptoPago.Name = "cbConceptoPago";
             this.cbConceptoPago.Size = new System.Drawing.Size(187, 24);
             this.cbConceptoPago.TabIndex = 2;
-            this.cbConceptoPago.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // cbMedioPago
             // 
@@ -110,6 +109,7 @@
             this.btnImprimirCarnet.TabIndex = 6;
             this.btnImprimirCarnet.Text = "IMPRIMIR";
             this.btnImprimirCarnet.UseVisualStyleBackColor = true;
+            this.btnImprimirCarnet.Click += new System.EventHandler(this.btnImprimirCarnet_Click);
             // 
             // label3
             // 
@@ -120,7 +120,6 @@
             this.label3.TabIndex = 7;
             this.label3.Tag = "";
             this.label3.Text = "Generar Carnet";
-            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // txtMontoPago
             // 

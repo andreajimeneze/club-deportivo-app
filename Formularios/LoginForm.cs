@@ -1,19 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using MySqlConnector;
-using ClubDeportivoApp;
 using ClubDeportivoApp.Models;
 using ClubDeportivoApp.Services;
 using ClubDeportivoApp.Repositories;
-using System.Drawing.Text;
-using System.Security.Cryptography.X509Certificates;
+
 
 namespace ClubDeportivoApp
 {
@@ -39,15 +30,7 @@ namespace ClubDeportivoApp
             service = new LoginServ(repository);
         }
 
-        private void txtUsername_keyPress(object sender, KeyPressEventArgs e)
-        {
 
-        }
-
-        private void txtPassword_keyPress(object sender, KeyPressEventArgs e)
-        {
-
-        }
         // Botón login ejecuta la lógica del login.
         // 1. Toma los datos ingresados por el usuario
         // a través de txtUsername (name del elemento) y usa método Trim() para eliminar espacios
@@ -68,9 +51,8 @@ namespace ClubDeportivoApp
             if(usuario != null)
             {
                 Dashboard dashboard = new Dashboard(usuario);
+                dashboard.Show();
                 this.Hide();
-                dashboard.ShowDialog();
-                this.Close();
             }
             else
             {
@@ -86,7 +68,7 @@ namespace ClubDeportivoApp
                         "Acceso bloqueado",
                         MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
-                    this.Hide();
+                    this.Close();
                 }
             }
 

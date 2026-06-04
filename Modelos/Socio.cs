@@ -17,5 +17,12 @@ namespace ClubDeportivoApp.Models
         {
             Estado = true;
         }
+
+        public string MostrarCliente()
+        {
+            return  $"Nombre: {Nombre}" +
+                    $"Apellido: {Apellido} " +
+                    $"Dni: {Dni}";
+        }
     }
 }

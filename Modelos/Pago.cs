@@ -1,13 +1,9 @@
-﻿using ClubDeportivoApp.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
+
 
 namespace ClubDeportivoApp.Models
 {
-    internal class Pago : IPago
+    internal class Pago
     {
         public int Id { get; set; }
         public DateTime FechaPago { get; set; }
@@ -27,16 +23,6 @@ namespace ClubDeportivoApp.Models
             this.Monto = monto;
             this.ConceptoPagoId = conceptoPagoId;
             this.MetodoPagoId = metodoPagoId;
-        }
-
-        void IPago.RegistrarPago()
-        {
-            throw new NotImplementedException();
-        }
-
-        List<Pago> IPago.listarPagosVencidos()
-        {
-            throw new NotImplementedException();
         }
     }
  }

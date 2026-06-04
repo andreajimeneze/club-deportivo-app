@@ -88,11 +88,10 @@ namespace ClubDeportivoApp
             this.txtUsername.Location = new System.Drawing.Point(194, 163);
             this.txtUsername.MaximumSize = new System.Drawing.Size(400, 45);
             this.txtUsername.MinimumSize = new System.Drawing.Size(250, 45);
-            this.txtUsername.Multiline = true;
             this.txtUsername.Name = "txtUsername";
             this.txtUsername.Size = new System.Drawing.Size(308, 45);
             this.txtUsername.TabIndex = 0;
-            this.txtUsername.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtUsername_keyPress);
+           
             // 
             // txtPassword
             // 
@@ -103,12 +102,11 @@ namespace ClubDeportivoApp
             this.txtPassword.Location = new System.Drawing.Point(194, 248);
             this.txtPassword.MaximumSize = new System.Drawing.Size(400, 45);
             this.txtPassword.MinimumSize = new System.Drawing.Size(250, 35);
-            this.txtPassword.Multiline = true;
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '*';
-            this.txtPassword.Size = new System.Drawing.Size(308, 45);
+            this.txtPassword.Size = new System.Drawing.Size(308, 35);
             this.txtPassword.TabIndex = 1;
-            this.txtPassword.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPassword_keyPress);
+           
             // 
             // btnLogin
             // 
@@ -126,7 +124,7 @@ namespace ClubDeportivoApp
             this.btnLogin.UseVisualStyleBackColor = false;
             this.btnLogin.Click += new System.EventHandler(this.btnLogin_click);
             // 
-            // Form1
+            // LoginForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -141,7 +139,7 @@ namespace ClubDeportivoApp
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Name = "Form1";
+            this.Name = "LoginForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Login";
             this.ResumeLayout(false);

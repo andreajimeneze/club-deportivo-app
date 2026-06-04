@@ -3,24 +3,32 @@ using System;
 using System.Windows.Forms;
 using ClubDeportivoApp.Servicios;
 using ClubDeportivoApp.Repositorios;
+using System.Runtime.CompilerServices;
 
 
 namespace ClubDeportivoApp.Formularios
 {
-    public partial class InscripcionSocio : Form
+    public partial class PagoCarnetForm : Form
     {
         private ListadosMaestrosServ servicio;
         private InscripcionSocioServ inscripcionServ;
-        private int socioId;
-        public InscripcionSocio(int socioId)
+        private RegistroPagoServ pagoServ;
+        private int idSocio;
+        private decimal montoCuota;
+
+        public PagoCarnetForm() { }
+        public PagoCarnetForm(int idSocio, decimal montoCuota)
         {
             InitializeComponent();
             ConexionMySql conexion = new ConexionMySql();
             ListadosMaestrosRepo repo = new ListadosMaestrosRepo(conexion);
             servicio = new ListadosMaestrosServ(repo);
-            InscripcionSocioRepo inscripcionRepo = new InscripcionSocioRepo(conexion);
+            PagosRepo inscripcionRepo = new PagosRepo(conexion);
             inscripcionServ = new InscripcionSocioServ(inscripcionRepo);
-            this.socioId = socioId;
+            pagoServ = new RegistroPagoServ(inscripcionRepo);
+            this.idSocio = idSocio;
+            this.montoCuota = montoCuota;
+            lblFechaHoy.Text = $"Fecha y hora: {DateTime.Now.ToString("dd/MM/yyyy HH:mm")}";
         }
 
         private void CargarMetodosPago()
@@ -56,48 +64,37 @@ namespace ClubDeportivoApp.Formularios
         {
             CargarConceptosPago();
             CargarMetodosPago();
-
-        }
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void btnValidarPago_Click(object sender, EventArgs e)
         {
-           
-            decimal monto;
+            decimal montoAPagar = decimal.Parse(txtMontoPago.Text);
+            int metodoPagoId = int.Parse(cbMedioPago.SelectedValue.ToString());
+            int conceptoPagoId = int.Parse(cbConceptoPago.SelectedValue.ToString());
             try
             {
-                if (!decimal.TryParse(txtMontoPago.Text, out monto))
-                {
-                    MessageBox.Show("Ingrese un monto válido");
-                    return;
-                }
-
-                int metodoPagoId = int.Parse(cbMedioPago.SelectedValue.ToString());
-                int conceptoPagoId = int.Parse(cbConceptoPago.SelectedValue.ToString());
-
-                bool result = inscripcionServ.FormalizarInscripcion(socioId, monto, conceptoPagoId, metodoPagoId);
+           
+                bool result = pagoServ.RegistrarPago(idSocio,  null, montoAPagar, montoCuota, conceptoPagoId, metodoPagoId);
 
                 if (result)
                 {
-                    MessageBox.Show("Inscripción realizada con éxito");
+                    MessageBox.Show("Pago realizado con éxito");
                 }
                 else
                 {
                     MessageBox.Show("Error al realizar la inscripción");
                 }
 
-            } catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
             }
+
+        }
+
+        private void btnImprimirCarnet_Click(object sender, EventArgs e)
+        {
 
         }
     }

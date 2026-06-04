@@ -1,14 +1,8 @@
 ﻿using ClubDeportivoApp.Modelos;
+using ClubDeportivoApp.Models;
 using ClubDeportivoApp.Repositorios;
 using ClubDeportivoApp.Servicios;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ClubDeportivoApp.Formularios
@@ -16,14 +10,15 @@ namespace ClubDeportivoApp.Formularios
     public partial class InscripcionNoSocioForm : Form
     {
         private ListadosMaestrosServ servicio;
-        private int idSocio;
-        public InscripcionNoSocioForm(int idSocio)
+        internal Cliente noSocio;
+        public InscripcionNoSocioForm(Cliente noSocio)
         {
             InitializeComponent();
             ConexionMySql conn = new ConexionMySql();
             ListadosMaestrosRepo repo = new ListadosMaestrosRepo(conn);
             servicio = new ListadosMaestrosServ(repo);
-            this.idSocio = idSocio;
+            this.noSocio = noSocio;
+            lblFechaHoy.Text = $"Fecha y hora: {DateTime.Now.ToString("dd/MM/yyyy")}";
         }
 
         private void CargarActividades()

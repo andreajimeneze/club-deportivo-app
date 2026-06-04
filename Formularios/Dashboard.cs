@@ -1,14 +1,7 @@
 ﻿using ClubDeportivoApp.Forms;
+using ClubDeportivoApp.Formularios;
 using ClubDeportivoApp.Models;
-using ClubDeportivoApp.Services;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ClubDeportivoApp
@@ -18,52 +11,47 @@ namespace ClubDeportivoApp
         internal Usuario Usuario { get; set; }
         protected ConexionMySql _conexion;
 
+        public Dashboard() { }
         public Dashboard(Usuario usuario)
         {
             InitializeComponent();
             this.Usuario = usuario;
-            labelUsuario.Text = $"Bienvenido, {usuario.Username}";
+            lblUsuario.Text = $"Bienvenido, {usuario.Username}";
+            lblFechaHoy.Text = $"Fecha y hora: {DateTime.Now.ToString("dd/MM/yyyy HH:mm")}";
         }
 
-        private void label1_Click(object sender, EventArgs e)
+       
+        private void btnRegistro_Click(object sender, EventArgs e)
         {
 
+            RegistroClientesForm registro = new RegistroClientesForm();
+            this.Hide();
+            registro.ShowDialog();
+            this.Show();         
         }
 
         private void btnCarnet_Click(object sender, EventArgs e)
         {
-
+            PagoCarnetForm pagoCarnet = new PagoCarnetForm();
+            this.Hide();
+            pagoCarnet.ShowDialog();
+            this.Show();
         }
 
-        private void btnRegistro_Click(object sender, EventArgs e)
+        private void btnPagos_Click(object sender, EventArgs e)
         {
-
+            PagosForm pagos = new PagosForm();
+            this.Hide();
+            pagos.ShowDialog();
+            this.Show();
         }
 
         private void btnMorosos_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Dashboard_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnRegistro_Click_1(object sender, EventArgs e)
-        {
-            Registro registro = new Registro();
-            registro.Show();            
+            VencimientosForm vencimientos = new VencimientosForm();
+            this.Hide();
+            vencimientos.ShowDialog();
+            this.Show();
         }
     }
 }

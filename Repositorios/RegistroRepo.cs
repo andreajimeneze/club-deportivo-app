@@ -1,5 +1,4 @@
 ﻿using ClubDeportivoApp.Interfaces;
-using ClubDeportivoApp.Models;
 using MySql.Data.MySqlClient;
 using System;
 using System.Data;

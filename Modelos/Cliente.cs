@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ClubDeportivoApp.Interfaces;
-
+﻿
 namespace ClubDeportivoApp.Models
 {
     public class Cliente : Persona
@@ -12,10 +6,7 @@ namespace ClubDeportivoApp.Models
         public new int Id { get; set; }
         public bool AptoFisico { get; set; }
 
-        //public Cliente()
-        //{
-        //}
-
+        public Cliente() { }
         public Cliente(string nombre, string apellido, string dni) 
             :base(nombre, apellido, dni)
         {
