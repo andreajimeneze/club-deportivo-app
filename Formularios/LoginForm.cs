@@ -11,8 +11,8 @@ namespace ClubDeportivoApp
     public partial class LoginForm : Form
     {
        // Atributos de la clase Form
-        private LoginServ service;
-        private ConexionMySql conexion;
+        private readonly LoginServ service;
+        private readonly ConexionMySql _conexion;
         private int intentosFallidos = 0;
         private const int maxIntentos = 3;
 
@@ -22,10 +22,11 @@ namespace ClubDeportivoApp
         // 3. Crea el repositorio de usuarios, al que se le pasa la conexión.
         // 4. Crea el servicio de usuarios, al que se le pasa el repositorio.
         // De esta forma se implementa la inyección de dependencias entre capas.
-        public LoginForm()
+        public LoginForm(ConexionMySql conexion)
         {
+            MessageBox.Show("Entré a LoginForm");
+            _conexion = conexion;
             InitializeComponent();          
-            conexion = new ConexionMySql();
             LoginRepo repository = new LoginRepo(conexion);
             service = new LoginServ(repository);
         }
@@ -50,7 +51,7 @@ namespace ClubDeportivoApp
 
             if(usuario != null)
             {
-                Dashboard dashboard = new Dashboard(usuario);
+                Dashboard dashboard = new Dashboard(usuario, _conexion);
                 dashboard.Show();
                 this.Hide();
             }

@@ -1,7 +1,7 @@
 ﻿
 namespace ClubDeportivoApp.Models
 {
-    internal class Carnet
+    public class Carnet
     {
         public int Id { get; set; }
         public int InscripcionId { get; set; }

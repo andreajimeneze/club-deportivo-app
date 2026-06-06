@@ -1,11 +1,13 @@
 ﻿
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
+
 namespace ClubDeportivoApp
 {
     public class Conexion
     {
-        protected string server = "localhost";
-        protected string database = "club_deportivo";
-        protected string username = "root";
-        protected string password = "condor28";
+        public string Server { get; set; }
+        public string Database { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
     }
 }

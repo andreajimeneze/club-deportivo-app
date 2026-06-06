@@ -11,18 +11,21 @@ namespace ClubDeportivoApp.Formularios
 {
     public partial class InscripcionSocioForm : Form
     {
-        private Cliente socio;
-        private int idSocio;
+        private readonly ConexionMySql _conexion;
+        private readonly Cliente _socio;
+        private readonly int _idSocio;
         private decimal montoCuota;
         internal InscripcionSocioServ serv;
-        public InscripcionSocioForm(Cliente socio, int idSocio)
+        public InscripcionSocioForm(Cliente socio, int idSocio, ConexionMySql conexion)
         {
             InitializeComponent();
-            ConexionMySql conexion = new ConexionMySql();
-            PagosRepo repo = new PagosRepo(conexion);
+            _socio = socio;
+            _idSocio = idSocio;
+            _conexion = conexion;
+
+            PagosRepo repo = new PagosRepo(_conexion);
             serv = new InscripcionSocioServ(repo);
-            this.socio = socio;
-            this.idSocio = idSocio;
+           
             lblNombre.Text = socio.Nombre;
             lblApellido.Text = socio.Apellido;
             lblDni.Text = socio.Dni;
@@ -32,11 +35,12 @@ namespace ClubDeportivoApp.Formularios
 
         private void btnImprimir_Click(object sender, EventArgs e)
         {
-            PagoCarnetForm pagoSocio = new PagoCarnetForm(idSocio, montoCuota);
             montoCuota = decimal.Parse(txtMontoCuota.Text);
             int diaPago = DateTime.Today.Day;
-
             string carpeta = @"C:\Contratos";
+
+            PagoCarnetForm pagoSocio = new PagoCarnetForm(_idSocio, montoCuota, _conexion);
+            
 
             if (!Directory.Exists(carpeta))
                 Directory.CreateDirectory(carpeta);
@@ -44,9 +48,9 @@ namespace ClubDeportivoApp.Formularios
             string ruta = Path.Combine(carpeta, "ContratoSocio.pdf");
 
             GeneradorContrato.GenerarContrato(
-                socio.Nombre,
-                socio.Apellido,
-                socio.Dni,
+                _socio.Nombre,
+                _socio.Apellido,
+                _socio.Dni,
                 montoCuota,
                 diaPago,
                 ruta

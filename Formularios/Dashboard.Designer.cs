@@ -37,6 +37,7 @@ namespace ClubDeportivoApp
             this.btnMorosos = new System.Windows.Forms.Button();
             this.lblUsuario = new System.Windows.Forms.Label();
             this.lblFechaHoy = new System.Windows.Forms.Label();
+            this.btnSalir = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnRegistro
@@ -46,7 +47,7 @@ namespace ClubDeportivoApp
             this.btnRegistro.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.btnRegistro.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRegistro.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.btnRegistro.Location = new System.Drawing.Point(144, 125);
+            this.btnRegistro.Location = new System.Drawing.Point(297, 190);
             this.btnRegistro.MaximumSize = new System.Drawing.Size(580, 57);
             this.btnRegistro.MinimumSize = new System.Drawing.Size(450, 42);
             this.btnRegistro.Name = "btnRegistro";
@@ -60,7 +61,7 @@ namespace ClubDeportivoApp
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(252, 25);
+            this.label2.Location = new System.Drawing.Point(405, 90);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(352, 29);
             this.label2.TabIndex = 4;
@@ -74,7 +75,7 @@ namespace ClubDeportivoApp
             this.btnCarnet.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.btnCarnet.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCarnet.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.btnCarnet.Location = new System.Drawing.Point(144, 196);
+            this.btnCarnet.Location = new System.Drawing.Point(297, 261);
             this.btnCarnet.MaximumSize = new System.Drawing.Size(580, 57);
             this.btnCarnet.MinimumSize = new System.Drawing.Size(450, 42);
             this.btnCarnet.Name = "btnCarnet";
@@ -91,7 +92,7 @@ namespace ClubDeportivoApp
             this.btnPagos.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.btnPagos.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnPagos.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.btnPagos.Location = new System.Drawing.Point(144, 270);
+            this.btnPagos.Location = new System.Drawing.Point(297, 335);
             this.btnPagos.MaximumSize = new System.Drawing.Size(580, 57);
             this.btnPagos.MinimumSize = new System.Drawing.Size(450, 42);
             this.btnPagos.Name = "btnPagos";
@@ -108,7 +109,7 @@ namespace ClubDeportivoApp
             this.btnMorosos.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.btnMorosos.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnMorosos.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.btnMorosos.Location = new System.Drawing.Point(144, 342);
+            this.btnMorosos.Location = new System.Drawing.Point(297, 407);
             this.btnMorosos.MaximumSize = new System.Drawing.Size(580, 57);
             this.btnMorosos.MinimumSize = new System.Drawing.Size(450, 42);
             this.btnMorosos.Name = "btnMorosos";
@@ -122,7 +123,7 @@ namespace ClubDeportivoApp
             // 
             this.lblUsuario.AutoSize = true;
             this.lblUsuario.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUsuario.Location = new System.Drawing.Point(730, 9);
+            this.lblUsuario.Location = new System.Drawing.Point(852, 41);
             this.lblUsuario.Name = "lblUsuario";
             this.lblUsuario.Size = new System.Drawing.Size(88, 18);
             this.lblUsuario.TabIndex = 9;
@@ -132,19 +133,37 @@ namespace ClubDeportivoApp
             // 
             this.lblFechaHoy.AutoSize = true;
             this.lblFechaHoy.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFechaHoy.Location = new System.Drawing.Point(29, 411);
+            this.lblFechaHoy.Location = new System.Drawing.Point(65, 552);
             this.lblFechaHoy.Name = "lblFechaHoy";
             this.lblFechaHoy.Size = new System.Drawing.Size(102, 18);
             this.lblFechaHoy.TabIndex = 15;
             this.lblFechaHoy.Text = "Fecha y hora: ";
+            // 
+            // btnSalir
+            // 
+            this.btnSalir.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(35)))), ((int)(((byte)(142)))));
+            this.btnSalir.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnSalir.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.btnSalir.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSalir.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.btnSalir.Location = new System.Drawing.Point(948, 600);
+            this.btnSalir.MaximumSize = new System.Drawing.Size(180, 57);
+            this.btnSalir.MinimumSize = new System.Drawing.Size(180, 42);
+            this.btnSalir.Name = "btnSalir";
+            this.btnSalir.Size = new System.Drawing.Size(180, 42);
+            this.btnSalir.TabIndex = 16;
+            this.btnSalir.Text = "Salir";
+            this.btnSalir.UseVisualStyleBackColor = false;
+            this.btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
             // 
             // Dashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(235)))), ((int)(((byte)(222)))));
-            this.ClientSize = new System.Drawing.Size(900, 450);
+            this.ClientSize = new System.Drawing.Size(1156, 654);
             this.ControlBox = false;
+            this.Controls.Add(this.btnSalir);
             this.Controls.Add(this.lblFechaHoy);
             this.Controls.Add(this.lblUsuario);
             this.Controls.Add(this.btnMorosos);
@@ -156,6 +175,7 @@ namespace ClubDeportivoApp
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "Dashboard";
             this.Text = "Club Deportivo ";
+            this.Load += new System.EventHandler(this.Dashboard_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -170,5 +190,6 @@ namespace ClubDeportivoApp
         private System.Windows.Forms.Button btnMorosos;
         private Label lblUsuario;
         private Label lblFechaHoy;
+        private Button btnSalir;
     }
 }

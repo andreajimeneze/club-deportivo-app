@@ -9,15 +9,16 @@ namespace ClubDeportivoApp.Forms
 {
     public partial class RegistroClientesForm : Form
     {
-        internal string nombre;
-        internal string apellido;
-        internal string dni;
-        internal RegistroServ servicio;
-        public RegistroClientesForm()
+        private readonly ConexionMySql _conexion;
+        private string nombre;
+        private string apellido;
+        private string dni;
+        private readonly RegistroServ servicio;
+        public RegistroClientesForm(ConexionMySql conexion)
         {
             InitializeComponent();
-            ConexionMySql conexion = new ConexionMySql();
-            RegistroRepo repo = new RegistroRepo(conexion);
+            _conexion = conexion;
+            RegistroRepo repo = new RegistroRepo(_conexion);
             servicio = new RegistroServ(repo);
             lblFechaHoy.Text = $"Fecha y hora: {DateTime.Now.ToString("dd/MM/yyyy HH:mm")}";
         }
@@ -31,19 +32,19 @@ namespace ClubDeportivoApp.Forms
             bool aptoFisico = cbAptoFisico.Checked;
 
             try { 
-               int id = servicio.realizarRegistro(nombre, apellido, dni, aptoFisico, esSocio);
+               int id = servicio.RealizarRegistro(nombre, apellido, dni, aptoFisico, esSocio);
 
                MessageBox.Show("Registro exitoso");
                 if(esSocio)
                 {
                     Cliente socio = new Cliente(nombre, apellido, dni);
-                    InscripcionSocioForm inscripcionSocio = new InscripcionSocioForm(socio, id);
+                    InscripcionSocioForm inscripcionSocio = new InscripcionSocioForm(socio, id, _conexion);
                     inscripcionSocio.Show();
                     this.Close();
                 } else
                 {
                     Cliente noSocio = new Cliente(nombre, apellido, dni);
-                    InscripcionNoSocioForm inscripcionNoSocio = new InscripcionNoSocioForm(noSocio);
+                    InscripcionNoSocioForm inscripcionNoSocio = new InscripcionNoSocioForm(noSocio, _conexion);
                     inscripcionNoSocio.Show();
                     this.Close();
                 }
@@ -56,7 +57,6 @@ namespace ClubDeportivoApp.Forms
 
             
         }
-
 
         private void btnVolver_Click(object sender, EventArgs e)
         {

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace ClubDeportivoApp.Models
 {
-    internal class Cuota 
+    public class Cuota 
     {
         public int Id { get; set; }
         public DateTime FechaVencimiento { get; set; }

@@ -8,15 +8,18 @@ namespace ClubDeportivoApp
 {
     public partial class Dashboard : Form
     {
-        internal Usuario Usuario { get; set; }
-        protected ConexionMySql _conexion;
+        private readonly ConexionMySql _conexion;
+        private readonly Usuario _usuario;
+
 
         public Dashboard() { }
-        public Dashboard(Usuario usuario)
+        public Dashboard(Usuario usuario, ConexionMySql conexion)
         {
+            _usuario = usuario;
+            _conexion = conexion;
             InitializeComponent();
-            this.Usuario = usuario;
-            lblUsuario.Text = $"Bienvenido, {usuario.Username}";
+            // Aplica método por herencia de Persona
+            lblUsuario.Text = $"Bienvenido, {usuario.MostrarNombreCompleto()}";
             lblFechaHoy.Text = $"Fecha y hora: {DateTime.Now.ToString("dd/MM/yyyy HH:mm")}";
         }
 
@@ -24,7 +27,7 @@ namespace ClubDeportivoApp
         private void btnRegistro_Click(object sender, EventArgs e)
         {
 
-            RegistroClientesForm registro = new RegistroClientesForm();
+            RegistroClientesForm registro = new RegistroClientesForm(_conexion);
             this.Hide();
             registro.ShowDialog();
             this.Show();         
@@ -32,7 +35,7 @@ namespace ClubDeportivoApp
 
         private void btnCarnet_Click(object sender, EventArgs e)
         {
-            PagoCarnetForm pagoCarnet = new PagoCarnetForm();
+            PagoCarnetForm pagoCarnet = new PagoCarnetForm(_conexion);
             this.Hide();
             pagoCarnet.ShowDialog();
             this.Show();
@@ -40,7 +43,7 @@ namespace ClubDeportivoApp
 
         private void btnPagos_Click(object sender, EventArgs e)
         {
-            PagosForm pagos = new PagosForm();
+            PagosForm pagos = new PagosForm(_conexion);
             this.Hide();
             pagos.ShowDialog();
             this.Show();
@@ -48,10 +51,20 @@ namespace ClubDeportivoApp
 
         private void btnMorosos_Click(object sender, EventArgs e)
         {
-            VencimientosForm vencimientos = new VencimientosForm();
+            VencimientosForm vencimientos = new VencimientosForm(_conexion);
             this.Hide();
             vencimientos.ShowDialog();
             this.Show();
+        }
+
+        private void Dashboard_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnSalir_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

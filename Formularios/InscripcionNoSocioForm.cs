@@ -9,15 +9,18 @@ namespace ClubDeportivoApp.Formularios
 {
     public partial class InscripcionNoSocioForm : Form
     {
-        private ListadosMaestrosServ servicio;
-        internal Cliente noSocio;
-        public InscripcionNoSocioForm(Cliente noSocio)
+        private readonly ConexionMySql _conexion;
+        private readonly ListadosMaestrosServ servicio;
+        private readonly Cliente _noSocio;
+        public InscripcionNoSocioForm(Cliente noSocio, ConexionMySql conexion)
         {
             InitializeComponent();
-            ConexionMySql conn = new ConexionMySql();
-            ListadosMaestrosRepo repo = new ListadosMaestrosRepo(conn);
+            _noSocio = noSocio;
+            _conexion = conexion;
+           
+            ListadosMaestrosRepo repo = new ListadosMaestrosRepo(_conexion);
             servicio = new ListadosMaestrosServ(repo);
-            this.noSocio = noSocio;
+            
             lblFechaHoy.Text = $"Fecha y hora: {DateTime.Now.ToString("dd/MM/yyyy")}";
         }
 
@@ -46,9 +49,9 @@ namespace ClubDeportivoApp.Formularios
                 Nombre = "Seleccione método"
             });
 
-            cbMetodos.DataSource = lista;
-            cbMetodos.DisplayMember = "Nombre";
-            cbMetodos.ValueMember = "Id";
+            cbMetodosPago.DataSource = lista;
+            cbMetodosPago.DisplayMember = "Nombre";
+            cbMetodosPago.ValueMember = "Id";
         }
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -72,6 +75,11 @@ namespace ClubDeportivoApp.Formularios
         }
 
         private void cbMetodos_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label6_Click(object sender, EventArgs e)
         {
 
         }

@@ -114,6 +114,12 @@
   <ItemGroup>
     <Compile Include="BaseDatos\Conexion.cs" />
     <Compile Include="BaseDatos\ConexionMySql.cs" />
+    <Compile Include="Formularios\AccesoBDForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\AccesoBDForm.Designer.cs">
+      <DependentUpon>AccesoBDForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Formularios\Dashboard.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -191,6 +197,9 @@
     <Compile Include="Servicios\RegistroPagoServ.cs" />
     <Compile Include="Servicios\RegistroServ.cs" />
     <Compile Include="Servicios\LoginServ.cs" />
+    <EmbeddedResource Include="Formularios\AccesoBDForm.resx">
+      <DependentUpon>AccesoBDForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Formularios\Dashboard.resx">
       <DependentUpon>Dashboard.cs</DependentUpon>
     </EmbeddedResource>

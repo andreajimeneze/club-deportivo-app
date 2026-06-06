@@ -12,9 +12,11 @@ namespace ClubDeportivoApp.Formularios
 {
     public partial class PagosForm : Form
     {
-        public PagosForm()
+        private readonly ConexionMySql _conexion;
+        public PagosForm(ConexionMySql conexion)
         {
             InitializeComponent();
+            _conexion = conexion;
         }
 
         private void btnValidarPago_Click(object sender, EventArgs e)

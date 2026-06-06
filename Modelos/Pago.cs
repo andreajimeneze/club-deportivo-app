@@ -3,7 +3,7 @@
 
 namespace ClubDeportivoApp.Models
 {
-    internal class Pago
+    public class Pago
     {
         public int Id { get; set; }
         public DateTime FechaPago { get; set; }

@@ -35,17 +35,19 @@
             this.dtActividad = new System.Windows.Forms.DateTimePicker();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.cbMetodos = new System.Windows.Forms.ComboBox();
+            this.cbMetodosPago = new System.Windows.Forms.ComboBox();
             this.txtpago = new System.Windows.Forms.TextBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.lblFechaHoy = new System.Windows.Forms.Label();
+            this.cbConceptoPago = new System.Windows.Forms.ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // cbActividades
             // 
             this.cbActividades.FormattingEnabled = true;
-            this.cbActividades.Location = new System.Drawing.Point(139, 154);
+            this.cbActividades.Location = new System.Drawing.Point(112, 146);
             this.cbActividades.Name = "cbActividades";
             this.cbActividades.Size = new System.Drawing.Size(214, 24);
             this.cbActividades.TabIndex = 0;
@@ -54,7 +56,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(138, 121);
+            this.label1.Location = new System.Drawing.Point(109, 105);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(145, 16);
             this.label1.TabIndex = 1;
@@ -63,7 +65,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(443, 121);
+            this.label2.Location = new System.Drawing.Point(443, 27);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(148, 16);
             this.label2.TabIndex = 2;
@@ -81,7 +83,7 @@
             // 
             // dtActividad
             // 
-            this.dtActividad.Location = new System.Drawing.Point(446, 156);
+            this.dtActividad.Location = new System.Drawing.Point(446, 62);
             this.dtActividad.Name = "dtActividad";
             this.dtActividad.Size = new System.Drawing.Size(200, 22);
             this.dtActividad.TabIndex = 7;
@@ -89,7 +91,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(138, 223);
+            this.label3.Location = new System.Drawing.Point(109, 190);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(94, 16);
             this.label3.TabIndex = 8;
@@ -98,31 +100,31 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(443, 223);
+            this.label4.Location = new System.Drawing.Point(443, 190);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(108, 16);
             this.label4.TabIndex = 9;
             this.label4.Text = "Método de Pago";
             // 
-            // cbMetodos
+            // cbMetodosPago
             // 
-            this.cbMetodos.FormattingEnabled = true;
-            this.cbMetodos.Location = new System.Drawing.Point(446, 255);
-            this.cbMetodos.Name = "cbMetodos";
-            this.cbMetodos.Size = new System.Drawing.Size(214, 24);
-            this.cbMetodos.TabIndex = 10;
-            this.cbMetodos.SelectedIndexChanged += new System.EventHandler(this.cbMetodos_SelectedIndexChanged);
+            this.cbMetodosPago.FormattingEnabled = true;
+            this.cbMetodosPago.Location = new System.Drawing.Point(446, 221);
+            this.cbMetodosPago.Name = "cbMetodosPago";
+            this.cbMetodosPago.Size = new System.Drawing.Size(214, 24);
+            this.cbMetodosPago.TabIndex = 10;
+            this.cbMetodosPago.SelectedIndexChanged += new System.EventHandler(this.cbMetodos_SelectedIndexChanged);
             // 
             // txtpago
             // 
-            this.txtpago.Location = new System.Drawing.Point(141, 257);
+            this.txtpago.Location = new System.Drawing.Point(112, 223);
             this.txtpago.Name = "txtpago";
             this.txtpago.Size = new System.Drawing.Size(151, 22);
             this.txtpago.TabIndex = 11;
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(134, 62);
+            this.textBox1.Location = new System.Drawing.Point(112, 62);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(151, 22);
             this.textBox1.TabIndex = 13;
@@ -130,7 +132,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(131, 28);
+            this.label5.Location = new System.Drawing.Point(109, 27);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(87, 16);
             this.label5.TabIndex = 12;
@@ -146,16 +148,36 @@
             this.lblFechaHoy.TabIndex = 16;
             this.lblFechaHoy.Text = "Fecha y hora: ";
             // 
+            // cbConceptoPago
+            // 
+            this.cbConceptoPago.FormattingEnabled = true;
+            this.cbConceptoPago.Location = new System.Drawing.Point(446, 146);
+            this.cbConceptoPago.Name = "cbConceptoPago";
+            this.cbConceptoPago.Size = new System.Drawing.Size(214, 24);
+            this.cbConceptoPago.TabIndex = 18;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(443, 105);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(120, 16);
+            this.label6.TabIndex = 17;
+            this.label6.Text = "Concepto de Pago";
+            this.label6.Click += new System.EventHandler(this.label6_Click);
+            // 
             // InscripcionNoSocioForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.cbConceptoPago);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.lblFechaHoy);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.txtpago);
-            this.Controls.Add(this.cbMetodos);
+            this.Controls.Add(this.cbMetodosPago);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.dtActividad);
@@ -180,10 +202,12 @@
         private System.Windows.Forms.DateTimePicker dtActividad;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.ComboBox cbMetodos;
+        private System.Windows.Forms.ComboBox cbMetodosPago;
         private System.Windows.Forms.TextBox txtpago;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label lblFechaHoy;
+        private System.Windows.Forms.ComboBox cbConceptoPago;
+        private System.Windows.Forms.Label label6;
     }
 }

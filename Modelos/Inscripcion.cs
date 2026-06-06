@@ -3,7 +3,7 @@ using System;
 
 namespace ClubDeportivoApp.Models
 {
-    internal class Inscripcion 
+    public class Inscripcion 
     {
         public int Id { get; set; }
         public DateTime FechaInscripcion { get; set; }

@@ -16,7 +16,7 @@ namespace ClubDeportivoApp.Services
             this.repo = repo;
         }
 
-        public int realizarRegistro(string nombre, string apellido, string dni, bool aptoFisico, bool esSocio)
+        public int RealizarRegistro(string nombre, string apellido, string dni, bool aptoFisico, bool esSocio)
         {
             int clienteId = repo.RegistrarCliente(nombre, apellido, dni, aptoFisico);
 

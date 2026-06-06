@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ClubDeportivoApp.Models
 {
-    internal class Socio : Cliente
+    public class Socio : Cliente
     {
         public new int Id { get; set; }
         public bool Estado { get; set; }

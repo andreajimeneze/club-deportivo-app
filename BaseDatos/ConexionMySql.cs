@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace ClubDeportivoApp
 {
@@ -16,15 +17,14 @@ namespace ClubDeportivoApp
 
         public ConexionMySql()
         {
-            cadenaConexion = "Server=" + server +
-                "; Database=" + database + "; Username=" + username
-                + "; Password=" + password;
+
 
 
         }
 
         public MySqlConnection GetMySqlConnection()
         {
+            cadenaConexion = $"Server={Server}; Database={Database}; Username={Username}; Password={Password}";
             try
             {
                 conn = new MySqlConnection(cadenaConexion);

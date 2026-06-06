@@ -1,7 +1,7 @@
 ﻿
 namespace ClubDeportivoApp.Models
 {
-    public class Persona
+    public abstract class Persona
     {
         public int Id { get; set; }
 
@@ -17,6 +17,11 @@ namespace ClubDeportivoApp.Models
             this.Nombre = nombre;
             this.Apellido = apellido;
             this.Dni = dni;
+        }
+
+        public string MostrarNombreCompleto()
+        {
+            return $"{Nombre} {Apellido}";
         }
     }
 }

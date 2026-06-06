@@ -4,6 +4,7 @@ using System;
 
 namespace ClubDeportivoApp.Utilidades
 {
+    //Clase estática
     public static class GeneradorContrato
     {
         public static void GenerarContrato(

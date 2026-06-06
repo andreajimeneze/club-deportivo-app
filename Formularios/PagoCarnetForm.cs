@@ -10,24 +10,30 @@ namespace ClubDeportivoApp.Formularios
 {
     public partial class PagoCarnetForm : Form
     {
-        private ListadosMaestrosServ servicio;
-        private InscripcionSocioServ inscripcionServ;
-        private RegistroPagoServ pagoServ;
-        private int idSocio;
-        private decimal montoCuota;
+        private readonly ConexionMySql _conexion;
+        private readonly ListadosMaestrosServ servicio;
+        private readonly InscripcionSocioServ inscripcionServ;
+        private readonly RegistroPagoServ pagoServ;
+        private readonly int _idSocio;
+        private readonly decimal _montoCuota;
 
-        public PagoCarnetForm() { }
-        public PagoCarnetForm(int idSocio, decimal montoCuota)
+        public PagoCarnetForm(ConexionMySql conexion) 
+        {
+            _conexion = conexion;
+        }
+        public PagoCarnetForm(int idSocio, decimal montoCuota, ConexionMySql conexion)
         {
             InitializeComponent();
-            ConexionMySql conexion = new ConexionMySql();
-            ListadosMaestrosRepo repo = new ListadosMaestrosRepo(conexion);
+            _idSocio = idSocio;
+            _montoCuota = montoCuota;
+            _conexion = conexion;
+
+            ListadosMaestrosRepo repo = new ListadosMaestrosRepo(_conexion);
+            PagosRepo inscripcionRepo = new PagosRepo(_conexion);
             servicio = new ListadosMaestrosServ(repo);
-            PagosRepo inscripcionRepo = new PagosRepo(conexion);
             inscripcionServ = new InscripcionSocioServ(inscripcionRepo);
             pagoServ = new RegistroPagoServ(inscripcionRepo);
-            this.idSocio = idSocio;
-            this.montoCuota = montoCuota;
+
             lblFechaHoy.Text = $"Fecha y hora: {DateTime.Now.ToString("dd/MM/yyyy HH:mm")}";
         }
 
@@ -74,7 +80,7 @@ namespace ClubDeportivoApp.Formularios
             try
             {
            
-                bool result = pagoServ.RegistrarPago(idSocio,  null, montoAPagar, montoCuota, conceptoPagoId, metodoPagoId);
+                bool result = pagoServ.RegistrarPago(_idSocio,  null, montoAPagar, _montoCuota, conceptoPagoId, metodoPagoId);
 
                 if (result)
                 {

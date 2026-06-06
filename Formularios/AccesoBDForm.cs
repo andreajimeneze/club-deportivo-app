@@ -1,0 +1,45 @@
+﻿using MySql.Data.MySqlClient;
+using System;
+using System.Windows.Forms;
+
+namespace ClubDeportivoApp.Formularios
+{
+    public partial class AccesoBDForm : Form
+    {
+        public AccesoBDForm()
+        {
+            InitializeComponent();
+           
+        }
+
+
+        private void btnIngresar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                ConexionMySql conexion = new ConexionMySql();
+                conexion.Server = txtServidor.Text.Trim();
+                conexion.Database = txtBD.Text.Trim();
+                conexion.Username = txtUsuario.Text.Trim();
+                conexion.Password = txtPass.Text.Trim();
+
+                MySqlConnection conn = conexion.GetMySqlConnection();
+
+                
+                if(conn == null)
+                {
+                    MessageBox.Show("No se estableció la conexión");
+                    return;
+                }
+
+
+                this.Hide();
+                LoginForm login = new LoginForm(conexion);
+                login.Show();
+            } catch(Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+    }
+}
