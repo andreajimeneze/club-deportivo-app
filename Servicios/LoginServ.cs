@@ -18,6 +18,10 @@ namespace ClubDeportivoApp.Services
         }
         public Usuario Login(string username, string password)
         { 
+            if(username == null || password == null)
+            {
+                return null;
+            }
             Usuario usuario = repository.LoguearUsuario(username, password);
 
             if (usuario == null)

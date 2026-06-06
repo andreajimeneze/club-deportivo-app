@@ -43,6 +43,12 @@ namespace ClubDeportivoApp
         // Al tercer intento fallido, se envía mensaje de máximo de intentos y la pantalla login se cierra.
         private void btnLogin_click(object sender, EventArgs e)
         {
+            if(txtUsername.Text == "" || txtPassword.Text == "")
+            {
+                MessageBox.Show("Debe completar ambos campos para poder acceder a la app");
+                return;
+            }
+
             string username = txtUsername.Text.Trim();
             string password = txtPassword.Text.Trim();
 
