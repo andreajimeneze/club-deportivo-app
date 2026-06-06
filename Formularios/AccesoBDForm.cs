@@ -15,6 +15,12 @@ namespace ClubDeportivoApp.Formularios
 
         private void btnIngresar_Click(object sender, EventArgs e)
         {
+            if(txtServidor.Text == "" || txtBD.Text == "" || txtUsuario.Text == "" || txtPass.Text == "")
+            {
+                MessageBox.Show("Debe completar todos los campos para poder acceder a la base de datos");
+                return;
+            }
+
             try
             {
                 ConexionMySql conexion = new ConexionMySql();
@@ -22,6 +28,8 @@ namespace ClubDeportivoApp.Formularios
                 conexion.Database = txtBD.Text.Trim();
                 conexion.Username = txtUsuario.Text.Trim();
                 conexion.Password = txtPass.Text.Trim();
+
+                
 
                 MySqlConnection conn = conexion.GetMySqlConnection();
 

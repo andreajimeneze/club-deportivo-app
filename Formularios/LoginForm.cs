@@ -24,7 +24,6 @@ namespace ClubDeportivoApp
         // De esta forma se implementa la inyección de dependencias entre capas.
         public LoginForm(ConexionMySql conexion)
         {
-            MessageBox.Show("Entré a LoginForm");
             _conexion = conexion;
             InitializeComponent();          
             LoginRepo repository = new LoginRepo(conexion);

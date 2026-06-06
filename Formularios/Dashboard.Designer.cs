@@ -122,26 +122,26 @@ namespace ClubDeportivoApp
             // lblUsuario
             // 
             this.lblUsuario.AutoSize = true;
-            this.lblUsuario.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUsuario.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblUsuario.Location = new System.Drawing.Point(852, 41);
             this.lblUsuario.Name = "lblUsuario";
-            this.lblUsuario.Size = new System.Drawing.Size(88, 18);
+            this.lblUsuario.Size = new System.Drawing.Size(100, 20);
             this.lblUsuario.TabIndex = 9;
             this.lblUsuario.Text = "Bienvenido, ";
             // 
             // lblFechaHoy
             // 
             this.lblFechaHoy.AutoSize = true;
-            this.lblFechaHoy.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblFechaHoy.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblFechaHoy.Location = new System.Drawing.Point(65, 552);
             this.lblFechaHoy.Name = "lblFechaHoy";
-            this.lblFechaHoy.Size = new System.Drawing.Size(102, 18);
+            this.lblFechaHoy.Size = new System.Drawing.Size(116, 20);
             this.lblFechaHoy.TabIndex = 15;
             this.lblFechaHoy.Text = "Fecha y hora: ";
             // 
             // btnSalir
             // 
-            this.btnSalir.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(35)))), ((int)(((byte)(142)))));
+            this.btnSalir.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(195)))), ((int)(((byte)(32)))), ((int)(((byte)(23)))));
             this.btnSalir.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnSalir.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.btnSalir.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
