@@ -24,5 +24,15 @@ namespace ClubDeportivoApp.Models
                     $"Apellido: {Apellido} " +
                     $"Dni: {Dni}";
         }
+
+        public override void VerificarAptoFisico()
+        {
+            base.VerificarAptoFisico();
+
+            if(!AptoFisico)
+            {
+                Estado = false;
+            }
+        }
     }
 }

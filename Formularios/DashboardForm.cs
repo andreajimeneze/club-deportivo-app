@@ -6,20 +6,18 @@ using System.Windows.Forms;
 
 namespace ClubDeportivoApp
 {
-    public partial class Dashboard : Form
+    public partial class DashboardForm : Form
     {
         private readonly ConexionMySql _conexion;
         private readonly Usuario _usuario;
 
-
-        public Dashboard() { }
-        public Dashboard(Usuario usuario, ConexionMySql conexion)
+        public DashboardForm(Usuario usuario, ConexionMySql conexion)
         {
             _usuario = usuario;
             _conexion = conexion;
             InitializeComponent();
             // Aplica método por herencia de Persona
-            lblUsuario.Text = $"Bienvenido, {usuario.MostrarNombreCompleto()}";
+            lblUsuario.Text = $"Bienvenido, {usuario.MostrarNombreCompleto()} ({usuario.Rol.Nombre})";
             lblFechaHoy.Text = $"Fecha y hora: {DateTime.Now.ToString("dd/MM/yyyy HH:mm")}";
         }
 
@@ -63,6 +61,16 @@ namespace ClubDeportivoApp
         }
 
         private void btnSalir_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void btnMinimizar_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
+        }
+
+        private void btnCerrar_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }

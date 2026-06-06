@@ -52,7 +52,7 @@ namespace ClubDeportivoApp.Utilidades
 
                             col.Item().Text(
                                 "Si a la fecha de vencimiento no ha cancelado la cuota, quedará inactivo y no podrá acceder" +
-                                "a ninguna actividad hasta ponerse al día."
+                                " a ninguna actividad hasta pagar la cuota correspondiente."
                             );
 
                             col.Item().Text(

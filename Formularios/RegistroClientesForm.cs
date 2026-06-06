@@ -25,6 +25,26 @@ namespace ClubDeportivoApp.Forms
   
         private void btnAceptar_Click(object sender, EventArgs e)
         {
+            if(txtNombre.Text == "" || txtApellido.Text == "" || txtDni.Text == "")
+            {
+                MessageBox.Show("Debe completar todos los campos para poder realizar el registro");
+                return;
+            }
+
+            if (!rbSocio.Checked && !rbNoSocio.Checked)
+            {
+                MessageBox.Show(
+                    "Debe seleccionar si el cliente será socio o no socio."
+                );
+
+                return;
+            }
+
+            if (cbAptoFisico == null )
+            {
+                MessageBox.Show("No puede acceder a los servicios hasta que no presente el documento");
+            }
+
             nombre = txtNombre.Text.Trim();
             apellido = txtApellido.Text.Trim();
             dni = txtDni.Text.Trim();
@@ -39,8 +59,9 @@ namespace ClubDeportivoApp.Forms
                 {
                     Cliente socio = new Cliente(nombre, apellido, dni);
                     InscripcionSocioForm inscripcionSocio = new InscripcionSocioForm(socio, id, _conexion);
-                    inscripcionSocio.Show();
-                    this.Close();
+                    this.Hide();
+                    inscripcionSocio.ShowDialog();
+                    this.Show();
                 } else
                 {
                     Cliente noSocio = new Cliente(nombre, apellido, dni);
@@ -61,6 +82,16 @@ namespace ClubDeportivoApp.Forms
         private void btnVolver_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void btnMinimizar_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
+        }
+
+        private void btnCerrar_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

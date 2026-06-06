@@ -29,7 +29,7 @@ namespace ClubDeportivoApp.Services
                 return null;
             }
 
-            if (usuario.RolId != 1)
+            if (usuario.Rol.Nombre != "admin")
             {
                 return null;
             }

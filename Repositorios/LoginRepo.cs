@@ -62,6 +62,7 @@ namespace ClubDeportivoApp.Repositories
                         if (reader.Read())
                         {
                             usuario = new Usuario();
+                            usuario.Rol = new Rol();
 
                             usuario.Id =
                                 reader.GetInt32("id");
@@ -69,8 +70,8 @@ namespace ClubDeportivoApp.Repositories
                             usuario.Username =
                                 reader.GetString("username");
 
-                            usuario.RolId =
-                                reader.GetInt32("rol_id");
+                            //usuario.Rol.Id =
+                            //    reader.GetInt32("rol_id");
 
                             usuario.Activo =
                                 reader.GetBoolean("activo");
@@ -79,6 +80,8 @@ namespace ClubDeportivoApp.Repositories
 
                             usuario.Apellido =
                                 reader.GetString("apellido");
+
+                            usuario.Rol.Nombre = reader.GetString("rol");
                         }
                     }
                 }

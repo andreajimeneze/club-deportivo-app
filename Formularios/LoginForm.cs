@@ -56,7 +56,7 @@ namespace ClubDeportivoApp
 
             if(usuario != null)
             {
-                Dashboard dashboard = new Dashboard(usuario, _conexion);
+                DashboardForm dashboard = new DashboardForm(usuario, _conexion);
                 dashboard.Show();
                 this.Hide();
             }
@@ -79,6 +79,16 @@ namespace ClubDeportivoApp
             }
 
 
+        }
+
+        private void btnCerrar_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void btnMinimizar_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
         }
     }
 }

@@ -1,4 +1,6 @@
 ﻿
+using System;
+
 namespace ClubDeportivoApp.Models
 {
     public class Cliente : Persona
@@ -18,5 +20,12 @@ namespace ClubDeportivoApp.Models
             return $"{Apellido}, {Nombre}, {Dni}";
         }
 
+        public virtual void VerificarAptoFisico()
+        {
+            if (!AptoFisico)
+            {
+                Console.WriteLine("Cliente sin apto físico.");
+            }
+        }
     }
 }

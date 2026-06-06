@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(VencimientosForm));
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -42,8 +43,16 @@
             this.button3 = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.panelLogin = new System.Windows.Forms.Panel();
+            this.btnMinimizar = new System.Windows.Forms.Button();
+            this.btnCerrar = new System.Windows.Forms.Button();
+            this.lblFechaHoy = new System.Windows.Forms.Label();
+            this.btnVolver = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataSet1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.panelLogin.SuspendLayout();
             this.SuspendLayout();
             // 
             // dataGridView1
@@ -56,11 +65,11 @@
             this.cuota,
             this.vencimiento,
             this.estado});
-            this.dataGridView1.Location = new System.Drawing.Point(0, 278);
+            this.dataGridView1.Location = new System.Drawing.Point(35, 412);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(820, 125);
+            this.dataGridView1.Size = new System.Drawing.Size(1130, 283);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
@@ -109,11 +118,12 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(342, 37);
+            this.label1.Location = new System.Drawing.Point(529, 227);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(44, 16);
             this.label1.TabIndex = 1;
             this.label1.Text = "label1";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // dataSet1
             // 
@@ -121,7 +131,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(41, 201);
+            this.button1.Location = new System.Drawing.Point(282, 291);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(133, 38);
             this.button1.TabIndex = 2;
@@ -130,7 +140,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(280, 201);
+            this.button2.Location = new System.Drawing.Point(521, 291);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(133, 38);
             this.button2.TabIndex = 3;
@@ -139,7 +149,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(461, 201);
+            this.button3.Location = new System.Drawing.Point(702, 291);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(133, 38);
             this.button3.TabIndex = 4;
@@ -149,7 +159,7 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(24, 154);
+            this.textBox1.Location = new System.Drawing.Point(265, 244);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(189, 22);
             this.textBox1.TabIndex = 5;
@@ -157,17 +167,97 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(21, 121);
+            this.label2.Location = new System.Drawing.Point(262, 211);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(44, 16);
             this.label2.TabIndex = 6;
             this.label2.Text = "label2";
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(1, 2);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(226, 218);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 21;
+            this.pictureBox1.TabStop = false;
+            // 
+            // panelLogin
+            // 
+            this.panelLogin.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.panelLogin.Controls.Add(this.btnMinimizar);
+            this.panelLogin.Controls.Add(this.btnCerrar);
+            this.panelLogin.Location = new System.Drawing.Point(1, 5);
+            this.panelLogin.Name = "panelLogin";
+            this.panelLogin.Size = new System.Drawing.Size(1199, 50);
+            this.panelLogin.TabIndex = 20;
+            // 
+            // btnMinimizar
+            // 
+            this.btnMinimizar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(250)))), ((int)(((byte)(200)))));
+            this.btnMinimizar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnMinimizar.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnMinimizar.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.btnMinimizar.Location = new System.Drawing.Point(1101, -3);
+            this.btnMinimizar.MaximumSize = new System.Drawing.Size(50, 50);
+            this.btnMinimizar.MinimumSize = new System.Drawing.Size(50, 50);
+            this.btnMinimizar.Name = "btnMinimizar";
+            this.btnMinimizar.Size = new System.Drawing.Size(50, 50);
+            this.btnMinimizar.TabIndex = 6;
+            this.btnMinimizar.Text = "-";
+            this.btnMinimizar.UseVisualStyleBackColor = false;
+            // 
+            // btnCerrar
+            // 
+            this.btnCerrar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(250)))), ((int)(((byte)(200)))));
+            this.btnCerrar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnCerrar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCerrar.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.btnCerrar.Location = new System.Drawing.Point(1146, -3);
+            this.btnCerrar.MaximumSize = new System.Drawing.Size(50, 50);
+            this.btnCerrar.MinimumSize = new System.Drawing.Size(50, 50);
+            this.btnCerrar.Name = "btnCerrar";
+            this.btnCerrar.Size = new System.Drawing.Size(50, 50);
+            this.btnCerrar.TabIndex = 5;
+            this.btnCerrar.Text = "X";
+            this.btnCerrar.UseVisualStyleBackColor = false;
+            // 
+            // lblFechaHoy
+            // 
+            this.lblFechaHoy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblFechaHoy.AutoSize = true;
+            this.lblFechaHoy.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblFechaHoy.Location = new System.Drawing.Point(55, 748);
+            this.lblFechaHoy.Name = "lblFechaHoy";
+            this.lblFechaHoy.Size = new System.Drawing.Size(116, 20);
+            this.lblFechaHoy.TabIndex = 19;
+            this.lblFechaHoy.Text = "Fecha y hora: ";
+            // 
+            // btnVolver
+            // 
+            this.btnVolver.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnVolver.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.btnVolver.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnVolver.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.btnVolver.Location = new System.Drawing.Point(1017, 729);
+            this.btnVolver.Margin = new System.Windows.Forms.Padding(5);
+            this.btnVolver.Name = "btnVolver";
+            this.btnVolver.Size = new System.Drawing.Size(153, 58);
+            this.btnVolver.TabIndex = 18;
+            this.btnVolver.Text = "<- VOLVER";
+            this.btnVolver.UseVisualStyleBackColor = false;
+            // 
             // VencimientosForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(881, 515);
+            this.ClientSize = new System.Drawing.Size(1200, 800);
+            this.ControlBox = false;
+            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.panelLogin);
+            this.Controls.Add(this.lblFechaHoy);
+            this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.button3);
@@ -175,10 +265,13 @@
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.dataGridView1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "VencimientosForm";
             this.Text = "VencimientosForm";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataSet1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.panelLogin.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -200,5 +293,11 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Panel panelLogin;
+        private System.Windows.Forms.Button btnMinimizar;
+        private System.Windows.Forms.Button btnCerrar;
+        private System.Windows.Forms.Label lblFechaHoy;
+        private System.Windows.Forms.Button btnVolver;
     }
 }

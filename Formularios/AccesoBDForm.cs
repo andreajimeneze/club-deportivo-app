@@ -36,7 +36,7 @@ namespace ClubDeportivoApp.Formularios
                 
                 if(conn == null)
                 {
-                    MessageBox.Show("No se estableció la conexión");
+                    MessageBox.Show("Error de datos. No se estableció la conexión");
                     return;
                 }
 
@@ -48,6 +48,26 @@ namespace ClubDeportivoApp.Formularios
             {
                 MessageBox.Show(ex.ToString());
             }
+        }
+
+        private void btnMinimizar_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
+        }
+
+        private void btnCerrar_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void AccesoBDForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

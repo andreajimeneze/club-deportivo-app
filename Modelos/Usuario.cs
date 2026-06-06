@@ -11,7 +11,7 @@ namespace ClubDeportivoApp.Models
         public new int Id { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
-        public int RolId { get; set; }
+        public Rol Rol { get; set; }
         public bool Activo { get; set; }
 
         public Usuario() { }
@@ -21,10 +21,10 @@ namespace ClubDeportivoApp.Models
         {
         }
 
-        public Usuario(string username, int rolId)
+        public Usuario(string username, Rol rol)
         {
-            this.Username = username;
-            this.RolId = rolId;
+            Username = username;
+            Rol = rol;
         }
     }
 }

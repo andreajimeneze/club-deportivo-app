@@ -13,5 +13,14 @@ namespace ClubDeportivoApp.Models
         {
             accesoDiario = false;
         }
+
+        public override void VerificarAptoFisico()
+        {
+            base.VerificarAptoFisico();
+            if(!AptoFisico)
+            {
+                accesoDiario = false;
+            }
+        }
     }
 }
