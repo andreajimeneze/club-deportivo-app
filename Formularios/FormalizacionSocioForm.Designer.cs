@@ -1,6 +1,6 @@
 ﻿namespace ClubDeportivoApp.Formularios
 {
-    partial class InscripcionSocioForm
+    partial class FormalizacionSocioForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InscripcionSocioForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormalizacionSocioForm));
             this.txtMontoCuota = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -46,6 +46,7 @@
             this.lblFechaHoy = new System.Windows.Forms.Label();
             this.btnImprimir = new System.Windows.Forms.Button();
             this.btnVolver = new System.Windows.Forms.Button();
+            this.btnAceptarContrato = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panelLogin.SuspendLayout();
             this.SuspendLayout();
@@ -217,12 +218,13 @@
             this.btnImprimir.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(48)))), ((int)(((byte)(144)))));
             this.btnImprimir.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnImprimir.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.btnImprimir.Location = new System.Drawing.Point(485, 578);
+            this.btnImprimir.Location = new System.Drawing.Point(267, 558);
             this.btnImprimir.Name = "btnImprimir";
             this.btnImprimir.Size = new System.Drawing.Size(241, 75);
             this.btnImprimir.TabIndex = 22;
-            this.btnImprimir.Text = "IMPRIMIR";
+            this.btnImprimir.Text = "IMPRIMIR CONTRATO";
             this.btnImprimir.UseVisualStyleBackColor = false;
+            this.btnImprimir.Click += new System.EventHandler(this.btnImprimir_Click);
             // 
             // btnVolver
             // 
@@ -239,13 +241,28 @@
             this.btnVolver.UseVisualStyleBackColor = false;
             this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
             // 
-            // InscripcionSocioForm
+            // btnAceptarContrato
+            // 
+            this.btnAceptarContrato.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.btnAceptarContrato.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(48)))), ((int)(((byte)(144)))));
+            this.btnAceptarContrato.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAceptarContrato.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.btnAceptarContrato.Location = new System.Drawing.Point(678, 558);
+            this.btnAceptarContrato.Name = "btnAceptarContrato";
+            this.btnAceptarContrato.Size = new System.Drawing.Size(241, 75);
+            this.btnAceptarContrato.TabIndex = 25;
+            this.btnAceptarContrato.Text = "ACEPTAR CONTRATO";
+            this.btnAceptarContrato.UseVisualStyleBackColor = false;
+            this.btnAceptarContrato.Click += new System.EventHandler(this.btnAceptarContrato_Click);
+            // 
+            // FormalizacionSocioForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(250)))), ((int)(((byte)(200)))));
             this.ClientSize = new System.Drawing.Size(1200, 800);
             this.ControlBox = false;
+            this.Controls.Add(this.btnAceptarContrato);
             this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.lblFechaHoy);
             this.Controls.Add(this.btnImprimir);
@@ -262,7 +279,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtMontoCuota);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "InscripcionSocioForm";
+            this.Name = "FormalizacionSocioForm";
             this.Text = "InscripcionForm";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panelLogin.ResumeLayout(false);
@@ -290,5 +307,6 @@
         private System.Windows.Forms.Label lblFechaHoy;
         private System.Windows.Forms.Button btnImprimir;
         private System.Windows.Forms.Button btnVolver;
+        private System.Windows.Forms.Button btnAceptarContrato;
     }
 }

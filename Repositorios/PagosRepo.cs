@@ -1,11 +1,12 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Data;
+using System.Windows.Forms;
 
 
 namespace ClubDeportivoApp.Repositorios
 {
-    internal class PagosRepo
+    public class PagosRepo
     {
         private readonly ConexionMySql _conexionDatabase;
 
@@ -42,15 +43,17 @@ namespace ClubDeportivoApp.Repositorios
                 throw new Exception("Error repo inscripción: " + ex.Message, ex);
             }
         }
-
         public int RegistrarPago(int ? socioId, int ? noSocioId, decimal montoAPagar, int conceptoPago, int medioPago )
         {
+            
             try
             {
                 using (MySqlConnection conn = _conexionDatabase.GetMySqlConnection())
                 {
+                  
                     using (MySqlCommand cmd = new MySqlCommand("RegistrarPago", conn))
                     {
+                      
                         cmd.CommandType = CommandType.StoredProcedure;
 
                         cmd.Parameters.AddWithValue("p_socio_id", socioId.HasValue ? (object)socioId.Value : DBNull.Value);
@@ -63,8 +66,11 @@ namespace ClubDeportivoApp.Repositorios
 
                         rtaParameter.Direction = ParameterDirection.Output;
                         cmd.Parameters.Add(rtaParameter);
-
+                       
                         cmd.ExecuteNonQuery();
+                        if (rtaParameter.Value == null || rtaParameter.Value == DBNull.Value)
+                            return -1;
+                        MessageBox.Show(rtaParameter.Value?.ToString() ?? "NULL");
                         return Convert.ToInt32(rtaParameter.Value);
                     }
                 }

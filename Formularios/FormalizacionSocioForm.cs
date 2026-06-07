@@ -1,4 +1,5 @@
-﻿using ClubDeportivoApp.Models;
+﻿using ClubDeportivoApp.Forms;
+using ClubDeportivoApp.Models;
 using ClubDeportivoApp.Repositorios;
 using ClubDeportivoApp.Servicios;
 using ClubDeportivoApp.Utilidades;
@@ -9,14 +10,15 @@ using System.Windows.Forms;
 
 namespace ClubDeportivoApp.Formularios
 {
-    public partial class InscripcionSocioForm : Form
+    public partial class FormalizacionSocioForm : Form
     {
         private readonly ConexionMySql _conexion;
         private readonly Cliente _socio;
-        private readonly int _idSocio;
         private decimal montoCuota;
-        internal InscripcionSocioServ serv;
-        public InscripcionSocioForm(Cliente socio, int idSocio, ConexionMySql conexion)
+        private int _idSocio;
+     
+        private readonly InscripcionSocioServ servicio;
+        public FormalizacionSocioForm(Cliente socio, int idSocio, ConexionMySql conexion)
         {
             InitializeComponent();
             _socio = socio;
@@ -24,8 +26,8 @@ namespace ClubDeportivoApp.Formularios
             _conexion = conexion;
 
             PagosRepo repo = new PagosRepo(_conexion);
-            serv = new InscripcionSocioServ(repo);
-           
+            servicio = new InscripcionSocioServ(repo);
+
             lblNombre.Text = socio.Nombre;
             lblApellido.Text = socio.Apellido;
             lblDni.Text = socio.Dni;
@@ -37,10 +39,7 @@ namespace ClubDeportivoApp.Formularios
         {
             montoCuota = decimal.Parse(txtMontoCuota.Text);
             int diaPago = DateTime.Today.Day;
-            string carpeta = @"C:\Contratos";
-
-            PagoCarnetForm pagoSocio = new PagoCarnetForm(_idSocio, montoCuota, _conexion);
-            
+            string carpeta = @"C:\Contratos";        
 
             if (!Directory.Exists(carpeta))
                 Directory.CreateDirectory(carpeta);
@@ -61,15 +60,13 @@ namespace ClubDeportivoApp.Formularios
                 FileName = ruta,
                 UseShellExecute = true
             });
-
-            pagoSocio.Show();
-            this.Close();
         }
-
 
         private void btnCerrar_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            DashboardForm dashboard = new DashboardForm();
+            this.Close();
+            dashboard.Show();
         }
 
         private void btnMinimizar_Click(object sender, EventArgs e)
@@ -79,7 +76,19 @@ namespace ClubDeportivoApp.Formularios
 
         private void btnVolver_Click(object sender, EventArgs e)
         {
+            RegistroClientesForm registroClientes = new RegistroClientesForm(_conexion);
+            this.Hide();
+            registroClientes.ShowDialog();
+            this.Close();
+        }
 
+        private void btnAceptarContrato_Click(object sender, EventArgs e)
+        {
+            servicio.FormalizarSocio(_idSocio, montoCuota);
+            PagoSocioForm pagoSocio = new PagoSocioForm(_conexion);
+
+            pagoSocio.Show();
+            this.Close();
         }
     }
 }

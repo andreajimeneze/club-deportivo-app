@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SeleccionPagoForm));
-            this.btnAceptar = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnNoSocio = new System.Windows.Forms.Button();
+            this.btnSocio = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panelLogin = new System.Windows.Forms.Panel();
             this.btnMinimizar = new System.Windows.Forms.Button();
@@ -42,38 +42,38 @@
             this.panelLogin.SuspendLayout();
             this.SuspendLayout();
             // 
-            // btnAceptar
+            // btnNoSocio
             // 
-            this.btnAceptar.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.btnAceptar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(48)))), ((int)(((byte)(144)))));
-            this.btnAceptar.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAceptar.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.btnAceptar.Location = new System.Drawing.Point(606, 342);
-            this.btnAceptar.Name = "btnAceptar";
-            this.btnAceptar.Size = new System.Drawing.Size(359, 75);
-            this.btnAceptar.TabIndex = 8;
-            this.btnAceptar.Text = "NO SOCIO";
-            this.btnAceptar.UseVisualStyleBackColor = false;
-            this.btnAceptar.Click += new System.EventHandler(this.btnAceptar_Click);
+            this.btnNoSocio.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.btnNoSocio.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(48)))), ((int)(((byte)(144)))));
+            this.btnNoSocio.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnNoSocio.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.btnNoSocio.Location = new System.Drawing.Point(604, 326);
+            this.btnNoSocio.Name = "btnNoSocio";
+            this.btnNoSocio.Size = new System.Drawing.Size(359, 75);
+            this.btnNoSocio.TabIndex = 8;
+            this.btnNoSocio.Text = "NO SOCIO";
+            this.btnNoSocio.UseVisualStyleBackColor = false;
+            this.btnNoSocio.Click += new System.EventHandler(this.btnNoSocio_Click);
             // 
-            // button1
+            // btnSocio
             // 
-            this.button1.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(250)))), ((int)(((byte)(200)))));
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.ForeColor = System.Drawing.Color.Black;
-            this.button1.Location = new System.Drawing.Point(189, 339);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(359, 75);
-            this.button1.TabIndex = 9;
-            this.button1.Text = "SOCIO";
-            this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btnSocio.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.btnSocio.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(250)))), ((int)(((byte)(200)))));
+            this.btnSocio.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSocio.ForeColor = System.Drawing.Color.Black;
+            this.btnSocio.Location = new System.Drawing.Point(187, 323);
+            this.btnSocio.Name = "btnSocio";
+            this.btnSocio.Size = new System.Drawing.Size(359, 75);
+            this.btnSocio.TabIndex = 9;
+            this.btnSocio.Text = "SOCIO";
+            this.btnSocio.UseVisualStyleBackColor = false;
+            this.btnSocio.Click += new System.EventHandler(this.btnSocio_Click);
             // 
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(453, 463);
+            this.pictureBox1.Location = new System.Drawing.Point(468, 442);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(226, 218);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -141,12 +141,11 @@
             this.lblFechaHoy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblFechaHoy.AutoSize = true;
             this.lblFechaHoy.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFechaHoy.Location = new System.Drawing.Point(36, 685);
+            this.lblFechaHoy.Location = new System.Drawing.Point(36, 732);
             this.lblFechaHoy.Name = "lblFechaHoy";
             this.lblFechaHoy.Size = new System.Drawing.Size(116, 20);
             this.lblFechaHoy.TabIndex = 22;
             this.lblFechaHoy.Text = "Fecha y hora: ";
-            this.lblFechaHoy.Click += new System.EventHandler(this.lblFechaHoy_Click);
             // 
             // btnVolver
             // 
@@ -154,7 +153,7 @@
             this.btnVolver.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.btnVolver.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnVolver.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.btnVolver.Location = new System.Drawing.Point(998, 666);
+            this.btnVolver.Location = new System.Drawing.Point(1016, 666);
             this.btnVolver.Margin = new System.Windows.Forms.Padding(5);
             this.btnVolver.Name = "btnVolver";
             this.btnVolver.Size = new System.Drawing.Size(153, 58);
@@ -168,17 +167,18 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(183)))), ((int)(((byte)(226)))), ((int)(((byte)(224)))));
-            this.ClientSize = new System.Drawing.Size(1182, 753);
+            this.ClientSize = new System.Drawing.Size(1200, 800);
             this.ControlBox = false;
             this.Controls.Add(this.lblFechaHoy);
             this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.panelLogin);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.btnAceptar);
+            this.Controls.Add(this.btnSocio);
+            this.Controls.Add(this.btnNoSocio);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "SeleccionPagoForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SeleccionPagoForm";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panelLogin.ResumeLayout(false);
@@ -189,8 +189,8 @@
 
         #endregion
 
-        private System.Windows.Forms.Button btnAceptar;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnNoSocio;
+        private System.Windows.Forms.Button btnSocio;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Panel panelLogin;
         private System.Windows.Forms.Button btnMinimizar;

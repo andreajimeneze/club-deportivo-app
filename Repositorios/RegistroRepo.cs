@@ -5,7 +5,7 @@ using System.Data;
 
 namespace ClubDeportivoApp.Repositories
 {
-    internal class RegistroRepo : IRegistro
+    public class RegistroRepo : IRegistro
     {
         // Atributo de la clase. Necesario para la conexión a la DB
         private readonly ConexionMySql _conexionDatabase;

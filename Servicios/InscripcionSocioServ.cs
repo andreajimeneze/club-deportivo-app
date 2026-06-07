@@ -14,11 +14,11 @@ namespace ClubDeportivoApp.Servicios
             this.repo = repo;
         }
 
-        public bool FormalizarSocio(int socioId, decimal montoCuota, decimal montoAPagar)
+        public bool FormalizarSocio(int socioId, decimal montoCuota)
         {
             try
             {
-                if (socioId <= 0 || montoCuota <= 0 || montoAPagar < montoCuota)
+                if (socioId <= 0 || montoCuota <= 0)
                 {
                     return false;
                 }

@@ -114,6 +114,7 @@
   <ItemGroup>
     <Compile Include="BaseDatos\Conexion.cs" />
     <Compile Include="BaseDatos\ConexionMySql.cs" />
+    <Compile Include="DTOS\CuotaPendienteDTO.cs" />
     <Compile Include="Formularios\AccesoBDForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -126,29 +127,23 @@
     <Compile Include="Formularios\DashboardForm.Designer.cs">
       <DependentUpon>DashboardForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Formularios\InscripcionSocioForm.cs">
+    <Compile Include="Formularios\FormalizacionSocioForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formularios\InscripcionSocioForm.Designer.cs">
-      <DependentUpon>InscripcionSocioForm.cs</DependentUpon>
+    <Compile Include="Formularios\FormalizacionSocioForm.Designer.cs">
+      <DependentUpon>FormalizacionSocioForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Formularios\InscripcionNoSocioForm.cs">
+    <Compile Include="Formularios\PagoActividadForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formularios\InscripcionNoSocioForm.Designer.cs">
-      <DependentUpon>InscripcionNoSocioForm.cs</DependentUpon>
+    <Compile Include="Formularios\PagoActividadForm.Designer.cs">
+      <DependentUpon>PagoActividadForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Formularios\PagoCarnetForm.cs">
+    <Compile Include="Formularios\PagoSocioForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formularios\PagoCarnetForm.Designer.cs">
-      <DependentUpon>PagoCarnetForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Formularios\PagosForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Formularios\PagosForm.Designer.cs">
-      <DependentUpon>PagosForm.cs</DependentUpon>
+    <Compile Include="Formularios\PagoSocioForm.Designer.cs">
+      <DependentUpon>PagoSocioForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Formularios\RegistroClientesForm.cs">
       <SubType>Form</SubType>
@@ -198,28 +193,27 @@
     <Compile Include="Repositorios\ListadosMaestrosRepo.cs" />
     <Compile Include="Repositorios\RegistroRepo.cs" />
     <Compile Include="Repositorios\LoginRepo.cs" />
+    <Compile Include="Repositorios\SocioRepo.cs" />
     <Compile Include="Servicios\InscripcionSocioServ.cs" />
     <Compile Include="Servicios\ListadosMaestrosServ.cs" />
-    <Compile Include="Servicios\RegistroPagoServ.cs" />
+    <Compile Include="Servicios\PagoServ.cs" />
     <Compile Include="Servicios\RegistroServ.cs" />
     <Compile Include="Servicios\LoginServ.cs" />
+    <Compile Include="Servicios\SocioServ.cs" />
     <EmbeddedResource Include="Formularios\AccesoBDForm.resx">
       <DependentUpon>AccesoBDForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\DashboardForm.resx">
       <DependentUpon>DashboardForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\InscripcionSocioForm.resx">
-      <DependentUpon>InscripcionSocioForm.cs</DependentUpon>
+    <EmbeddedResource Include="Formularios\FormalizacionSocioForm.resx">
+      <DependentUpon>FormalizacionSocioForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\InscripcionNoSocioForm.resx">
-      <DependentUpon>InscripcionNoSocioForm.cs</DependentUpon>
+    <EmbeddedResource Include="Formularios\PagoActividadForm.resx">
+      <DependentUpon>PagoActividadForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\PagoCarnetForm.resx">
-      <DependentUpon>PagoCarnetForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Formularios\PagosForm.resx">
-      <DependentUpon>PagosForm.cs</DependentUpon>
+    <EmbeddedResource Include="Formularios\PagoSocioForm.resx">
+      <DependentUpon>PagoSocioForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\RegistroClientesForm.resx">
       <DependentUpon>RegistroClientesForm.cs</DependentUpon>

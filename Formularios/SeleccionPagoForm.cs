@@ -1,51 +1,45 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ClubDeportivoApp.Formularios
 {
     public partial class SeleccionPagoForm : Form
     {
-        public SeleccionPagoForm()
+        private readonly ConexionMySql _conexion;
+        public SeleccionPagoForm(ConexionMySql conexion)
         {
+            _conexion = conexion;
             InitializeComponent();
             lblFechaHoy.Text = $"Fecha y hora: {DateTime.Now.ToString("dd/MM/yyyy HH:mm")}";
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnSocio_Click(object sender, EventArgs e)
         {
-
+            PagoSocioForm pagoSocio = new PagoSocioForm(_conexion);
+            pagoSocio.ShowDialog();
+            this.Close();
         }
 
-        private void btnAceptar_Click(object sender, EventArgs e)
+        private void btnNoSocio_Click(object sender, EventArgs e)
         {
-
+            PagoActividadForm pagoActividad = new PagoActividadForm(_conexion);
+            pagoActividad.ShowDialog();
+            this.Close();
         }
 
         private void btnVolver_Click(object sender, EventArgs e)
         {
-
+            this.Close();
         }
 
         private void btnMinimizar_Click(object sender, EventArgs e)
         {
-
+            this.WindowState = FormWindowState.Minimized;
         }
 
         private void btnCerrar_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void lblFechaHoy_Click(object sender, EventArgs e)
-        {
-
+            this.Close();
         }
     }
 }

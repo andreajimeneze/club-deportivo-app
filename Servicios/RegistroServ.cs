@@ -31,9 +31,14 @@ namespace ClubDeportivoApp.Services
                 throw new Exception("Cliente debe presentar certificado para poder acceder a los servicios del club");
                
             }
-             
-              return repo.AsignarTipoCliente(clienteId, esSocio);
-          
+
+            return clienteId;
+        }
+
+        public int AsignarTipoSocio(int clienteId, bool esSocio)
+        {
+
+            return repo.AsignarTipoCliente(clienteId, esSocio);
         }
     }
 }

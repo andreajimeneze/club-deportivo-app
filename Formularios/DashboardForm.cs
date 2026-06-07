@@ -11,6 +11,7 @@ namespace ClubDeportivoApp
         private readonly ConexionMySql _conexion;
         private readonly Usuario _usuario;
 
+        public DashboardForm() { }
         public DashboardForm(Usuario usuario, ConexionMySql conexion)
         {
             _usuario = usuario;
@@ -33,7 +34,7 @@ namespace ClubDeportivoApp
 
         private void btnCarnet_Click(object sender, EventArgs e)
         {
-            PagoCarnetForm pagoCarnet = new PagoCarnetForm(_conexion);
+            PagoSocioForm pagoCarnet = new PagoSocioForm(_conexion);
             this.Hide();
             pagoCarnet.ShowDialog();
             this.Show();
@@ -41,9 +42,9 @@ namespace ClubDeportivoApp
 
         private void btnPagos_Click(object sender, EventArgs e)
         {
-            PagosForm pagos = new PagosForm(_conexion);
+            SeleccionPagoForm seleccionPago = new SeleccionPagoForm(_conexion);
             this.Hide();
-            pagos.ShowDialog();
+            seleccionPago.ShowDialog();
             this.Show();
         }
 

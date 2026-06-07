@@ -4,35 +4,31 @@ using System.Windows.Forms;
 using ClubDeportivoApp.Servicios;
 using ClubDeportivoApp.Repositorios;
 using System.Runtime.CompilerServices;
+using ClubDeportivoApp.DTOS;
 
 
 namespace ClubDeportivoApp.Formularios
 {
-    public partial class PagoCarnetForm : Form
+    public partial class PagoSocioForm : Form
     {
         private readonly ConexionMySql _conexion;
         private readonly ListadosMaestrosServ servicio;
-        private readonly InscripcionSocioServ inscripcionServ;
-        private readonly RegistroPagoServ pagoServ;
-        private readonly int _idSocio;
-        private readonly decimal _montoCuota;
+        private readonly SocioServ socioServ;
+        private readonly PagoServ pagoServ;
+        private CuotaPendienteDTO cuota;
 
-        public PagoCarnetForm(ConexionMySql conexion) 
-        {
-            _conexion = conexion;
-        }
-        public PagoCarnetForm(int idSocio, decimal montoCuota, ConexionMySql conexion)
+
+          public PagoSocioForm(ConexionMySql conexion)
         {
             InitializeComponent();
-            _idSocio = idSocio;
-            _montoCuota = montoCuota;
             _conexion = conexion;
 
             ListadosMaestrosRepo repo = new ListadosMaestrosRepo(_conexion);
-            PagosRepo inscripcionRepo = new PagosRepo(_conexion);
             servicio = new ListadosMaestrosServ(repo);
-            inscripcionServ = new InscripcionSocioServ(inscripcionRepo);
-            pagoServ = new RegistroPagoServ(inscripcionRepo);
+            SocioRepo socioRepo = new SocioRepo(_conexion);
+            socioServ = new SocioServ(socioRepo);
+            PagosRepo pagosRepo = new PagosRepo(_conexion);
+            pagoServ = new PagoServ(pagosRepo);
 
             lblFechaHoy.Text = $"Fecha y hora: {DateTime.Now.ToString("dd/MM/yyyy HH:mm")}";
         }
@@ -72,15 +68,75 @@ namespace ClubDeportivoApp.Formularios
             CargarMetodosPago();
         }
 
+
+        private void btnValidarCuota_Click(object sender, EventArgs e)
+        {
+            string dni = txtDni.Text.Trim();
+
+            if (String.IsNullOrEmpty(dni))
+            {
+                MessageBox.Show("Debe ingresar un DNI");
+                return;
+            }
+
+            bool existe = socioServ.ExisteSocioPorId(dni);
+
+            if(!existe)
+            {
+                MessageBox.Show("Socio no existe, verifique el número de DNI");
+                return;
+            }
+
+            cuota = new CuotaPendienteDTO();
+            cuota = socioServ.ObtenerCuotaPendienteServ(dni);
+
+
+            cuota = socioServ.ObtenerCuotaPendienteServ(dni);
+
+            if (cuota != null)
+            {
+                txtMontoPago.Enabled = true;
+                cbConceptoPago.Enabled = true;
+                cbMedioPago.Enabled = true;
+                btnValidarPago.Enabled = true;
+            }
+
+            if (cuota == null)
+            {
+                MessageBox.Show("Socio no tiene cuota pendiente");
+                return;
+            }
+
+            txtNombre.Text = $"Nombres:   {cuota.Nombre}";
+            txtApellido.Text = $"Apellidos:  {cuota.Apellido}";
+            txtDniSocio.Text = $"DNI:    {cuota.Dni}";
+            txtCuota.Text = $"Cuota: {Convert.ToString(cuota.MontoCuota)}";
+            txtEstado.Text = $"Estado socio: {(cuota.EstadoSocio == true ? "Activo" : "Inactivo")}";
+            txtFechaVencimiento.Text = $"Vencimiento: {Convert.ToString(cuota.FechaVencimiento)}";
+        }
+
         private void btnValidarPago_Click(object sender, EventArgs e)
         {
-            decimal montoAPagar = decimal.Parse(txtMontoPago.Text);
+            if (cuota == null)
+            {
+                MessageBox.Show($"Primero debe validar el socio {cuota.IdSocio}");
+                return;
+            }
+
+            // 2. Validar combos
+            if (cbMedioPago.SelectedIndex == 0 || cbConceptoPago.SelectedIndex == 0)
+            {
+                MessageBox.Show("Debe seleccionar método y concepto de pago");
+                return;
+            }
+
+            decimal montoAPagar = Convert.ToDecimal(txtMontoPago.Text);
             int metodoPagoId = int.Parse(cbMedioPago.SelectedValue.ToString());
             int conceptoPagoId = int.Parse(cbConceptoPago.SelectedValue.ToString());
             try
             {
-           
-                bool result = pagoServ.RegistrarPago(_idSocio,  null, montoAPagar, _montoCuota, conceptoPagoId, metodoPagoId);
+               
+                bool result = pagoServ.RegistrarPago(cuota.IdSocio, null, montoAPagar, cuota.MontoCuota, conceptoPagoId, metodoPagoId);
 
                 if (result)
                 {
@@ -88,7 +144,7 @@ namespace ClubDeportivoApp.Formularios
                 }
                 else
                 {
-                    MessageBox.Show("Error al realizar la inscripción");
+                    MessageBox.Show("Error al ejecutar el pago");
                 }
 
             }
@@ -98,15 +154,9 @@ namespace ClubDeportivoApp.Formularios
             }
 
         }
-
-        private void btnImprimirCarnet_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void btnCerrar_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            this.Close();
         }
 
         private void btnMinimizar_Click(object sender, EventArgs e)
@@ -116,7 +166,7 @@ namespace ClubDeportivoApp.Formularios
 
         private void btnVolver_Click(object sender, EventArgs e)
         {
-
+            this.Close();
         }
     }
 }

@@ -57,16 +57,17 @@ namespace ClubDeportivoApp.Forms
                MessageBox.Show("Registro exitoso");
                 if(esSocio)
                 {
+                    int idSocio = servicio.AsignarTipoSocio(id, esSocio);
                     Cliente socio = new Cliente(nombre, apellido, dni);
-                    InscripcionSocioForm inscripcionSocio = new InscripcionSocioForm(socio, id, _conexion);
+                    FormalizacionSocioForm inscripcionSocio = new FormalizacionSocioForm(socio, idSocio,_conexion);
                     this.Hide();
                     inscripcionSocio.ShowDialog();
                     this.Show();
                 } else
                 {
                     Cliente noSocio = new Cliente(nombre, apellido, dni);
-                    InscripcionNoSocioForm inscripcionNoSocio = new InscripcionNoSocioForm(noSocio, _conexion);
-                    inscripcionNoSocio.Show();
+                    PagoActividadForm inscripcionNoSocio = new PagoActividadForm(noSocio, _conexion);
+                    inscripcionNoSocio.ShowDialog();
                     this.Close();
                 }
                
@@ -91,7 +92,7 @@ namespace ClubDeportivoApp.Forms
 
         private void btnCerrar_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            this.Close();
         }
     }
 }
