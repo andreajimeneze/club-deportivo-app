@@ -11,9 +11,9 @@ namespace ClubDeportivoApp.Servicios
 {
     internal class ListadosMaestrosServ
     {
-        private ListadosMaestrosRepo repo;
+        private ConceptoPagoRepo repo;
 
-        public ListadosMaestrosServ(ListadosMaestrosRepo repo)
+        public ListadosMaestrosServ(ConceptoPagoRepo repo)
         {
             this.repo = repo;
         }

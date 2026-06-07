@@ -23,7 +23,7 @@ namespace ClubDeportivoApp.Formularios
             InitializeComponent();
             _conexion = conexion;
 
-            ListadosMaestrosRepo repo = new ListadosMaestrosRepo(_conexion);
+            ConceptoPagoRepo repo = new ListadosMaestrosRepo(_conexion);
             servicio = new ListadosMaestrosServ(repo);
             SocioRepo socioRepo = new SocioRepo(_conexion);
             socioServ = new SocioServ(socioRepo);
