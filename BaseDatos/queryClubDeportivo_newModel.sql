@@ -179,23 +179,37 @@ CREATE TABLE pagos(
     OR (cuota_id IS NULL AND no_socio_id IS NOT NULL) )
 );
 
-
-CREATE TABLE actividades(
+CREATE TABLE Actividades(
 	id INT AUTO_INCREMENT PRIMARY KEY,
-	nombre VARCHAR(30) NOT NULL
-    );
+    nombre VARCHAR(50) NOT NULL,
+    precio DECIMAL
+);
+
+CREATE TABLE Programaciones(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    actividad_id INT NOT NULL,
+    fecha_hora DATETIME NOT NULL,
+    cupos_disponibles INT,
     
-CREATE TABLE no_socio_actividad(
-	no_socio_id INT NOT NULL,
-	actividad_id INT NOT NULL,
+    CONSTRAINT fk_programacion_actividades
+    FOREIGN KEY(actividad_id)
+    REFERENCES actividades(id)
+);
 
-	CONSTRAINT fk_no_socios_actividades_no_socios
-	FOREIGN KEY(no_socio_id)
-	REFERENCES no_socios(id),
-
-	CONSTRAINT fk_no_socios_actividades_no_socios_actividades
-	FOREIGN KEY(actividad_id)
-	REFERENCES actividades(id)
+CREATE TABLE Reservas(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    programacion_id INT NOT NULL,
+    no_socio_id INT NOT NULL,
+    fecha_hora_reserva DATETIME NOT NULL,
+    pagada BOOLEAN DEFAULT false,
+    
+    CONSTRAINT fk_reservas_programaciones
+    FOREIGN KEY (programacion_id)
+    REFERENCES programaciones(id),
+    
+    CONSTRAINT fk_reservas_no_socios
+    FOREIGN KEY (no_socio_id)
+    REFERENCES no_socios(id)
 );
 -- =========================================
 -- DATOS INICIALES
@@ -271,7 +285,7 @@ BEGIN
         r.nombre AS rol,
         p.nombre,
         p.apellido,
-        p.dni
+        r.nombre
     FROM usuarios u
     INNER JOIN personas p
         ON u.persona_id = p.id
@@ -386,10 +400,12 @@ BEGIN
     
     -- manejo de errores
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
-    BEGIN
-        ROLLBACK;
-        SET rta = -99;
-    END;
+BEGIN
+    ROLLBACK;
+    GET DIAGNOSTICS CONDITION 1 @sqlstate = RETURNED_SQLSTATE, @msg = MESSAGE_TEXT;
+    SET rta = -99;
+    SELECT @sqlstate, @msg;
+END;
     
 	START TRANSACTION;
 
@@ -447,106 +463,105 @@ DELIMITER ;
 -- PROCEDIMIENTO REGISTRAR PAGO
 -- =========================================
 
+-- Primero elimina el procedimiento existente
+DROP PROCEDURE IF EXISTS RegistrarPago;
+
+-- Luego crea el nuevo procedimiento
 DELIMITER //
 
 CREATE PROCEDURE RegistrarPago(
-	IN p_socio_id INT,
+    IN p_socio_id INT,
     IN p_no_socio_id INT,
-    IN p_monto DECIMAL,
+    IN p_monto DECIMAL(10,2),
     IN p_concepto_id INT,
     IN p_metodo_id INT,
     OUT rta INT
 )
-
 BEGIN
-	DECLARE v_cuota_id INT;
-	DECLARE v_monto_cuota DECIMAL;
-	DECLARE v_id_pago INT;
-    DECLARE existe INT;
-    
-    -- manejo de errores
+    DECLARE v_cuota_id INT DEFAULT NULL;
+    DECLARE v_monto_cuota DECIMAL(10,2) DEFAULT NULL;
+
+    -- EXIT HANDLER correcto
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
     BEGIN
         ROLLBACK;
         SET rta = -99;
     END;
+
+    START TRANSACTION;
+
+    -- CASO 1: NO SOCIO
+    IF p_socio_id IS NULL AND p_no_socio_id IS NOT NULL THEN
+        INSERT INTO pagos(
+            cuota_id,
+            no_socio_id,
+            fecha_pago,
+            monto,
+            concepto_id,
+            metodo_id
+        )
+        VALUES(
+            NULL,
+            p_no_socio_id,
+            CURDATE(),
+            p_monto,
+            p_concepto_id,
+            p_metodo_id
+        );
+
+        SET rta = LAST_INSERT_ID();
+        COMMIT;
     
-	START TRANSACTION;
-    
-    IF p_socio_id IS NULL THEN
-		-- se ejecuta el pago de una actividad para no socio
-		 INSERT INTO pagos(
-			cuota_id,
-			no_socio_id,
-			fecha_pago,
-			monto,
-			concepto_id,
-			metodo_id
-		)
-		VALUES(
-			NULL,
-			p_no_socio_id,
-			CURDATE(),
-			p_monto,
-			p_concepto_id,
-			p_metodo_id
-		);
-		SET v_id_pago = LAST_INSERT_ID();
-		SET rta = v_id_pago;
-	ELSE 
-    -- verifica si hay cuotas pendientes
-    SELECT COUNT(*)
-		INTO existe
-        FROM cuotas
-        WHERE socio_id = p_socio_id AND
-            estado_cuota = 'Pendiente';
-            
-		IF existe = 0 THEN
-			ROLLBACK;
-			SET rta = -2;
-		ELSE
-			-- busca cuota pendiente más antigua 
-				SELECT id, monto_cuota
-					INTO v_cuota_id, v_monto_cuota
-					FROM cuotas
-					WHERE socio_id = p_socio_id AND
-					estado_cuota = 'Pendiente'
-					ORDER BY fecha_vencimiento ASC
-					LIMIT 1;
-            
-			-- se ejecuta el pago de una cuota
-				 INSERT INTO pagos(
-					cuota_id,
-					no_socio_id,
-					fecha_pago,
-					monto,
-					concepto_id,
-					metodo_id
-				)
-				VALUES(
-					v_cuota_id,
-					NULL,
-					CURDATE(),
-					v_monto_cuota,
-					p_concepto_id,
-					p_metodo_id
-				);
-				SET v_id_pago = LAST_INSERT_ID();
-				
-				-- se actualiza estado de la cuota a pagado
-				UPDATE cuotas
-				SET estado_cuota = 'Pagada'
-				WHERE id = v_cuota_id;
-                
-                SET rta = v_id_pago;
-		END IF;
-	END IF;
-    COMMIT;
-	
+    -- CASO 2: SOCIO
+    ELSEIF p_socio_id IS NOT NULL THEN
+        -- Obtener cuota pendiente
+        SELECT c.id, c.monto_cuota 
+        INTO v_cuota_id, v_monto_cuota
+        FROM cuotas c
+        WHERE c.socio_id = p_socio_id
+          AND c.estado_cuota = 'Pendiente'
+        ORDER BY c.fecha_vencimiento ASC
+        LIMIT 1;
+
+        -- Verificar si existe cuota pendiente
+        IF v_cuota_id IS NULL THEN
+            SET rta = -2;  -- No hay cuota pendiente
+            ROLLBACK;
+        ELSE
+            -- Registrar el pago
+            INSERT INTO pagos(
+                cuota_id,
+                no_socio_id,
+                fecha_pago,
+                monto,
+                concepto_id,
+                metodo_id
+            )
+            VALUES(
+                v_cuota_id,
+                NULL,
+                CURDATE(),
+                p_monto,
+                p_concepto_id,
+                p_metodo_id
+            );
+
+            -- Actualizar estado de la cuota
+            UPDATE cuotas
+            SET estado_cuota = 'Pagada'
+            WHERE id = v_cuota_id;
+
+            SET rta = LAST_INSERT_ID();
+            COMMIT;
+        END IF;
+    ELSE
+        SET rta = -3;  -- Ambos parámetros son NULL
+        ROLLBACK;
+    END IF;
+
 END //
 
 DELIMITER ;
-
 
 
 -- =========================================
@@ -587,8 +602,8 @@ DELIMITER ;
 
 DELIMITER //
 
-CREATE PROCEDURE EstadoCuota(
-    IN p_dni VARCHAR(10)
+CREATE PROCEDURE ObtenerCuotaPendiente(
+    IN in_dni VARCHAR(10)
 )
 
 BEGIN
@@ -596,9 +611,12 @@ BEGIN
     SELECT
         p.nombre,
         p.apellido,
+        p.dni,
+        s.id,
+        s.estado,
+        c.id AS 'id_cuota',
         c.monto_cuota,
-        c.fecha_vencimiento,
-        c.estado_cuota
+        c.fecha_vencimiento
     FROM personas p
     INNER JOIN clientes cl
         ON p.id = cl.persona_id
@@ -606,7 +624,8 @@ BEGIN
         ON cl.id = s.cliente_id
     INNER JOIN cuotas c
         ON s.id = c.socio_id
-    WHERE p.dni = p_dni;
+    WHERE p.dni = in_dni
+    AND c.estado_cuota = 'Pendiente';
 
 END //
 
@@ -619,8 +638,7 @@ DELIMITER ;
 
 DELIMITER //
 CREATE PROCEDURE listarVencimientos(
-	IN p_fecha_vencimiento DATE,
-    IN p_estado_cuota VARCHAR(20)
+	IN p_fecha_vencimiento DATE
 )
 BEGIN
 
@@ -638,7 +656,6 @@ SELECT
     ON s.cliente_id = cl.id
     INNER JOIN cuotas c 
     ON s.id = c.socio_id
-    WHERE c.estado_cuota = p_estado_cuota AND
-    DATE(c.fecha_vencimiento) = p_fecha_vencimiento;
+    WHERE DATE(c.fecha_vencimiento) = p_fecha_vencimiento;
 END //
 DELIMITER ;
