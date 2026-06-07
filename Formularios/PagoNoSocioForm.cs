@@ -7,22 +7,22 @@ using System.Windows.Forms;
 
 namespace ClubDeportivoApp.Formularios
 {
-    public partial class PagoActividadForm : Form
+    public partial class PagoNoSocio : Form
     {
         private readonly ConexionMySql _conexion;
         private readonly ListadosMaestrosServ servicio;
         private readonly Cliente _noSocio;
 
-        public PagoActividadForm(ConexionMySql conexion) {
+        public PagoNoSocioForm(ConexionMySql conexion) {
             _conexion = conexion;
         }
-        public PagoActividadForm(Cliente noSocio, ConexionMySql conexion)
+        public PagoNoSocioForm(Cliente noSocio, ConexionMySql conexion)
         {
             InitializeComponent();
             _noSocio = noSocio;
             _conexion = conexion;
            
-            ListadosMaestrosRepo repo = new ListadosMaestrosRepo(_conexion);
+            ConceptoPagoRepo repo = new ListadosMaestrosRepo(_conexion);
             servicio = new ListadosMaestrosServ(repo);
             
             lblFechaHoy.Text = $"Fecha y hora: {DateTime.Now.ToString("dd/MM/yyyy")}";

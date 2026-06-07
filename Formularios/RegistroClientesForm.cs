@@ -66,7 +66,7 @@ namespace ClubDeportivoApp.Forms
                 } else
                 {
                     Cliente noSocio = new Cliente(nombre, apellido, dni);
-                    PagoActividadForm inscripcionNoSocio = new PagoActividadForm(noSocio, _conexion);
+                    PagoNoSocioForm inscripcionNoSocio = new PagoActividadForm(noSocio, _conexion);
                     inscripcionNoSocio.ShowDialog();
                     this.Close();
                 }

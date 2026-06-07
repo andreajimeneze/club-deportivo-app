@@ -1,6 +1,6 @@
 ﻿namespace ClubDeportivoApp.Formularios
 {
-    partial class PagoActividadForm
+    partial class PagoNoSocio
     {
         /// <summary>
         /// Required designer variable.
@@ -28,10 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PagoActividadForm));
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.dtActividad = new System.Windows.Forms.DateTimePicker();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PagoNoSocio));
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panelLogin = new System.Windows.Forms.Panel();
             this.btnMinimizar = new System.Windows.Forms.Button();
@@ -46,40 +43,24 @@
             this.label11 = new System.Windows.Forms.Label();
             this.cbConceptoPago = new System.Windows.Forms.ComboBox();
             this.label12 = new System.Windows.Forms.Label();
-            this.cbActividades = new System.Windows.Forms.ComboBox();
             this.btnValidarPago = new System.Windows.Forms.Button();
-            this.btnReserva = new System.Windows.Forms.Button();
             this.txtDni = new System.Windows.Forms.TextBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.label6 = new System.Windows.Forms.Label();
+            this.txtFechaVencimiento = new System.Windows.Forms.Label();
+            this.txtCuota = new System.Windows.Forms.Label();
+            this.txtDniSocio = new System.Windows.Forms.Label();
+            this.txtApellido = new System.Windows.Forms.Label();
+            this.txtNombre = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panelLogin.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(770, 203);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(178, 20);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Selección de Actividad";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(761, 312);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(206, 20);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Selección Fecha y hora";
-            // 
-            // dtActividad
-            // 
-            this.dtActividad.Location = new System.Drawing.Point(764, 347);
-            this.dtActividad.Name = "dtActividad";
-            this.dtActividad.Size = new System.Drawing.Size(200, 22);
-            this.dtActividad.TabIndex = 7;
             // 
             // pictureBox1
             // 
@@ -150,7 +131,7 @@
             this.btnVolver.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.btnVolver.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnVolver.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.btnVolver.Location = new System.Drawing.Point(1012, 692);
+            this.btnVolver.Location = new System.Drawing.Point(1012, 703);
             this.btnVolver.Margin = new System.Windows.Forms.Padding(5);
             this.btnVolver.Name = "btnVolver";
             this.btnVolver.Size = new System.Drawing.Size(153, 58);
@@ -173,17 +154,17 @@
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(259, 203);
+            this.label9.Location = new System.Drawing.Point(269, 152);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(38, 20);
+            this.label9.Size = new System.Drawing.Size(98, 20);
             this.label9.TabIndex = 34;
-            this.label9.Text = "DNI";
+            this.label9.Text = "Ingrese DNI";
             // 
             // label10
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(259, 293);
+            this.label10.Location = new System.Drawing.Point(269, 251);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(116, 20);
             this.label10.TabIndex = 32;
@@ -193,18 +174,18 @@
             // 
             this.txtMontoPago.Enabled = false;
             this.txtMontoPago.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtMontoPago.Location = new System.Drawing.Point(256, 322);
+            this.txtMontoPago.Location = new System.Drawing.Point(266, 280);
             this.txtMontoPago.MaximumSize = new System.Drawing.Size(400, 40);
             this.txtMontoPago.MinimumSize = new System.Drawing.Size(400, 40);
             this.txtMontoPago.Name = "txtMontoPago";
-            this.txtMontoPago.Size = new System.Drawing.Size(400, 26);
+            this.txtMontoPago.Size = new System.Drawing.Size(400, 40);
             this.txtMontoPago.TabIndex = 30;
             // 
             // cbMetodosPago
             // 
             this.cbMetodosPago.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbMetodosPago.FormattingEnabled = true;
-            this.cbMetodosPago.Location = new System.Drawing.Point(256, 499);
+            this.cbMetodosPago.Location = new System.Drawing.Point(266, 457);
             this.cbMetodosPago.MaximumSize = new System.Drawing.Size(400, 0);
             this.cbMetodosPago.MinimumSize = new System.Drawing.Size(400, 0);
             this.cbMetodosPago.Name = "cbMetodosPago";
@@ -215,7 +196,7 @@
             // 
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(252, 467);
+            this.label11.Location = new System.Drawing.Point(262, 425);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(95, 20);
             this.label11.TabIndex = 28;
@@ -226,7 +207,7 @@
             this.cbConceptoPago.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbConceptoPago.FormattingEnabled = true;
             this.cbConceptoPago.ItemHeight = 25;
-            this.cbConceptoPago.Location = new System.Drawing.Point(256, 411);
+            this.cbConceptoPago.Location = new System.Drawing.Point(266, 369);
             this.cbConceptoPago.MaximumSize = new System.Drawing.Size(400, 0);
             this.cbConceptoPago.MaxLength = 32767;
             this.cbConceptoPago.MinimumSize = new System.Drawing.Size(400, 0);
@@ -238,24 +219,11 @@
             // 
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.Location = new System.Drawing.Point(259, 377);
+            this.label12.Location = new System.Drawing.Point(269, 335);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(121, 20);
             this.label12.TabIndex = 27;
             this.label12.Text = "Concepto pago";
-            // 
-            // cbActividades
-            // 
-            this.cbActividades.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbActividades.FormattingEnabled = true;
-            this.cbActividades.ItemHeight = 25;
-            this.cbActividades.Location = new System.Drawing.Point(765, 239);
-            this.cbActividades.MaximumSize = new System.Drawing.Size(400, 0);
-            this.cbActividades.MaxLength = 32767;
-            this.cbActividades.MinimumSize = new System.Drawing.Size(400, 0);
-            this.cbActividades.Name = "cbActividades";
-            this.cbActividades.Size = new System.Drawing.Size(400, 33);
-            this.cbActividades.TabIndex = 35;
             // 
             // btnValidarPago
             // 
@@ -263,7 +231,7 @@
             this.btnValidarPago.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(48)))), ((int)(((byte)(144)))));
             this.btnValidarPago.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnValidarPago.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.btnValidarPago.Location = new System.Drawing.Point(363, 579);
+            this.btnValidarPago.Location = new System.Drawing.Point(354, 565);
             this.btnValidarPago.Name = "btnValidarPago";
             this.btnValidarPago.Size = new System.Drawing.Size(241, 75);
             this.btnValidarPago.TabIndex = 36;
@@ -271,41 +239,157 @@
             this.btnValidarPago.UseVisualStyleBackColor = false;
             this.btnValidarPago.Click += new System.EventHandler(this.btnValidarPago_Click);
             // 
-            // btnReserva
-            // 
-            this.btnReserva.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.btnReserva.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(48)))), ((int)(((byte)(144)))));
-            this.btnReserva.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnReserva.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.btnReserva.Location = new System.Drawing.Point(670, 579);
-            this.btnReserva.Name = "btnReserva";
-            this.btnReserva.Size = new System.Drawing.Size(241, 75);
-            this.btnReserva.TabIndex = 37;
-            this.btnReserva.Text = "CONFIRMAR RESERVA";
-            this.btnReserva.UseVisualStyleBackColor = false;
-            this.btnReserva.Click += new System.EventHandler(this.btnReserva_Click);
-            // 
             // txtDni
             // 
             this.txtDni.Enabled = false;
             this.txtDni.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtDni.Location = new System.Drawing.Point(263, 232);
+            this.txtDni.Location = new System.Drawing.Point(266, 184);
             this.txtDni.MaximumSize = new System.Drawing.Size(400, 40);
             this.txtDni.MinimumSize = new System.Drawing.Size(400, 40);
             this.txtDni.Name = "txtDni";
             this.txtDni.Size = new System.Drawing.Size(400, 40);
             this.txtDni.TabIndex = 38;
             // 
-            // PagoActividadForm
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.label2);
+            this.panel1.Controls.Add(this.label4);
+            this.panel1.Controls.Add(this.label7);
+            this.panel1.Controls.Add(this.label1);
+            this.panel1.Controls.Add(this.label6);
+            this.panel1.Controls.Add(this.txtFechaVencimiento);
+            this.panel1.Controls.Add(this.txtCuota);
+            this.panel1.Controls.Add(this.txtDniSocio);
+            this.panel1.Controls.Add(this.txtApellido);
+            this.panel1.Controls.Add(this.txtNombre);
+            this.panel1.Controls.Add(this.label3);
+            this.panel1.Location = new System.Drawing.Point(710, 161);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(414, 463);
+            this.panel1.TabIndex = 40;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(49, 169);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(154, 25);
+            this.label6.TabIndex = 34;
+            this.label6.Tag = "";
+            this.label6.Text = "Datos Actividad:";
+            // 
+            // txtFechaVencimiento
+            // 
+            this.txtFechaVencimiento.AutoSize = true;
+            this.txtFechaVencimiento.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtFechaVencimiento.Location = new System.Drawing.Point(62, 241);
+            this.txtFechaVencimiento.Name = "txtFechaVencimiento";
+            this.txtFechaVencimiento.Size = new System.Drawing.Size(111, 20);
+            this.txtFechaVencimiento.TabIndex = 31;
+            this.txtFechaVencimiento.Text = "Fecha y hora:";
+            // 
+            // txtCuota
+            // 
+            this.txtCuota.AutoSize = true;
+            this.txtCuota.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtCuota.Location = new System.Drawing.Point(62, 209);
+            this.txtCuota.Name = "txtCuota";
+            this.txtCuota.Size = new System.Drawing.Size(82, 20);
+            this.txtCuota.TabIndex = 30;
+            this.txtCuota.Text = "Actividad:";
+            // 
+            // txtDniSocio
+            // 
+            this.txtDniSocio.AutoSize = true;
+            this.txtDniSocio.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtDniSocio.Location = new System.Drawing.Point(61, 126);
+            this.txtDniSocio.Name = "txtDniSocio";
+            this.txtDniSocio.Size = new System.Drawing.Size(43, 20);
+            this.txtDniSocio.TabIndex = 28;
+            this.txtDniSocio.Text = "DNI:";
+            // 
+            // txtApellido
+            // 
+            this.txtApellido.AutoSize = true;
+            this.txtApellido.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtApellido.Location = new System.Drawing.Point(61, 91);
+            this.txtApellido.Name = "txtApellido";
+            this.txtApellido.Size = new System.Drawing.Size(73, 20);
+            this.txtApellido.TabIndex = 27;
+            this.txtApellido.Text = "Apellido:";
+            // 
+            // txtNombre
+            // 
+            this.txtNombre.AutoSize = true;
+            this.txtNombre.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtNombre.Location = new System.Drawing.Point(61, 60);
+            this.txtNombre.Name = "txtNombre";
+            this.txtNombre.Size = new System.Drawing.Size(73, 20);
+            this.txtNombre.TabIndex = 26;
+            this.txtNombre.Text = "Nombre:";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(49, 19);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(135, 25);
+            this.label3.TabIndex = 7;
+            this.label3.Tag = "";
+            this.label3.Text = "Datos Cliente:";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(49, 294);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(120, 25);
+            this.label1.TabIndex = 35;
+            this.label1.Tag = "";
+            this.label1.Text = "Datos Pago:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(62, 404);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(125, 20);
+            this.label2.TabIndex = 38;
+            this.label2.Text = "Medio de Pago:";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(62, 366);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(101, 20);
+            this.label4.TabIndex = 37;
+            this.label4.Text = "Fecha pago:";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(62, 334);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(55, 20);
+            this.label7.TabIndex = 36;
+            this.label7.Text = "Monto";
+            // 
+            // PagoNoSocio
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1200, 800);
             this.ControlBox = false;
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.txtDni);
-            this.Controls.Add(this.btnReserva);
             this.Controls.Add(this.btnValidarPago);
-            this.Controls.Add(this.cbActividades);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.txtMontoPago);
@@ -318,24 +402,20 @@
             this.Controls.Add(this.panelLogin);
             this.Controls.Add(this.lblFechaHoy);
             this.Controls.Add(this.btnVolver);
-            this.Controls.Add(this.dtActividad);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "PagoActividadForm";
+            this.Name = "PagoNoSocio";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Inscripcion Actividades NO SOCIO";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panelLogin.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.DateTimePicker dtActividad;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Panel panelLogin;
         private System.Windows.Forms.Button btnMinimizar;
@@ -350,9 +430,19 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.ComboBox cbConceptoPago;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.ComboBox cbActividades;
         private System.Windows.Forms.Button btnValidarPago;
-        private System.Windows.Forms.Button btnReserva;
         private System.Windows.Forms.TextBox txtDni;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label txtFechaVencimiento;
+        private System.Windows.Forms.Label txtCuota;
+        private System.Windows.Forms.Label txtDniSocio;
+        private System.Windows.Forms.Label txtApellido;
+        private System.Windows.Forms.Label txtNombre;
+        private System.Windows.Forms.Label label3;
     }
 }
