@@ -9,8 +9,8 @@ namespace ClubDeportivoApp.Interfaces
 {
     internal interface IPago
     {
-        void RegistrarPago();
-        List<Pago> listarPagosVencidos();
+        int RegistrarPago(int ? idSocio, int ? idNoSocio, decimal montoAPagar, int conceptoPago, int medioPago);
+        //List<Pago> listarPagosVencidos();
     }
 
 }

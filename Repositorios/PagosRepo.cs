@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using ClubDeportivoApp.Interfaces;
+using MySql.Data.MySqlClient;
 using System;
 using System.Data;
 using System.Windows.Forms;
@@ -6,7 +7,7 @@ using System.Windows.Forms;
 
 namespace ClubDeportivoApp.Repositorios
 {
-    public class PagosRepo
+    public class PagosRepo : IContrato, IPago
     {
         private readonly ConexionMySql _conexionDatabase;
 
@@ -43,7 +44,7 @@ namespace ClubDeportivoApp.Repositorios
                 throw new Exception("Error repo inscripción: " + ex.Message, ex);
             }
         }
-        public int RegistrarPago(int ? socioId, int ? noSocioId, decimal montoAPagar, int conceptoPago, int medioPago )
+        public int RegistrarPago(int? idSocio, int? idNoSocio, decimal montoAPagar, int conceptoPago, int medioPago)
         {
             
             try
@@ -56,8 +57,8 @@ namespace ClubDeportivoApp.Repositorios
                       
                         cmd.CommandType = CommandType.StoredProcedure;
 
-                        cmd.Parameters.AddWithValue("p_socio_id", socioId.HasValue ? (object)socioId.Value : DBNull.Value);
-                        cmd.Parameters.AddWithValue("p_no_socio_id", noSocioId.HasValue ? (object)noSocioId.Value : DBNull.Value);
+                        cmd.Parameters.AddWithValue("p_socio_id", idSocio.HasValue ? (object)idSocio.Value : DBNull.Value);
+                        cmd.Parameters.AddWithValue("p_no_socio_id", idNoSocio.HasValue ? (object)idNoSocio.Value : DBNull.Value);
                         cmd.Parameters.AddWithValue("p_monto", montoAPagar);
                         cmd.Parameters.AddWithValue("p_concepto_id", conceptoPago);
                         cmd.Parameters.AddWithValue("p_metodo_id", medioPago);
@@ -69,8 +70,9 @@ namespace ClubDeportivoApp.Repositorios
                        
                         cmd.ExecuteNonQuery();
                         if (rtaParameter.Value == null || rtaParameter.Value == DBNull.Value)
+                        {
                             return -1;
-                        MessageBox.Show(rtaParameter.Value?.ToString() ?? "NULL");
+                        }
                         return Convert.ToInt32(rtaParameter.Value);
                     }
                 }

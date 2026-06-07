@@ -49,6 +49,7 @@
             this.cbActividades = new System.Windows.Forms.ComboBox();
             this.btnValidarPago = new System.Windows.Forms.Button();
             this.btnReserva = new System.Windows.Forms.Button();
+            this.txtDni = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panelLogin.SuspendLayout();
             this.SuspendLayout();
@@ -284,12 +285,24 @@
             this.btnReserva.UseVisualStyleBackColor = false;
             this.btnReserva.Click += new System.EventHandler(this.btnReserva_Click);
             // 
+            // txtDni
+            // 
+            this.txtDni.Enabled = false;
+            this.txtDni.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtDni.Location = new System.Drawing.Point(263, 232);
+            this.txtDni.MaximumSize = new System.Drawing.Size(400, 40);
+            this.txtDni.MinimumSize = new System.Drawing.Size(400, 40);
+            this.txtDni.Name = "txtDni";
+            this.txtDni.Size = new System.Drawing.Size(400, 40);
+            this.txtDni.TabIndex = 38;
+            // 
             // PagoActividadForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1200, 800);
             this.ControlBox = false;
+            this.Controls.Add(this.txtDni);
             this.Controls.Add(this.btnReserva);
             this.Controls.Add(this.btnValidarPago);
             this.Controls.Add(this.cbActividades);
@@ -340,5 +353,6 @@
         private System.Windows.Forms.ComboBox cbActividades;
         private System.Windows.Forms.Button btnValidarPago;
         private System.Windows.Forms.Button btnReserva;
+        private System.Windows.Forms.TextBox txtDni;
     }
 }
