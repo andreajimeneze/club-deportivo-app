@@ -9,7 +9,7 @@ namespace ClubDeportivoApp.Models
         public int Id { get; set; }
         public DateTime FechaVencimiento { get; set; }
         public string EstadoPago { get; set; }
-        public int SocioId { get; set; }
+        public Socio Socio { get; set; }
         public decimal MontoCuota { get; set; }
         public List<Pago> Pagos { get; set; }
 
@@ -18,12 +18,12 @@ namespace ClubDeportivoApp.Models
                 }
 
       
-       public Cuota(decimal montoCuota, DateTime fechaVencimiento, string estadoPago, int socioId)
+       public Cuota(decimal montoCuota, DateTime fechaVencimiento, string estadoPago, Socio socio)
         {
             this.MontoCuota = montoCuota;
             this.FechaVencimiento = fechaVencimiento;
             this.EstadoPago = estadoPago;
-            this.SocioId = socioId;
+            this.Socio = socio;
         }
     }
 }

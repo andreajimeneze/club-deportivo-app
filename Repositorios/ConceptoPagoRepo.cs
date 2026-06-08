@@ -7,20 +7,20 @@ using System.Collections.Generic;
 
 namespace ClubDeportivoApp.Repositorios
 {
-    internal class ConceptoPagoRepo : IListado<ConceptoPago>
+    public class ConceptoPagoRepo : IListado<ConceptoPago>
     {
-        private ConexionMySql conexionMysql;
+        private ConexionMySql _conexionDatabase;
         
-        public ConceptoPagoRepo(ConexionMySql conexionMysql)
+        public ConceptoPagoRepo(ConexionMySql conexionDatabase)
         {
-            
-            this.conexionMysql = conexionMysql;
+
+            _conexionDatabase = conexionDatabase;
  
         }
         
         public List<ConceptoPago> ObtenerLista()
         {
-            using (MySqlConnection conn = conexionMysql.GetMySqlConnection())
+            using (MySqlConnection conn = _conexionDatabase.GetMySqlConnection())
             {
                 string query = "SELECT id, nombre FROM conceptos_pago";
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))

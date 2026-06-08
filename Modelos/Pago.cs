@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ClubDeportivoApp.Modelos;
+using System;
 
 
 namespace ClubDeportivoApp.Models
@@ -8,21 +9,21 @@ namespace ClubDeportivoApp.Models
         public int Id { get; set; }
         public DateTime FechaPago { get; set; }
         public decimal Monto { get; set; }
-        public int ConceptoPagoId { get; set; }
-        public int MetodoPagoId { get; set; }
-        public int? CuotaId { get; set; }
-        public int? NoSocioId { get; set; }
+        public ConceptoPago ConceptoPago { get; set; }
+        public MetodoPago MetodoPago { get; set; }
+        public Cuota Cuota { get; set; }
+        public NoSocio NoSocio { get; set; }
 
         public Pago()
         { }
-        public Pago(int? cuotaId, int? noSocioId, DateTime fechaPago, int monto, int conceptoPagoId, int metodoPagoId)
+        public Pago(Cuota cuota, NoSocio noSocio, DateTime fechaPago, int monto, ConceptoPago conceptoPago, MetodoPago metodoPago)
         {
-            this.CuotaId = cuotaId;
-            this.NoSocioId = noSocioId;
+            this.Cuota = cuota;
+            this.NoSocio = noSocio;
             this.FechaPago = fechaPago;
             this.Monto = monto;
-            this.ConceptoPagoId = conceptoPagoId;
-            this.MetodoPagoId = metodoPagoId;
+            this.ConceptoPago = conceptoPago;
+            this.MetodoPago = metodoPago;
         }
     }
  }

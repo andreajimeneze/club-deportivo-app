@@ -7,13 +7,14 @@ using System.Windows.Forms;
 
 namespace ClubDeportivoApp.Formularios
 {
-    public partial class PagoNoSocio : Form
+    public partial class PagoNoSocioForm : Form
     {
         private readonly ConexionMySql _conexion;
         private readonly ListadosMaestrosServ servicio;
         private readonly Cliente _noSocio;
 
-        public PagoNoSocioForm(ConexionMySql conexion) {
+        public PagoNoSocioForm(ConexionMySql conexion)
+        {
             _conexion = conexion;
         }
         public PagoNoSocioForm(Cliente noSocio, ConexionMySql conexion)
@@ -22,27 +23,28 @@ namespace ClubDeportivoApp.Formularios
             _noSocio = noSocio;
             _conexion = conexion;
            
-            ConceptoPagoRepo repo = new ListadosMaestrosRepo(_conexion);
-            servicio = new ListadosMaestrosServ(repo);
+            ConceptoPagoRepo cPagoRepo = new ConceptoPagoRepo(_conexion);
+            MetodoPagoRepo mPagoRepo = new MetodoPagoRepo(_conexion);
+            servicio = new ListadosMaestrosServ(cPagoRepo, mPagoRepo);
             
             lblFechaHoy.Text = $"Fecha y hora: {DateTime.Now.ToString("dd/MM/yyyy")}";
         }
 
-        private void CargarActividades()
+        private void CargarConceptoPago()
         {
-            var lista = servicio.ObtenerActividades();
+            var lista = servicio.ObtenerConceptosPago();
 
-            lista.Insert(0, new Actividad
+            lista.Insert(0, new ConceptoPago
             {
                 Id = 0,
-                Nombre = "Seleccione actividad"
+                Nombre = "Seleccione método"
             });
 
-            cbActividades.DataSource = lista;
-            cbActividades.DisplayMember = "Nombre";
-            cbActividades.ValueMember = "Id";
+            cbConceptoPago.DataSource = lista;
+            cbConceptoPago.DisplayMember = "Nombre";
+            cbConceptoPago.ValueMember = "Id";
         }
-
+        
         private void CargarMetodosPago()
         {
             var lista = servicio.ObtenerMetodosPago();
@@ -59,8 +61,8 @@ namespace ClubDeportivoApp.Formularios
         }
         private void PagoActividadForm_Load(object sender, EventArgs e)
         {
-            CargarActividades();
             CargarMetodosPago();
+            CargarConceptoPago();
             
         }
 

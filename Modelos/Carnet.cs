@@ -4,12 +4,12 @@ namespace ClubDeportivoApp.Models
     public class Carnet
     {
         public int Id { get; set; }
-        public int InscripcionId { get; set; }
+        public Inscripcion Inscripcion { get; set; }
         public bool Estado { get; set; }
 
-        public Carnet(int inscripcionId, bool estado)
+        public Carnet(Inscripcion inscripcion, bool estado)
         {
-            this.InscripcionId = inscripcionId;
+            this.Inscripcion = inscripcion;
             this.Estado = estado;
         }
     }

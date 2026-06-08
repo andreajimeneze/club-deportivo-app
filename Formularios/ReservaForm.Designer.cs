@@ -46,6 +46,9 @@
             this.txtDni = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.txtFechaVencimiento = new System.Windows.Forms.Label();
             this.txtCuota = new System.Windows.Forms.Label();
             this.txtEstado = new System.Windows.Forms.Label();
@@ -53,9 +56,6 @@
             this.txtApellido = new System.Windows.Forms.Label();
             this.txtNombre = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panelLogin.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -87,6 +87,7 @@
             this.dtActividad.Name = "dtActividad";
             this.dtActividad.Size = new System.Drawing.Size(250, 22);
             this.dtActividad.TabIndex = 7;
+            this.dtActividad.ValueChanged += new System.EventHandler(this.dtActividad_ValueChanged);
             // 
             // pictureBox1
             // 
@@ -198,6 +199,7 @@
             this.cbActividades.Name = "cbActividades";
             this.cbActividades.Size = new System.Drawing.Size(400, 33);
             this.cbActividades.TabIndex = 35;
+            this.cbActividades.SelectedIndexChanged += new System.EventHandler(this.cbActividades_SelectedIndexChanged);
             // 
             // btnValidarPago
             // 
@@ -235,7 +237,7 @@
             this.txtDni.MaximumSize = new System.Drawing.Size(400, 40);
             this.txtDni.MinimumSize = new System.Drawing.Size(400, 40);
             this.txtDni.Name = "txtDni";
-            this.txtDni.Size = new System.Drawing.Size(400, 40);
+            this.txtDni.Size = new System.Drawing.Size(400, 26);
             this.txtDni.TabIndex = 38;
             // 
             // label17
@@ -264,6 +266,37 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(414, 488);
             this.panel1.TabIndex = 39;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(49, 198);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(154, 25);
+            this.label6.TabIndex = 34;
+            this.label6.Tag = "";
+            this.label6.Text = "Datos Actividad:";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(62, 341);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(62, 20);
+            this.label5.TabIndex = 33;
+            this.label5.Text = "Precio:";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(62, 305);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(119, 20);
+            this.label4.TabIndex = 32;
+            this.label4.Text = "Disponibilidad:";
             // 
             // txtFechaVencimiento
             // 
@@ -336,37 +369,6 @@
             this.label3.Tag = "";
             this.label3.Text = "Datos Cliente:";
             // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(62, 305);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(119, 20);
-            this.label4.TabIndex = 32;
-            this.label4.Text = "Disponibilidad:";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(62, 341);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(62, 20);
-            this.label5.TabIndex = 33;
-            this.label5.Text = "Precio:";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(49, 198);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(154, 25);
-            this.label6.TabIndex = 34;
-            this.label6.Tag = "";
-            this.label6.Text = "Datos Actividad:";
-            // 
             // ReservaForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -391,6 +393,7 @@
             this.Name = "ReservaForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Reserva Actividades NO SOCIO";
+            this.Load += new System.EventHandler(this.ReservaForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panelLogin.ResumeLayout(false);
             this.panel1.ResumeLayout(false);

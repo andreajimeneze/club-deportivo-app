@@ -23,8 +23,9 @@ namespace ClubDeportivoApp.Formularios
             InitializeComponent();
             _conexion = conexion;
 
-            ConceptoPagoRepo repo = new ListadosMaestrosRepo(_conexion);
-            servicio = new ListadosMaestrosServ(repo);
+            ConceptoPagoRepo cPagoRepo = new ConceptoPagoRepo(_conexion);
+            MetodoPagoRepo mPagoRepo = new MetodoPagoRepo(_conexion);
+            servicio = new ListadosMaestrosServ(cPagoRepo, mPagoRepo);
             SocioRepo socioRepo = new SocioRepo(_conexion);
             socioServ = new SocioServ(socioRepo);
             PagosRepo pagosRepo = new PagosRepo(_conexion);

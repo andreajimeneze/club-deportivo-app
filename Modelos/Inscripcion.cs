@@ -7,14 +7,14 @@ namespace ClubDeportivoApp.Models
     {
         public int Id { get; set; }
         public DateTime FechaInscripcion { get; set; }
-        public int SocioId { get; set; }
+        public Socio Socio { get; set; }
 
         public Inscripcion() { }
 
-        public Inscripcion(int socioId)
+        public Inscripcion(Socio socio)
         {
             this.FechaInscripcion = DateTime.Now;
-            this.SocioId = socioId;
+            this.Socio = socio;
         }
     }
 }

@@ -11,26 +11,33 @@ namespace ClubDeportivoApp.Servicios
 {
     internal class ListadosMaestrosServ
     {
-        private ConceptoPagoRepo repo;
+        private ConceptoPagoRepo _cPagorepo;
+        private ActividadRepo _actRepo;
+        private MetodoPagoRepo _mPagoRepo;
 
-        public ListadosMaestrosServ(ConceptoPagoRepo repo)
+        public ListadosMaestrosServ(ActividadRepo actRepo)
         {
-            this.repo = repo;
+            _actRepo = actRepo;
+        }
+        public ListadosMaestrosServ(ConceptoPagoRepo cPagoRepo, MetodoPagoRepo mPagoRepo)
+        {
+            _cPagorepo = cPagoRepo;
+            _mPagoRepo = mPagoRepo;
         }
 
         public List<MetodoPago> ObtenerMetodosPago()
         {
-            return repo.ObtenerListadoMetodos();
+            return _mPagoRepo.ObtenerLista();
         }
 
         public List<ConceptoPago> ObtenerConceptosPago()
         {
-            return repo.ObtenerListadoConceptos();
+            return _cPagorepo.ObtenerLista();
         }
 
         public List<Actividad> ObtenerActividades()
         {
-            return repo.ObtenerListadoActividades();
+            return _actRepo.ObtenerLista();
         }
     }
 }

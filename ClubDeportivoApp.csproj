@@ -115,6 +115,7 @@
     <Compile Include="BaseDatos\Conexion.cs" />
     <Compile Include="BaseDatos\ConexionMySql.cs" />
     <Compile Include="DTOS\CuotaPendienteDTO.cs" />
+    <Compile Include="DTOS\ProgramacionDTO.cs" />
     <Compile Include="Formularios\AccesoBDForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -201,6 +202,7 @@
     <Compile Include="Repositorios\MetodoPagoRepo..cs" />
     <Compile Include="Repositorios\PagosRepo.cs" />
     <Compile Include="Repositorios\ConceptoPagoRepo.cs" />
+    <Compile Include="Repositorios\ProgramacionRepo.cs" />
     <Compile Include="Repositorios\RegistroRepo.cs" />
     <Compile Include="Repositorios\LoginRepo.cs" />
     <Compile Include="Repositorios\SocioRepo.cs" />

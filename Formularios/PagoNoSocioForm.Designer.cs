@@ -1,6 +1,6 @@
 ﻿namespace ClubDeportivoApp.Formularios
 {
-    partial class PagoNoSocio
+    partial class PagoNoSocioForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PagoNoSocio));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PagoNoSocioForm));
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panelLogin = new System.Windows.Forms.Panel();
             this.btnMinimizar = new System.Windows.Forms.Button();

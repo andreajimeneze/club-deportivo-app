@@ -10,9 +10,8 @@ namespace ClubDeportivoApp.Formularios
     public partial class ReservaForm : Form
     {
         private readonly ConexionMySql _conexion;
-        private readonly ListadosMaestrosServ servicio;
         private readonly Cliente _noSocio;
-
+        private readonly ListadosMaestrosServ listasServ;
         public ReservaForm(ConexionMySql conexion) {
             _conexion = conexion;
         }
@@ -22,15 +21,17 @@ namespace ClubDeportivoApp.Formularios
             _noSocio = noSocio;
             _conexion = conexion;
            
-            ListadosMaestrosRepo repo = new ListadosMaestrosRepo(_conexion);
-            servicio = new ListadosMaestrosServ(repo);
+            ActividadRepo actRepo = new ActividadRepo(_conexion);
+            ConceptoPagoRepo cPagoRepo = new ConceptoPagoRepo(_conexion);
+            MetodoPagoRepo mPagoRepo = new MetodoPagoRepo(_conexion);
+            listasServ = new ListadosMaestrosServ(actRepo);
             
             lblFechaHoy.Text = $"Fecha y hora: {DateTime.Now.ToString("dd/MM/yyyy")}";
         }
 
         private void CargarActividades()
         {
-            var lista = servicio.ObtenerActividades();
+            var lista = listasServ.ObtenerActividades();
 
             lista.Insert(0, new Actividad
             {
@@ -41,27 +42,6 @@ namespace ClubDeportivoApp.Formularios
             cbActividades.DataSource = lista;
             cbActividades.DisplayMember = "Nombre";
             cbActividades.ValueMember = "Id";
-        }
-
-        private void CargarMetodosPago()
-        {
-            var lista = servicio.ObtenerMetodosPago();
-
-            lista.Insert(0, new MetodoPago
-            {
-                Id = 0,
-                Nombre = "Seleccione método"
-            });
-
-            cbMetodosPago.DataSource = lista;
-            cbMetodosPago.DisplayMember = "Nombre";
-            cbMetodosPago.ValueMember = "Id";
-        }
-        private void PagoActividadForm_Load(object sender, EventArgs e)
-        {
-            CargarActividades();
-            CargarMetodosPago();
-            
         }
 
         private void btnValidarPago_Click(object sender, EventArgs e)
@@ -87,6 +67,21 @@ namespace ClubDeportivoApp.Formularios
         private void btnCerrar_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void ReservaForm_Load(object sender, EventArgs e)
+        {
+            CargarActividades();
+        }
+
+        private void cbActividades_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dtActividad_ValueChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
