@@ -29,9 +29,19 @@ namespace ClubDeportivoApp.Formularios
 
         }
 
-        private void label1_Click(object sender, EventArgs e)
+        private void btnVolver_Click(object sender, EventArgs e)
         {
+            this.Close();
+        }
 
+        private void btnMinimizar_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
+        }
+
+        private void btnCerrar_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

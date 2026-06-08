@@ -60,6 +60,17 @@ namespace ClubDeportivoApp.Formularios
                 FileName = ruta,
                 UseShellExecute = true
             });
+
+            btnAceptarContrato.Enabled = true;
+        }
+
+        private void btnAceptarContrato_Click(object sender, EventArgs e)
+        {
+            servicio.FormalizarSocio(_idSocio, montoCuota);
+            PagoSocioForm pagoSocio = new PagoSocioForm(_conexion);
+            this.Hide();
+            pagoSocio.ShowDialog();
+            this.Close();
         }
 
         private void btnCerrar_Click(object sender, EventArgs e)
@@ -82,13 +93,6 @@ namespace ClubDeportivoApp.Formularios
             this.Close();
         }
 
-        private void btnAceptarContrato_Click(object sender, EventArgs e)
-        {
-            servicio.FormalizarSocio(_idSocio, montoCuota);
-            PagoSocioForm pagoSocio = new PagoSocioForm(_conexion);
 
-            pagoSocio.Show();
-            this.Close();
-        }
     }
 }

@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PagoSocioForm));
+            this.txtMontoPago = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.cbConceptoPago = new System.Windows.Forms.ComboBox();
             this.cbMedioPago = new System.Windows.Forms.ComboBox();
@@ -59,22 +60,10 @@
             this.label6 = new System.Windows.Forms.Label();
             this.txtDni = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
-            this.txtMontoPago = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panelLogin.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // txtMontoPago
-            // 
-            txtMontoPago.Enabled = false;
-            txtMontoPago.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            txtMontoPago.Location = new System.Drawing.Point(726, 232);
-            txtMontoPago.MaximumSize = new System.Drawing.Size(400, 40);
-            txtMontoPago.MinimumSize = new System.Drawing.Size(400, 40);
-            txtMontoPago.Name = "txtMontoPago";
-            txtMontoPago.Size = new System.Drawing.Size(400, 26);
-            txtMontoPago.TabIndex = 8;
             // 
             // label1
             // 
@@ -163,6 +152,7 @@
             this.panel1.Controls.Add(this.txtFechaVencimiento);
             this.panel1.Controls.Add(this.txtCuota);
             this.panel1.Controls.Add(this.txtEstado);
+            this.panel1.Controls.Add(this.txtMontoPago);
             this.panel1.Controls.Add(this.txtDniSocio);
             this.panel1.Controls.Add(this.txtApellido);
             this.panel1.Controls.Add(this.txtNombre);
@@ -371,6 +361,17 @@
             this.label17.Size = new System.Drawing.Size(0, 20);
             this.label17.TabIndex = 26;
             // 
+            // txtMontoPago
+            // 
+            txtMontoPago.Enabled = false;
+            txtMontoPago.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            txtMontoPago.Location = new System.Drawing.Point(726, 232);
+            txtMontoPago.MaximumSize = new System.Drawing.Size(400, 40);
+            txtMontoPago.MinimumSize = new System.Drawing.Size(400, 40);
+            txtMontoPago.Name = "txtMontoPago";
+            txtMontoPago.Size = new System.Drawing.Size(400, 26);
+            txtMontoPago.TabIndex = 8;
+            // 
             // PagoSocioForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -389,13 +390,14 @@
             this.Controls.Add(this.panelLogin);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.label4);
-            this.Controls.Add(txtMontoPago);
+            this.Controls.Add(this.txtMontoPago);
             this.Controls.Add(this.cbMedioPago);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.cbConceptoPago);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "PagoSocioForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "InscripcionSocio";
             this.Load += new System.EventHandler(this.InscripcionSocio_Load);
             this.panel1.ResumeLayout(false);
@@ -411,6 +413,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cbConceptoPago;
         private System.Windows.Forms.ComboBox cbMedioPago;
+        private System.Windows.Forms.TextBox txtMontoPago;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnValidarCuota;
         private System.Windows.Forms.Label label3;
@@ -437,6 +440,5 @@
         private System.Windows.Forms.Label txtCuota;
         private System.Windows.Forms.Label txtEstado;
         private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.TextBox txtMontoPago;
     }
 }

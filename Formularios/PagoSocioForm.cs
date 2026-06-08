@@ -148,6 +148,10 @@ namespace ClubDeportivoApp.Formularios
                 if (result)
                 {
                     MessageBox.Show("Pago realizado con éxito");
+                    //Falta imprimir comprobante pago
+                    this.Hide();
+                    DashboardForm dashboard = new DashboardForm();
+                    this.Close();
                 }
                 else
                 {

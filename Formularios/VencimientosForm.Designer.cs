@@ -178,6 +178,7 @@
             this.btnMinimizar.TabIndex = 6;
             this.btnMinimizar.Text = "-";
             this.btnMinimizar.UseVisualStyleBackColor = false;
+            this.btnMinimizar.Click += new System.EventHandler(this.btnMinimizar_Click);
             // 
             // btnCerrar
             // 
@@ -193,6 +194,7 @@
             this.btnCerrar.TabIndex = 5;
             this.btnCerrar.Text = "X";
             this.btnCerrar.UseVisualStyleBackColor = false;
+            this.btnCerrar.Click += new System.EventHandler(this.btnCerrar_Click);
             // 
             // lblFechaHoy
             // 
@@ -218,6 +220,7 @@
             this.btnVolver.TabIndex = 18;
             this.btnVolver.Text = "<- VOLVER";
             this.btnVolver.UseVisualStyleBackColor = false;
+            this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
             // 
             // VencimientosForm
             // 
@@ -235,6 +238,7 @@
             this.Controls.Add(this.dataGridView1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "VencimientosForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "VencimientosForm";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataSet1)).EndInit();

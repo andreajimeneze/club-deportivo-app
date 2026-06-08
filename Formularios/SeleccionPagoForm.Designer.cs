@@ -48,7 +48,7 @@
             this.btnNoSocio.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(48)))), ((int)(((byte)(144)))));
             this.btnNoSocio.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnNoSocio.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.btnNoSocio.Location = new System.Drawing.Point(604, 326);
+            this.btnNoSocio.Location = new System.Drawing.Point(618, 326);
             this.btnNoSocio.Name = "btnNoSocio";
             this.btnNoSocio.Size = new System.Drawing.Size(359, 75);
             this.btnNoSocio.TabIndex = 8;
@@ -62,7 +62,7 @@
             this.btnSocio.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(250)))), ((int)(((byte)(200)))));
             this.btnSocio.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSocio.ForeColor = System.Drawing.Color.Black;
-            this.btnSocio.Location = new System.Drawing.Point(187, 323);
+            this.btnSocio.Location = new System.Drawing.Point(201, 323);
             this.btnSocio.Name = "btnSocio";
             this.btnSocio.Size = new System.Drawing.Size(359, 75);
             this.btnSocio.TabIndex = 9;

@@ -32,11 +32,11 @@ namespace ClubDeportivoApp
             this.Show();         
         }
 
-        private void btnCarnet_Click(object sender, EventArgs e)
+        private void btnReservas_Click(object sender, EventArgs e)
         {
-            PagoSocioForm pagoCarnet = new PagoSocioForm(_conexion);
+            ReservaForm reservas = new ReservaForm(_conexion);
             this.Hide();
-            pagoCarnet.ShowDialog();
+            reservas.ShowDialog();
             this.Show();
         }
 
@@ -47,7 +47,13 @@ namespace ClubDeportivoApp
             seleccionPago.ShowDialog();
             this.Show();
         }
-
+        private void btnCarnet_Click(object sender, EventArgs e)
+        {
+            PagoSocioForm pagoCarnet = new PagoSocioForm(_conexion);
+            this.Hide();
+            pagoCarnet.ShowDialog();
+            this.Show();
+        }
         private void btnMorosos_Click(object sender, EventArgs e)
         {
             VencimientosForm vencimientos = new VencimientosForm(_conexion);

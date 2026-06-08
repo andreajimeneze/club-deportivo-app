@@ -434,8 +434,8 @@ BEGIN
 		-- si es socio se ingresa a tabla socios
         INSERT INTO socios(cliente_id, estado)
         VALUES(p_cliente_id, TRUE);
-
-		SET rta = LAST_INSERT_ID();
+            
+	SET rta = LAST_INSERT_ID();
     ELSE
 		-- si no es socio se ingresa a tabla no_socios
         INSERT INTO no_socios(cliente_id, acceso_diario)
@@ -732,16 +732,44 @@ DELIMITER ;
 -- =========================================
 -- PROCEDIMIENTO RESERVA
 -- =========================================
-
+CREATE TABLE Reservas(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    programacion_id INT NOT NULL,
+    cliente_id INT NOT NULL,
+    fecha_hora_reserva DATETIME NOT NULL,
+    pagada BOOLEAN DEFAULT false,
+    
+    CONSTRAINT fk_reservas_programaciones
+    FOREIGN KEY (programacion_id)
+    REFERENCES programaciones(id),
+    
+    CONSTRAINT fk_reservas_clientes
+    FOREIGN KEY (cliente_id)
+    REFERENCES clientes(id)
+);
 DELIMITER //
 CREATE PROCEDURE generarReserva(
-	IN p_dni VARCHAR(10);
-    IN p_activiad
+	IN p_dni VARCHAR(10),
+    IN p_actividad VARCHAR(50),
+    IN fecha_hora DATETIME
 )
 
 BEGIN
-START TRANSACTION;
+DECLARE v_programacion_id INT DEFAULT NULL;
+DECLARE v_socio_id INT DEFAULT NULL;
+DECLARE v_no_socio_id INT DEFAULT NULL;
+DECLARE v_cupos_disponibles INT DEFAULT NULL;
 
+START TRANSACTION;
+	SELECT s.id, ns.id 
+    INTO v_socio_id, v_no_socio_id
+    FROM clientes cl 
+    JOIN socios s
+    ON cl.id = s.cliente_id
+    WHERE cl.dni = p_dni;
+    
+    INSERT INTO 
+    
 COMMIT;
 END //
 DELIMITER ;

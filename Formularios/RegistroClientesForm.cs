@@ -54,18 +54,26 @@ namespace ClubDeportivoApp.Forms
             try { 
                int id = servicio.RealizarRegistro(nombre, apellido, dni, aptoFisico, esSocio);
 
-               MessageBox.Show("Registro exitoso");
+            
+               
                 if(esSocio)
                 {
                     int idSocio = servicio.AsignarTipoSocio(id, esSocio);
                     Cliente socio = new Cliente(nombre, apellido, dni);
+                    MessageBox.Show($"Registro de CLIENTE SOCIO N° {idSocio}: {socio.Nombre}{socio.Apellido} exitoso");
                     FormalizacionSocioForm inscripcionSocio = new FormalizacionSocioForm(socio, idSocio,_conexion);
+                    // AsignarTipoSocio debiera retornar al socio para poder setear el estado en caso de que no haya
+                    // presentado el aptoFisico --- Puede continuar con la formalización y pago de cuota.
+                    //Pregunta: dónde presenta aptoFísico nuevamente?
                     this.Hide();
                     inscripcionSocio.ShowDialog();
                     this.Show();
                 } else
                 {
                     Cliente noSocio = new Cliente(nombre, apellido, dni);
+                    MessageBox.Show($"Registro de CLIENTE NO SOCIO {noSocio.Nombre}{noSocio.Apellido} exitoso");
+                    // AsignarTipoSocio debiera retornar al socio para poder setear el accesoDiario en caso de que no haya
+                    // presentado el aptoFisico --- No puede reservar. Fin del proceso. Pregunta: dónde presenta aptoFísico nuevamente?
                     ReservaForm reserva = new ReservaForm(_conexion);
                     this.Hide();
                     reserva.ShowDialog();

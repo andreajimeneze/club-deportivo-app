@@ -244,9 +244,10 @@
             // btnAceptarContrato
             // 
             this.btnAceptarContrato.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.btnAceptarContrato.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(48)))), ((int)(((byte)(144)))));
+            this.btnAceptarContrato.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(90)))), ((int)(((byte)(122)))));
+            this.btnAceptarContrato.Enabled = false;
             this.btnAceptarContrato.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAceptarContrato.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.btnAceptarContrato.ForeColor = System.Drawing.Color.LightGray;
             this.btnAceptarContrato.Location = new System.Drawing.Point(678, 558);
             this.btnAceptarContrato.Name = "btnAceptarContrato";
             this.btnAceptarContrato.Size = new System.Drawing.Size(241, 75);
@@ -280,6 +281,7 @@
             this.Controls.Add(this.txtMontoCuota);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "FormalizacionSocioForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "InscripcionForm";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panelLogin.ResumeLayout(false);
