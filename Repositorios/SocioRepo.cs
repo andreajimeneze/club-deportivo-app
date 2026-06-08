@@ -86,7 +86,9 @@ namespace ClubDeportivoApp.Repositorios
                                 Apellido = reader["apellido"].ToString(),
                                 Dni = reader["dni"].ToString(),
                                 EsSocio = Convert.ToBoolean(reader["es_socio"]),
-                                Estado = Convert.ToBoolean(reader["estado"])
+                                Estado = reader["estado"] != DBNull.Value &&
+                                    Convert.ToBoolean(reader["estado"])
+                                //Estado = Convert.ToBoolean(reader["estado"])
                             };
                         }
                         

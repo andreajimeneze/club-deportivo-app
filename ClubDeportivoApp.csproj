@@ -205,6 +205,7 @@
     <Compile Include="Repositorios\ProgramacionRepo.cs" />
     <Compile Include="Repositorios\RegistroRepo.cs" />
     <Compile Include="Repositorios\LoginRepo.cs" />
+    <Compile Include="Repositorios\ReservaRepo.cs" />
     <Compile Include="Repositorios\SocioRepo.cs" />
     <Compile Include="Servicios\InscripcionSocioServ.cs" />
     <Compile Include="Servicios\ListadosMaestrosServ.cs" />

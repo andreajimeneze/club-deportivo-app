@@ -83,22 +83,42 @@ namespace ClubDeportivoApp.Formularios
                 return;
             }
 
-            lblNombre.Text = clienteBuscado.Nombre;
-            lblApellido.Text = clienteBuscado.Apellido;
-            lblDniSocio.Text = clienteBuscado.Dni;
-            lblEsSocio.Text = clienteBuscado.EsSocio ? "Socio" : "No Socio";
+            lblNombre.Text = $"Nombre: {clienteBuscado.Nombre}";
+            lblApellido.Text = $"Apellido: {clienteBuscado.Apellido}";
+            lblDniSocio.Text = $"DNI: {clienteBuscado.Dni}";
+            lblEsSocio.Text = $"Tipo Cliente: {(clienteBuscado.EsSocio ? "Socio" : "No Socio")}";
 
             if (clienteBuscado.EsSocio)
-            {
+            {                            
+                lblEstado.Text = $"Estado: {(clienteBuscado.Estado ? "Activo" : "Inactivo")}";
+                
                 MessageBox.Show("Cliente es socio");
-                if (lblEsSocio.Text == "Socio")
+
+                if(!clienteBuscado.Estado)
                 {
-                    lblEstado.Text = clienteBuscado.Estado ? "Activo" : "Inactivo";
+                    MessageBox.Show("Socio se encuentra inactivo no puede realizar reserva.");
+                } else
+                {
+                    
+                    MessageBox.Show("Reserva efectuada exitosamente. Socio no debe pagar");
+
+                    // Ejecutar reserva
+                    // Debiera entregarse un comprobante de reserva
                 }
+
+
+                this.Close();
 
             } else
             {
                 MessageBox.Show("Cliente NO ES SOCIO");
+                PagoNoSocioForm pagoNoSocio = new PagoNoSocioForm(_conexion);
+                this.Hide();
+                pagoNoSocio.ShowDialog();
+                this.Close();
+                // Reserva se ejecuta cuando el no socio realiza el pago en PagoNoSocioForm
+                // Pago no socio debiera llevar los datos del no socio y de la reserva para 
+                // cargar datos por defecto?
 
             }
         }

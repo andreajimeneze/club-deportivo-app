@@ -44,7 +44,6 @@
             this.txtDni = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.lblTipoCliente = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.lblPrecio = new System.Windows.Forms.Label();
             this.lblDisponibilidad = new System.Windows.Forms.Label();
@@ -230,7 +229,6 @@
             // panel1
             // 
             this.panel1.Controls.Add(this.lblEsSocio);
-            this.panel1.Controls.Add(this.lblTipoCliente);
             this.panel1.Controls.Add(this.label6);
             this.panel1.Controls.Add(this.lblPrecio);
             this.panel1.Controls.Add(this.lblDisponibilidad);
@@ -245,16 +243,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(414, 488);
             this.panel1.TabIndex = 39;
-            // 
-            // lblTipoCliente
-            // 
-            this.lblTipoCliente.AutoSize = true;
-            this.lblTipoCliente.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTipoCliente.Location = new System.Drawing.Point(61, 170);
-            this.lblTipoCliente.Name = "lblTipoCliente";
-            this.lblTipoCliente.Size = new System.Drawing.Size(103, 20);
-            this.lblTipoCliente.TabIndex = 35;
-            this.lblTipoCliente.Text = "Tipo Cliente:";
             // 
             // label6
             // 
@@ -311,7 +299,7 @@
             // 
             this.lblEstado.AutoSize = true;
             this.lblEstado.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblEstado.Location = new System.Drawing.Point(57, 239);
+            this.lblEstado.Location = new System.Drawing.Point(61, 207);
             this.lblEstado.Name = "lblEstado";
             this.lblEstado.Size = new System.Drawing.Size(66, 20);
             this.lblEstado.TabIndex = 29;
@@ -376,7 +364,7 @@
             // 
             this.lblEsSocio.AutoSize = true;
             this.lblEsSocio.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblEsSocio.Location = new System.Drawing.Point(61, 206);
+            this.lblEsSocio.Location = new System.Drawing.Point(61, 171);
             this.lblEsSocio.Name = "lblEsSocio";
             this.lblEsSocio.Size = new System.Drawing.Size(103, 20);
             this.lblEsSocio.TabIndex = 36;
@@ -443,7 +431,6 @@
         private System.Windows.Forms.Label lblPrecio;
         private System.Windows.Forms.Label lblDisponibilidad;
         private System.Windows.Forms.ComboBox cbFechaHora;
-        private System.Windows.Forms.Label lblTipoCliente;
         private System.Windows.Forms.Label lblEsSocio;
     }
 }
