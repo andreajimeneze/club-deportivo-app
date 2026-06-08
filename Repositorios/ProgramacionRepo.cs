@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace ClubDeportivoApp.Repositorios
 {
-    public class ProgramacionRepo : IListado<ProgramacionDTO>
+    public class ProgramacionRepo   
     {
         private readonly ConexionMySql _conexionDatabase;
 
@@ -20,29 +20,30 @@ namespace ClubDeportivoApp.Repositorios
             _conexionDatabase = conexionDatabase;
         }
 
-        public List<ProgramacionDTO> ObtenerLista()
+        public List<Programacion> BuscarProgramacionPorActividad(int idActividad)
         {
-            string query = "SELECT a.id AS id_act, a.nombre, a.precio, p.fecha_hora, p.id AS id_prog, p.cupos_disponibles" +
-                "FROM programaciones p INNER JOIN actividades a ON a.id = p.actividad_id";
+            string query = "SELECT a.id AS id_act, p.fecha_hora, p.id AS id_prog, p.cupos_disponibles" +
+                " FROM programaciones p INNER JOIN actividades a ON a.id = p.actividad_id " +
+                " WHERE a.id = @idActividad" +
+                " ORDER BY p.fecha_hora ASC";
 
             using(MySqlConnection conn = _conexionDatabase.GetMySqlConnection())
             {
                 using(MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
+                    cmd.Parameters.AddWithValue("@idActividad", idActividad);
+
                     using(MySqlDataReader reader = cmd.ExecuteReader())
                     {
-                        List<ProgramacionDTO> listaProgramacion = new List<ProgramacionDTO>();
+                        List<Programacion> listaProgramacion = new List<Programacion>();
                         
                           while (reader.Read())
                             {
-                            ProgramacionDTO programacion = new ProgramacionDTO
+                            Programacion programacion = new Programacion
                             {
-                                IdProgramacion = Convert.ToInt32(reader["id_prog"]),
-                                IdActividad = Convert.ToInt32(reader["id_act"]),
-                                NombreActividad = reader["nombre"].ToString(),
-                                PrecioActividad = Convert.ToDecimal(reader["precio"]),
+                                Id = Convert.ToInt32(reader["id_prog"]),
                                 FechaHora = Convert.ToDateTime(reader["fecha_hora"]),
-                                CuposDisponibles = Convert.ToInt32(reader["cupos_disponibles"])
+                                CuposDisponibles = Convert.ToInt32(reader["cupos_disponibles"]),
                             };
 
                             listaProgramacion.Add(programacion);

@@ -17,10 +17,17 @@ namespace ClubDeportivoApp.Servicios
             _socioRepo = socioRepo;
         }
 
-        public bool ExisteSocioPorId(string dni)
+        public ClienteDTO BuscarClientePorDni(string dni)
         {
-            return _socioRepo.BuscarSocioPorDNI(dni);
+            ClienteDTO clienteBuscado = _socioRepo.BuscarClientePorDniRepo(dni);
+            if(clienteBuscado == null)
+            {
+                return null;
+            }
+
+            return clienteBuscado;
         }
+
         public CuotaPendienteDTO ObtenerCuotaPendienteServ(string dni)
         {
             CuotaPendienteDTO cuota = new CuotaPendienteDTO();

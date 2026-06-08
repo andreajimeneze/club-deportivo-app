@@ -12,12 +12,12 @@ namespace ClubDeportivoApp.Servicios
     internal class ListadosMaestrosServ
     {
         private ConceptoPagoRepo _cPagorepo;
-        private ActividadRepo _actRepo;
         private MetodoPagoRepo _mPagoRepo;
-
+        private ActividadRepo _actRepo;
+             
         public ListadosMaestrosServ(ActividadRepo actRepo)
         {
-            _actRepo = actRepo;
+            _actRepo = actRepo;         
         }
         public ListadosMaestrosServ(ConceptoPagoRepo cPagoRepo, MetodoPagoRepo mPagoRepo)
         {

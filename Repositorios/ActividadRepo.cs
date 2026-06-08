@@ -27,18 +27,19 @@ namespace ClubDeportivoApp.Repositorios
             using (MySqlConnection conn = conexionMysql.GetMySqlConnection())
             {
  
-                string query = "SELECT id, nombre FROM actividades";
+                string query = "SELECT id, nombre, precio FROM actividades";
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
-                    using (MySqlDataReader dr = cmd.ExecuteReader())
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
                         List<Actividad> actividades = new List<Actividad>();
-                        while (dr.Read())
+                        while (reader.Read())
                         {
                             Actividad actividad = new Actividad
                             {
-                                Id = Convert.ToInt32(dr["id"]),
-                                Nombre = dr["nombre"].ToString()
+                                Id = Convert.ToInt32(reader["id"]),
+                                Nombre = reader["nombre"].ToString(),
+                                Precio = Convert.ToDecimal(reader["precio"])
                             };
 
                             actividades.Add(actividad);

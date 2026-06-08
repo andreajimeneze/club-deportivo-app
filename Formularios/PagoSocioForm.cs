@@ -80,11 +80,17 @@ namespace ClubDeportivoApp.Formularios
                 return;
             }
 
-            bool existe = socioServ.ExisteSocioPorId(dni);
+            ClienteDTO clienteBuscado = socioServ.BuscarClientePorDni(dni);
 
-            if(!existe)
+            if(clienteBuscado == null)
             {
-                MessageBox.Show("Socio no existe, verifique el número de DNI");
+                MessageBox.Show("Cliente no existe, verifique el número de DNI");
+                return;
+            }
+
+            if(!clienteBuscado.EsSocio)
+            {
+                MessageBox.Show("Cliente no es socio");
                 return;
             }
 

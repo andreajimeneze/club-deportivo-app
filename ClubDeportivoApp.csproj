@@ -114,8 +114,8 @@
   <ItemGroup>
     <Compile Include="BaseDatos\Conexion.cs" />
     <Compile Include="BaseDatos\ConexionMySql.cs" />
+    <Compile Include="DTOS\ClienteDTO.cs" />
     <Compile Include="DTOS\CuotaPendienteDTO.cs" />
-    <Compile Include="DTOS\ProgramacionDTO.cs" />
     <Compile Include="Formularios\AccesoBDForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -209,6 +209,7 @@
     <Compile Include="Servicios\InscripcionSocioServ.cs" />
     <Compile Include="Servicios\ListadosMaestrosServ.cs" />
     <Compile Include="Servicios\PagoServ.cs" />
+    <Compile Include="Servicios\ProgramacionServ.cs" />
     <Compile Include="Servicios\RegistroServ.cs" />
     <Compile Include="Servicios\LoginServ.cs" />
     <Compile Include="Servicios\SocioServ.cs" />

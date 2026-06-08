@@ -46,6 +46,10 @@
             this.btnValidarPago = new System.Windows.Forms.Button();
             this.txtDni = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.txtFechaVencimiento = new System.Windows.Forms.Label();
             this.txtCuota = new System.Windows.Forms.Label();
@@ -53,10 +57,6 @@
             this.txtApellido = new System.Windows.Forms.Label();
             this.txtNombre = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panelLogin.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -172,13 +172,12 @@
             // 
             // txtMontoPago
             // 
-            this.txtMontoPago.Enabled = false;
             this.txtMontoPago.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtMontoPago.Location = new System.Drawing.Point(266, 280);
             this.txtMontoPago.MaximumSize = new System.Drawing.Size(400, 40);
             this.txtMontoPago.MinimumSize = new System.Drawing.Size(400, 40);
             this.txtMontoPago.Name = "txtMontoPago";
-            this.txtMontoPago.Size = new System.Drawing.Size(400, 40);
+            this.txtMontoPago.Size = new System.Drawing.Size(400, 26);
             this.txtMontoPago.TabIndex = 30;
             // 
             // cbMetodosPago
@@ -241,13 +240,12 @@
             // 
             // txtDni
             // 
-            this.txtDni.Enabled = false;
             this.txtDni.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtDni.Location = new System.Drawing.Point(266, 184);
             this.txtDni.MaximumSize = new System.Drawing.Size(400, 40);
             this.txtDni.MinimumSize = new System.Drawing.Size(400, 40);
             this.txtDni.Name = "txtDni";
-            this.txtDni.Size = new System.Drawing.Size(400, 40);
+            this.txtDni.Size = new System.Drawing.Size(400, 26);
             this.txtDni.TabIndex = 38;
             // 
             // panel1
@@ -267,6 +265,47 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(414, 463);
             this.panel1.TabIndex = 40;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(62, 404);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(125, 20);
+            this.label2.TabIndex = 38;
+            this.label2.Text = "Medio de Pago:";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(62, 366);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(101, 20);
+            this.label4.TabIndex = 37;
+            this.label4.Text = "Fecha pago:";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(62, 334);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(55, 20);
+            this.label7.TabIndex = 36;
+            this.label7.Text = "Monto";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(49, 294);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(120, 25);
+            this.label1.TabIndex = 35;
+            this.label1.Tag = "";
+            this.label1.Text = "Datos Pago:";
             // 
             // label6
             // 
@@ -340,48 +379,7 @@
             this.label3.Tag = "";
             this.label3.Text = "Datos Cliente:";
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(49, 294);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(120, 25);
-            this.label1.TabIndex = 35;
-            this.label1.Tag = "";
-            this.label1.Text = "Datos Pago:";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(62, 404);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(125, 20);
-            this.label2.TabIndex = 38;
-            this.label2.Text = "Medio de Pago:";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(62, 366);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(101, 20);
-            this.label4.TabIndex = 37;
-            this.label4.Text = "Fecha pago:";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(62, 334);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(55, 20);
-            this.label7.TabIndex = 36;
-            this.label7.Text = "Monto";
-            // 
-            // PagoNoSocio
+            // PagoNoSocioForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -403,7 +401,7 @@
             this.Controls.Add(this.lblFechaHoy);
             this.Controls.Add(this.btnVolver);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "PagoNoSocio";
+            this.Name = "PagoNoSocioForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Inscripcion Actividades NO SOCIO";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

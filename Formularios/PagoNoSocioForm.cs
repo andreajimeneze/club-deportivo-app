@@ -11,16 +11,10 @@ namespace ClubDeportivoApp.Formularios
     {
         private readonly ConexionMySql _conexion;
         private readonly ListadosMaestrosServ servicio;
-        private readonly Cliente _noSocio;
-
+       
         public PagoNoSocioForm(ConexionMySql conexion)
         {
-            _conexion = conexion;
-        }
-        public PagoNoSocioForm(Cliente noSocio, ConexionMySql conexion)
-        {
             InitializeComponent();
-            _noSocio = noSocio;
             _conexion = conexion;
            
             ConceptoPagoRepo cPagoRepo = new ConceptoPagoRepo(_conexion);

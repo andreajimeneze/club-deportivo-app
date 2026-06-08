@@ -66,9 +66,7 @@ namespace ClubDeportivoApp.Forms
                 } else
                 {
                     Cliente noSocio = new Cliente(nombre, apellido, dni);
-                    //PagoNoSocioForm inscripcionNoSocio = new PagoNoSocioForm(noSocio, _conexion);
-                    //inscripcionNoSocio.ShowDialog();
-                    ReservaForm reserva = new ReservaForm(noSocio, _conexion);
+                    ReservaForm reserva = new ReservaForm(_conexion);
                     this.Hide();
                     reserva.ShowDialog();
                     this.Close();

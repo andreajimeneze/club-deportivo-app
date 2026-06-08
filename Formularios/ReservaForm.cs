@@ -1,4 +1,5 @@
-﻿using ClubDeportivoApp.Modelos;
+﻿using ClubDeportivoApp.DTOS;
+using ClubDeportivoApp.Modelos;
 using ClubDeportivoApp.Models;
 using ClubDeportivoApp.Repositorios;
 using ClubDeportivoApp.Servicios;
@@ -10,22 +11,22 @@ namespace ClubDeportivoApp.Formularios
     public partial class ReservaForm : Form
     {
         private readonly ConexionMySql _conexion;
-        private readonly Cliente _noSocio;
         private readonly ListadosMaestrosServ listasServ;
-        public ReservaForm(ConexionMySql conexion) {
-            _conexion = conexion;
-        }
-        public ReservaForm(Cliente noSocio, ConexionMySql conexion)
+        private readonly ProgramacionServ progServ;
+        private readonly SocioServ socioServ;
+
+        public ReservaForm(ConexionMySql conexion)
         {
             InitializeComponent();
-            _noSocio = noSocio;
             _conexion = conexion;
-           
+
             ActividadRepo actRepo = new ActividadRepo(_conexion);
-            ConceptoPagoRepo cPagoRepo = new ConceptoPagoRepo(_conexion);
-            MetodoPagoRepo mPagoRepo = new MetodoPagoRepo(_conexion);
+            ProgramacionRepo progRepo = new ProgramacionRepo(_conexion);
+            SocioRepo socioRepo = new SocioRepo(_conexion);
             listasServ = new ListadosMaestrosServ(actRepo);
-            
+            progServ = new ProgramacionServ(progRepo);
+            socioServ = new SocioServ(socioRepo);
+
             lblFechaHoy.Text = $"Fecha y hora: {DateTime.Now.ToString("dd/MM/yyyy")}";
         }
 
@@ -44,14 +45,62 @@ namespace ClubDeportivoApp.Formularios
             cbActividades.ValueMember = "Id";
         }
 
-        private void btnValidarPago_Click(object sender, EventArgs e)
+        private void CargarProgramacion(int idActividad)
         {
+            var lista = progServ.ObtenerProgramacionPorActividad(idActividad);
 
+            lista.Insert(0, new Programacion
+            {
+                Id = 0,
+                FechaHora = DateTime.MinValue,
+                CuposDisponibles = 0
+            });
+
+            cbFechaHora.DataSource = null;
+            cbFechaHora.DataSource = lista;
+            cbFechaHora.DisplayMember = $"Descripcion";
+            cbFechaHora.ValueMember = "Id";
+
+            lblFechaHora.Text = "Fecha y Hora:";
+            lblDisponibilidad.Text = "Disponibilidad:";
         }
 
         private void btnReserva_Click(object sender, EventArgs e)
         {
+            string dni = txtDni.Text;
 
+            if (String.IsNullOrEmpty(dni))
+            {
+                MessageBox.Show("Debe ingresar un DNI");
+                return;
+            }
+
+            ClienteDTO clienteBuscado = socioServ.BuscarClientePorDni(dni);
+
+            if (clienteBuscado == null)
+            {
+                MessageBox.Show("Cliente no existe, verifique el número de DNI");
+                return;
+            }
+
+            lblNombre.Text = clienteBuscado.Nombre;
+            lblApellido.Text = clienteBuscado.Apellido;
+            lblDniSocio.Text = clienteBuscado.Dni;
+            lblEsSocio.Text = clienteBuscado.EsSocio ? "Socio" : "No Socio";
+
+            if (clienteBuscado.EsSocio)
+            {
+                MessageBox.Show("Cliente es socio");
+                if (lblEsSocio.Text == "Socio")
+                {
+                    lblEstado.Text = clienteBuscado.Estado ? "Activo" : "Inactivo";
+                }
+
+            } else
+            {
+                MessageBox.Show("Cliente NO ES SOCIO");
+
+            }
         }
 
         private void btnVolver_Click(object sender, EventArgs e)
@@ -76,12 +125,21 @@ namespace ClubDeportivoApp.Formularios
 
         private void cbActividades_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            if (cbActividades.SelectedItem is Actividad actividad && actividad.Id != 0)
+            {
+                CargarProgramacion(actividad.Id);
+                lblActividad.Text = $"Actividad: {actividad.Nombre}";
+                lblPrecio.Text = $"Precio: {actividad.Precio}";
+            }
         }
 
-        private void dtActividad_ValueChanged(object sender, EventArgs e)
+        private void cbFechaHora_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            if (cbFechaHora.SelectedItem is Programacion programacion && programacion.Id != 0)
+            {
+                lblFechaHora.Text = $"Fecha y Hora: {programacion.FormatoFechaHora()}";
+                lblDisponibilidad.Text = $"{(programacion.EstaDisponible() ? "Disponibilidad: Sí" : "Disponibilidad: No")}";
+            }
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using ClubDeportivoApp.DTOS;
 using ClubDeportivoApp.Models;
 using MySql.Data.MySqlClient;
+using MySqlX.XDevAPI;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -19,12 +20,52 @@ namespace ClubDeportivoApp.Repositorios
             _conexionDatabase = conexionDatabase;
         }
 
-        public bool BuscarSocioPorDNI(string dni)
-        {
-            string query = "SELECT 1 FROM socios s JOIN clientes cl ON cl.id = s.cliente_id " +
-                "JOIN personas p ON p.id = cl.persona_id WHERE p.dni = @dni";
+        //public bool BuscarSocioPorDNI(string dni)
+        //{
+        //    string query = "SELECT 1 FROM socios s JOIN clientes cl ON cl.id = s.cliente_id " +
+        //        "JOIN personas p ON p.id = cl.persona_id WHERE p.dni = @dni";
 
-            using(MySqlConnection conn = _conexionDatabase.GetMySqlConnection())
+        //    using(MySqlConnection conn = _conexionDatabase.GetMySqlConnection())
+        //    {
+        //        using (
+        //            MySqlCommand cmd =
+        //            new MySqlCommand(query, conn)
+        //        )
+        //        {
+        //            cmd.Parameters.AddWithValue("@dni", dni);
+
+        //            using (MySqlDataReader reader =
+        //                   cmd.ExecuteReader())
+        //            {
+        //                return reader.Read();
+        //            }
+        //        }
+        //    }
+        //}
+
+        public ClienteDTO BuscarClientePorDniRepo(string dni)
+        {
+            ClienteDTO cliente = null;
+
+            string query = @"
+                SELECT
+                    cl.id AS id_cliente,
+                    p.nombre,
+                    p.apellido,
+                    p.dni,
+                    s.estado,
+                    CASE
+                        WHEN s.id IS NULL THEN 0
+                        ELSE 1
+                    END AS es_socio
+                FROM clientes cl
+                JOIN personas p
+                    ON p.id = cl.persona_id
+                LEFT JOIN socios s
+                    ON s.cliente_id = cl.id
+                WHERE p.dni = @dni";
+
+            using (MySqlConnection conn = _conexionDatabase.GetMySqlConnection())
             {
                 using (
                     MySqlCommand cmd =
@@ -36,11 +77,25 @@ namespace ClubDeportivoApp.Repositorios
                     using (MySqlDataReader reader =
                            cmd.ExecuteReader())
                     {
-                        return reader.Read();
+                        if(reader.Read())
+                        {
+                            cliente = new ClienteDTO
+                            {
+                                IdCliente = Convert.ToInt32(reader["id_cliente"]),
+                                Nombre = reader["nombre"].ToString(),
+                                Apellido = reader["apellido"].ToString(),
+                                Dni = reader["dni"].ToString(),
+                                EsSocio = Convert.ToBoolean(reader["es_socio"]),
+                                Estado = Convert.ToBoolean(reader["estado"])
+                            };
+                        }
+                        
                     }
                 }
             }
+            return cliente;
         }
+
         public CuotaPendienteDTO ObtenerCuotaPendienteRepo(string dni)
         {
             CuotaPendienteDTO cuota = null;
