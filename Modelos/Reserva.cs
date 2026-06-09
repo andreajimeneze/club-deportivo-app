@@ -13,7 +13,7 @@ namespace ClubDeportivoApp.Modelos
         public Programacion Programacion { get; set; }
         public Cliente Cliente { get; set; }
         public DateTime FechaHoraReserva { get; set; }
-        public bool Pagada {get; set;}
-      
+        public bool Pagada { get; set; }
     }
 }
+

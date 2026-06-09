@@ -399,7 +399,7 @@
             this.Name = "PagoSocioForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "InscripcionSocio";
-            this.Load += new System.EventHandler(this.InscripcionSocio_Load);
+            this.Load += new System.EventHandler(this.PagoSocioForm_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

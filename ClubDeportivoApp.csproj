@@ -116,6 +116,7 @@
     <Compile Include="BaseDatos\ConexionMySql.cs" />
     <Compile Include="DTOS\ClienteDTO.cs" />
     <Compile Include="DTOS\CuotaPendienteDTO.cs" />
+    <Compile Include="DTOS\ReservaDTO.cs" />
     <Compile Include="Formularios\AccesoBDForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -213,6 +214,7 @@
     <Compile Include="Servicios\ProgramacionServ.cs" />
     <Compile Include="Servicios\RegistroServ.cs" />
     <Compile Include="Servicios\LoginServ.cs" />
+    <Compile Include="Servicios\ReservaServ.cs" />
     <Compile Include="Servicios\SocioServ.cs" />
     <EmbeddedResource Include="Formularios\AccesoBDForm.resx">
       <DependentUpon>AccesoBDForm.cs</DependentUpon>

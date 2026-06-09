@@ -88,7 +88,6 @@ namespace ClubDeportivoApp.Repositorios
                                 EsSocio = Convert.ToBoolean(reader["es_socio"]),
                                 Estado = reader["estado"] != DBNull.Value &&
                                     Convert.ToBoolean(reader["estado"])
-                                //Estado = Convert.ToBoolean(reader["estado"])
                             };
                         }
                         

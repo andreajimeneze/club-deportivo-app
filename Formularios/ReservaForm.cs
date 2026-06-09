@@ -14,6 +14,9 @@ namespace ClubDeportivoApp.Formularios
         private readonly ListadosMaestrosServ listasServ;
         private readonly ProgramacionServ progServ;
         private readonly SocioServ socioServ;
+        private readonly ReservaServ resServ;
+        private Actividad actividad;
+        private Programacion programacion;
 
         public ReservaForm(ConexionMySql conexion)
         {
@@ -23,9 +26,13 @@ namespace ClubDeportivoApp.Formularios
             ActividadRepo actRepo = new ActividadRepo(_conexion);
             ProgramacionRepo progRepo = new ProgramacionRepo(_conexion);
             SocioRepo socioRepo = new SocioRepo(_conexion);
+            ReservaRepo resRepo = new ReservaRepo(_conexion);
             listasServ = new ListadosMaestrosServ(actRepo);
             progServ = new ProgramacionServ(progRepo);
             socioServ = new SocioServ(socioRepo);
+            resServ = new ReservaServ(resRepo);
+
+            //actividad = new Actividad();
 
             lblFechaHoy.Text = $"Fecha y hora: {DateTime.Now.ToString("dd/MM/yyyy")}";
         }
@@ -65,6 +72,26 @@ namespace ClubDeportivoApp.Formularios
             lblDisponibilidad.Text = "Disponibilidad:";
         }
 
+        private void cbActividades_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbActividades.SelectedItem is Actividad act && act.Id != 0)
+            {
+                actividad = act;
+                CargarProgramacion(act.Id);
+                lblActividad.Text = $"Actividad: {act.Nombre}";
+                lblPrecio.Text = $"Precio: {act.Precio}";
+            }
+        }
+
+        private void cbFechaHora_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbFechaHora.SelectedItem is Programacion prog && prog.Id != 0)
+            {
+                programacion = prog;
+                lblFechaHora.Text = $"Fecha y Hora: {prog.FormatoFechaHora()}";
+                lblDisponibilidad.Text = $"{(prog.EstaDisponible() ? "Disponibilidad: Sí" : "Disponibilidad: No")}";
+            }
+        }
         private void btnReserva_Click(object sender, EventArgs e)
         {
             string dni = txtDni.Text;
@@ -102,6 +129,15 @@ namespace ClubDeportivoApp.Formularios
                     
                     MessageBox.Show("Reserva efectuada exitosamente. Socio no debe pagar");
 
+                    int idReserva = resServ.GenerarReserva(actividad.Id, clienteBuscado.IdCliente, programacion.FechaHora);
+                    
+                    if(idReserva <= 0)
+                    {
+                        MessageBox.Show("Error al crear la reserva");
+                        return;
+                    }
+
+                    
                     // Ejecutar reserva
                     // Debiera entregarse un comprobante de reserva
                 }
@@ -112,10 +148,17 @@ namespace ClubDeportivoApp.Formularios
             } else
             {
                 MessageBox.Show("Cliente NO ES SOCIO");
+                int idReserva = resServ.GenerarReserva(actividad.Id, clienteBuscado.IdCliente, programacion.FechaHora);
+                if (idReserva <= 0)
+                {
+                    MessageBox.Show("Error al crear la reserva");
+                    return;
+                }
                 PagoNoSocioForm pagoNoSocio = new PagoNoSocioForm(_conexion);
                 this.Hide();
                 pagoNoSocio.ShowDialog();
                 this.Close();
+
                 // Reserva se ejecuta cuando el no socio realiza el pago en PagoNoSocioForm
                 // Pago no socio debiera llevar los datos del no socio y de la reserva para 
                 // cargar datos por defecto?
@@ -143,23 +186,6 @@ namespace ClubDeportivoApp.Formularios
             CargarActividades();
         }
 
-        private void cbActividades_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (cbActividades.SelectedItem is Actividad actividad && actividad.Id != 0)
-            {
-                CargarProgramacion(actividad.Id);
-                lblActividad.Text = $"Actividad: {actividad.Nombre}";
-                lblPrecio.Text = $"Precio: {actividad.Precio}";
-            }
-        }
-
-        private void cbFechaHora_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (cbFechaHora.SelectedItem is Programacion programacion && programacion.Id != 0)
-            {
-                lblFechaHora.Text = $"Fecha y Hora: {programacion.FormatoFechaHora()}";
-                lblDisponibilidad.Text = $"{(programacion.EstaDisponible() ? "Disponibilidad: Sí" : "Disponibilidad: No")}";
-            }
-        }
+        
     }
 }

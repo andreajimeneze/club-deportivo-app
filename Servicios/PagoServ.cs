@@ -1,10 +1,6 @@
 ﻿using ClubDeportivoApp.Repositorios;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+
 
 namespace ClubDeportivoApp.Servicios
 {
@@ -17,22 +13,22 @@ namespace ClubDeportivoApp.Servicios
             this.repo = repo;
         }
 
-        public bool RegistrarPago(int? socioId, int? noSocioId, decimal montoAPagar, decimal montoCuota, int conceptoPago, int medioPago)
+        public bool RegistrarPagoCuota(int socioId, decimal montoAPagar, decimal montoCuota, int conceptoPago, int medioPago)
         {
-           
-            if (socioId.HasValue && montoAPagar < montoCuota)
+
+            if (montoAPagar < montoCuota)
             {
-                MessageBox.Show($"El monto a pagar (${montoAPagar}) es menor que la cuota (${montoCuota})");
                 return false;
             }
 
             if (montoAPagar <= 0)
             {
-                MessageBox.Show("El monto a pagar debe ser mayor a 0");
-                return false;
+                throw new ArgumentException("El monto debe ser mayor a 0");
             }
 
-            int result = repo.RegistrarPago(socioId, noSocioId, montoAPagar, conceptoPago, medioPago);
+           
+             int result = repo.RegistrarPagoCuota(socioId, montoAPagar, conceptoPago, medioPago);
+                     
 
             if (result <= 0)
             {
@@ -42,5 +38,29 @@ namespace ClubDeportivoApp.Servicios
             return true;
         }
 
+        public bool RegistrarPagoActividad(int noSocioId, int idReserva, decimal montoAPagar, decimal montoActividad, int conceptoPago, int medioPago)
+        {
+            if (montoAPagar < montoActividad)
+            {
+                return false;
+            }
+
+            if (montoAPagar <= 0)
+            {
+                throw new ArgumentException("El monto debe ser mayor a 0");
+            }
+
+            
+             int result = repo.RegistrarPagoActividad(idReserva, montoAPagar, conceptoPago, medioPago);             
+                  
+
+
+            if (result <= 0)
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 }

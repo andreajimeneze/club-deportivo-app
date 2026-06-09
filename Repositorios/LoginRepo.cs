@@ -70,9 +70,6 @@ namespace ClubDeportivoApp.Repositories
                             usuario.Username =
                                 reader.GetString("username");
 
-                            //usuario.Rol.Id =
-                            //    reader.GetInt32("rol_id");
-
                             usuario.Activo =
                                 reader.GetBoolean("activo");
                             usuario.Nombre =

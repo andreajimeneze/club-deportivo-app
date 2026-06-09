@@ -44,6 +44,7 @@
             this.txtDni = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.lblEsSocio = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.lblPrecio = new System.Windows.Forms.Label();
             this.lblDisponibilidad = new System.Windows.Forms.Label();
@@ -55,7 +56,6 @@
             this.lblNombre = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.cbFechaHora = new System.Windows.Forms.ComboBox();
-            this.lblEsSocio = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panelLogin.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -244,6 +244,16 @@
             this.panel1.Size = new System.Drawing.Size(414, 488);
             this.panel1.TabIndex = 39;
             // 
+            // lblEsSocio
+            // 
+            this.lblEsSocio.AutoSize = true;
+            this.lblEsSocio.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblEsSocio.Location = new System.Drawing.Point(61, 171);
+            this.lblEsSocio.Name = "lblEsSocio";
+            this.lblEsSocio.Size = new System.Drawing.Size(103, 20);
+            this.lblEsSocio.TabIndex = 36;
+            this.lblEsSocio.Text = "Tipo Cliente:";
+            // 
             // label6
             // 
             this.label6.AutoSize = true;
@@ -359,16 +369,6 @@
             this.cbFechaHora.Size = new System.Drawing.Size(400, 33);
             this.cbFechaHora.TabIndex = 41;
             this.cbFechaHora.SelectedIndexChanged += new System.EventHandler(this.cbFechaHora_SelectedIndexChanged);
-            // 
-            // lblEsSocio
-            // 
-            this.lblEsSocio.AutoSize = true;
-            this.lblEsSocio.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblEsSocio.Location = new System.Drawing.Point(61, 171);
-            this.lblEsSocio.Name = "lblEsSocio";
-            this.lblEsSocio.Size = new System.Drawing.Size(103, 20);
-            this.lblEsSocio.TabIndex = 36;
-            this.lblEsSocio.Text = "Tipo Cliente:";
             // 
             // ReservaForm
             // 

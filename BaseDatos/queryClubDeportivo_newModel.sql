@@ -142,43 +142,6 @@ CREATE TABLE metodos_pago(
 	nombre VARCHAR(30) NOT NULL
 );
 
--- =========================================
--- TABLA PAGOS
--- =========================================
-
-CREATE TABLE pagos(
-    id INT AUTO_INCREMENT PRIMARY KEY,
-
-    cuota_id INT NULL,
-    no_socio_id INT NULL,
-
-    fecha_pago DATE NOT NULL,
-    monto DECIMAL NOT NULL,
-
-    concepto_id INT NOT NULL,
-    metodo_id INT NOT NULL,
-
-    CONSTRAINT fk_pagos_cuotas
-    FOREIGN KEY(cuota_id)
-    REFERENCES cuotas(id),
-
-    CONSTRAINT fk_pagos_no_socios
-    FOREIGN KEY(no_socio_id)
-    REFERENCES no_socios(id),
-    
-    CONSTRAINT fk_pagos_conceptos_pago
-    FOREIGN KEY(concepto_id)
-    REFERENCES conceptos_pago(id),
-    
-    CONSTRAINT fk_pagos_metodos_pago
-    FOREIGN KEY(metodo_id)
-    REFERENCES metodos_pago(id),
-    
-    CONSTRAINT chk_origen_pago CHECK ( 
-    (cuota_id IS NOT NULL AND no_socio_id IS NULL) 
-    OR (cuota_id IS NULL AND no_socio_id IS NOT NULL) )
-);
-
 CREATE TABLE Actividades(
 	id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(50) NOT NULL,
@@ -200,7 +163,7 @@ CREATE TABLE Reservas(
 	id INT AUTO_INCREMENT PRIMARY KEY,
     programacion_id INT NOT NULL,
     cliente_id INT NOT NULL,
-    fecha_hora_reserva DATETIME NOT NULL,
+    fecha_reserva DATETIME NOT NULL,
     pagada BOOLEAN DEFAULT false,
     
     CONSTRAINT fk_reservas_programaciones
@@ -211,6 +174,45 @@ CREATE TABLE Reservas(
     FOREIGN KEY (cliente_id)
     REFERENCES clientes(id)
 );
+
+
+-- =========================================
+-- TABLA PAGOS
+-- =========================================
+
+CREATE TABLE pagos(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+
+    cuota_id INT NULL,
+    reserva_id INT NULL,
+
+    fecha_pago DATE NOT NULL,
+    monto DECIMAL NOT NULL,
+
+    concepto_id INT NOT NULL,
+    metodo_id INT NOT NULL,
+
+    CONSTRAINT fk_pagos_cuotas
+    FOREIGN KEY(cuota_id)
+    REFERENCES cuotas(id),
+
+    CONSTRAINT fk_pagos_reservas
+    FOREIGN KEY(reserva_id)
+    REFERENCES reservas(id),
+    
+    CONSTRAINT fk_pagos_conceptos_pago
+    FOREIGN KEY(concepto_id)
+    REFERENCES conceptos_pago(id),
+    
+    CONSTRAINT fk_pagos_metodos_pago
+    FOREIGN KEY(metodo_id)
+    REFERENCES metodos_pago(id),
+    
+    CONSTRAINT chk_origen_pago CHECK ( 
+    (cuota_id IS NOT NULL AND reserva_id IS NULL) 
+    OR (cuota_id IS NULL AND reserva_id IS NOT NULL) )
+);
+
 -- =========================================
 -- DATOS INICIALES
 -- =========================================
@@ -528,28 +530,20 @@ DELIMITER ;
 
 
 -- =========================================
--- PROCEDIMIENTO REGISTRAR PAGO
+-- PROCEDIMIENTO REGISTRAR PAGO CUOTA
 -- =========================================
-
--- Primero elimina el procedimiento existente
-DROP PROCEDURE IF EXISTS RegistrarPago;
-
--- Luego crea el nuevo procedimiento
 DELIMITER //
 
-CREATE PROCEDURE RegistrarPago(
+CREATE PROCEDURE RegistrarPagoCuota(
     IN p_socio_id INT,
-    IN p_no_socio_id INT,
     IN p_monto DECIMAL(10,2),
     IN p_concepto_id INT,
     IN p_metodo_id INT,
     OUT rta INT
 )
 BEGIN
-    DECLARE v_cuota_id INT DEFAULT NULL;
-    DECLARE v_monto_cuota DECIMAL(10,2) DEFAULT NULL;
-
-    -- EXIT HANDLER correcto
+    DECLARE v_cuota_id INT;
+    
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
     BEGIN
         ROLLBACK;
@@ -558,79 +552,96 @@ BEGIN
 
     START TRANSACTION;
 
-    -- CASO 1: NO SOCIO
-    IF p_socio_id IS NULL AND p_no_socio_id IS NOT NULL THEN
+    SELECT c.id
+    INTO v_cuota_id
+    FROM cuotas c
+    WHERE c.socio_id = p_socio_id
+      AND c.estado_cuota = 'Pendiente'
+    ORDER BY c.fecha_vencimiento
+    LIMIT 1;
+
+    IF v_cuota_id IS NULL THEN
+        SET rta = -2;
+        ROLLBACK;
+    ELSE
+
         INSERT INTO pagos(
             cuota_id,
-            no_socio_id,
             fecha_pago,
             monto,
             concepto_id,
             metodo_id
         )
         VALUES(
-            NULL,
-            p_no_socio_id,
+            v_cuota_id,
             CURDATE(),
             p_monto,
             p_concepto_id,
             p_metodo_id
         );
 
+        UPDATE cuotas
+        SET estado_cuota = 'Pagada'
+        WHERE id = v_cuota_id;
+
         SET rta = LAST_INSERT_ID();
+
         COMMIT;
-    
-    -- CASO 2: SOCIO
-    ELSEIF p_socio_id IS NOT NULL THEN
-        -- Obtener cuota pendiente
-        SELECT c.id, c.monto_cuota 
-        INTO v_cuota_id, v_monto_cuota
-        FROM cuotas c
-        WHERE c.socio_id = p_socio_id
-          AND c.estado_cuota = 'Pendiente'
-        ORDER BY c.fecha_vencimiento ASC
-        LIMIT 1;
-
-        -- Verificar si existe cuota pendiente
-        IF v_cuota_id IS NULL THEN
-            SET rta = -2;  -- No hay cuota pendiente
-            ROLLBACK;
-        ELSE
-            -- Registrar el pago
-            INSERT INTO pagos(
-                cuota_id,
-                no_socio_id,
-                fecha_pago,
-                monto,
-                concepto_id,
-                metodo_id
-            )
-            VALUES(
-                v_cuota_id,
-                NULL,
-                CURDATE(),
-                p_monto,
-                p_concepto_id,
-                p_metodo_id
-            );
-
-            -- Actualizar estado de la cuota
-            UPDATE cuotas
-            SET estado_cuota = 'Pagada'
-            WHERE id = v_cuota_id;
-
-            SET rta = LAST_INSERT_ID();
-            COMMIT;
-        END IF;
-    ELSE
-        SET rta = -3;  -- Ambos parámetros son NULL
-        ROLLBACK;
     END IF;
 
 END //
 
 DELIMITER ;
 
+-- =========================================
+-- PROCEDIMIENTO REGISTRAR PAGO ACTIVIDAD
+-- =========================================
+
+DELIMITER //
+
+CREATE PROCEDURE RegistrarPagoActividad(
+    IN p_reserva_id INT,
+    IN p_monto DECIMAL(10,2),
+    IN p_concepto_id INT,
+    IN p_metodo_id INT,
+    OUT rta INT
+)
+BEGIN
+
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+        SET rta = -99;
+    END;
+
+    START TRANSACTION;
+
+    INSERT INTO pagos(
+        reserva_id,
+        fecha_pago,
+        monto,
+        concepto_id,
+        metodo_id
+    )
+    VALUES(
+        p_reserva_id,
+        CURDATE(),
+        p_monto,
+        p_concepto_id,
+        p_metodo_id
+    );
+
+    UPDATE reservas
+    SET pagada = TRUE
+    WHERE id = p_reserva_id;
+
+    SET rta = LAST_INSERT_ID();
+
+    COMMIT;
+
+END //
+
+DELIMITER ;
 
 -- =========================================
 -- PROCEDIMIENTO GENERAR CUOTAS MENSUALES
@@ -699,6 +710,58 @@ END //
 
 DELIMITER ;
 
+-- =========================================
+-- PROCEDIMIENTO RESERVA
+-- =========================================
+
+DELIMITER //
+CREATE PROCEDURE generarReserva(
+	IN p_id_actividad INT,
+	IN p_cliente_id INT,
+	IN p_fecha_hora DATETIME,
+	OUT rta INT
+)
+BEGIN
+	DECLARE v_programacion_id INT;
+	DECLARE v_reserva_id INT;
+
+	SELECT p.id 
+		INTO v_programacion_id
+		FROM programaciones p
+		WHERE actividad_id = p_id_actividad
+		AND fecha_hora = p_fecha_hora
+		LIMIT 1;
+        
+	IF v_programacion_id IS NULL THEN
+		SET rta = -1;
+	ELSE
+		IF EXISTS(
+			SELECT 1
+			FROM reservas
+			WHERE programacion_id = v_programacion_id
+			  AND cliente_id = p_cliente_id
+		) THEN
+			SET rta = -2;
+		ELSE
+			INSERT INTO reservas(
+				programacion_id, 
+				cliente_id, 
+				fecha_reserva, 
+				pagada
+			) 
+			VALUES(
+				v_programacion_id,
+				p_cliente_id,
+				NOW(),
+				FALSE
+			);
+			
+			SET v_reserva_id = LAST_INSERT_ID();
+			SET rta = v_reserva_id;
+		END IF;
+	END IF;
+END //
+DELIMITER ;
 
 -- =========================================
 -- PROCEDIMIENTO LISTAR VENCIMIENTOS
@@ -725,51 +788,5 @@ SELECT
     INNER JOIN cuotas c 
     ON s.id = c.socio_id
     WHERE DATE(c.fecha_vencimiento) = p_fecha_vencimiento;
-END //
-DELIMITER ;
-
-
--- =========================================
--- PROCEDIMIENTO RESERVA
--- =========================================
-CREATE TABLE Reservas(
-	id INT AUTO_INCREMENT PRIMARY KEY,
-    programacion_id INT NOT NULL,
-    cliente_id INT NOT NULL,
-    fecha_hora_reserva DATETIME NOT NULL,
-    pagada BOOLEAN DEFAULT false,
-    
-    CONSTRAINT fk_reservas_programaciones
-    FOREIGN KEY (programacion_id)
-    REFERENCES programaciones(id),
-    
-    CONSTRAINT fk_reservas_clientes
-    FOREIGN KEY (cliente_id)
-    REFERENCES clientes(id)
-);
-DELIMITER //
-CREATE PROCEDURE generarReserva(
-	IN p_dni VARCHAR(10),
-    IN p_actividad VARCHAR(50),
-    IN fecha_hora DATETIME
-)
-
-BEGIN
-DECLARE v_programacion_id INT DEFAULT NULL;
-DECLARE v_socio_id INT DEFAULT NULL;
-DECLARE v_no_socio_id INT DEFAULT NULL;
-DECLARE v_cupos_disponibles INT DEFAULT NULL;
-
-START TRANSACTION;
-	SELECT s.id, ns.id 
-    INTO v_socio_id, v_no_socio_id
-    FROM clientes cl 
-    JOIN socios s
-    ON cl.id = s.cliente_id
-    WHERE cl.dni = p_dni;
-    
-    INSERT INTO 
-    
-COMMIT;
 END //
 DELIMITER ;

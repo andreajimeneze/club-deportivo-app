@@ -63,7 +63,7 @@ namespace ClubDeportivoApp.Formularios
             cbConceptoPago.DisplayMember = "Nombre";
             cbConceptoPago.ValueMember = "Id";
         }
-        private void InscripcionSocio_Load(object sender, EventArgs e)
+        private void PagoSocioForm_Load(object sender, EventArgs e)
         {
             CargarConceptosPago();
             CargarMetodosPago();
@@ -143,7 +143,7 @@ namespace ClubDeportivoApp.Formularios
             try
             {
                
-                bool result = pagoServ.RegistrarPago(cuota.IdSocio, null, montoAPagar, cuota.MontoCuota, conceptoPagoId, metodoPagoId);
+                bool result = pagoServ.RegistrarPagoCuota(cuota.IdSocio, montoAPagar, cuota.MontoCuota, conceptoPagoId, metodoPagoId);
 
                 if (result)
                 {
