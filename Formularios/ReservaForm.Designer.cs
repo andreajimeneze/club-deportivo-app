@@ -148,6 +148,7 @@
             // 
             this.btnVolver.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnVolver.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.btnVolver.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnVolver.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnVolver.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.btnVolver.Location = new System.Drawing.Point(1016, 711);
@@ -197,6 +198,7 @@
             // 
             this.btnConfirmarReserva.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.btnConfirmarReserva.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(48)))), ((int)(((byte)(144)))));
+            this.btnConfirmarReserva.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnConfirmarReserva.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnConfirmarReserva.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.btnConfirmarReserva.Location = new System.Drawing.Point(311, 576);

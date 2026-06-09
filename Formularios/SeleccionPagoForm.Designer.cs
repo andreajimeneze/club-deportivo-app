@@ -46,6 +46,7 @@
             // 
             this.btnNoSocio.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.btnNoSocio.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(48)))), ((int)(((byte)(144)))));
+            this.btnNoSocio.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnNoSocio.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnNoSocio.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.btnNoSocio.Location = new System.Drawing.Point(618, 326);
@@ -60,6 +61,7 @@
             // 
             this.btnSocio.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.btnSocio.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(250)))), ((int)(((byte)(200)))));
+            this.btnSocio.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnSocio.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSocio.ForeColor = System.Drawing.Color.Black;
             this.btnSocio.Location = new System.Drawing.Point(201, 323);
@@ -151,6 +153,7 @@
             // 
             this.btnVolver.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnVolver.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.btnVolver.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnVolver.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnVolver.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.btnVolver.Location = new System.Drawing.Point(1016, 666);

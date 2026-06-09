@@ -387,6 +387,7 @@
             // 
             this.btnValidarReserva.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.btnValidarReserva.BackColor = System.Drawing.Color.LightGray;
+            this.btnValidarReserva.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnValidarReserva.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnValidarReserva.ForeColor = System.Drawing.Color.DimGray;
             this.btnValidarReserva.Location = new System.Drawing.Point(354, 231);

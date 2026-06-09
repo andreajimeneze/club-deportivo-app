@@ -89,7 +89,7 @@
             this.txtNombre.MaximumSize = new System.Drawing.Size(400, 40);
             this.txtNombre.MinimumSize = new System.Drawing.Size(400, 40);
             this.txtNombre.Name = "txtNombre";
-            this.txtNombre.Size = new System.Drawing.Size(400, 40);
+            this.txtNombre.Size = new System.Drawing.Size(400, 22);
             this.txtNombre.TabIndex = 3;
             // 
             // txtApellido
@@ -98,7 +98,7 @@
             this.txtApellido.MaximumSize = new System.Drawing.Size(400, 40);
             this.txtApellido.MinimumSize = new System.Drawing.Size(400, 40);
             this.txtApellido.Name = "txtApellido";
-            this.txtApellido.Size = new System.Drawing.Size(400, 40);
+            this.txtApellido.Size = new System.Drawing.Size(400, 22);
             this.txtApellido.TabIndex = 4;
             // 
             // txtDni
@@ -108,13 +108,14 @@
             this.txtDni.MaxLength = 10;
             this.txtDni.MinimumSize = new System.Drawing.Size(400, 40);
             this.txtDni.Name = "txtDni";
-            this.txtDni.Size = new System.Drawing.Size(400, 40);
+            this.txtDni.Size = new System.Drawing.Size(400, 22);
             this.txtDni.TabIndex = 5;
             // 
             // btnAceptar
             // 
             this.btnAceptar.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.btnAceptar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(48)))), ((int)(((byte)(144)))));
+            this.btnAceptar.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnAceptar.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAceptar.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.btnAceptar.Location = new System.Drawing.Point(477, 581);
@@ -129,6 +130,7 @@
             // 
             this.btnVolver.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnVolver.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.btnVolver.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnVolver.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnVolver.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.btnVolver.Location = new System.Drawing.Point(1017, 713);

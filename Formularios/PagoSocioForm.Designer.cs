@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.TextBox txtMontoPago;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PagoSocioForm));
-            this.txtMontoPago = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.cbConceptoPago = new System.Windows.Forms.ComboBox();
             this.cbMedioPago = new System.Windows.Forms.ComboBox();
@@ -60,10 +60,22 @@
             this.label6 = new System.Windows.Forms.Label();
             this.txtDni = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
+            this.txtMontoPago = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panelLogin.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // txtMontoPago
+            // 
+            txtMontoPago.Enabled = false;
+            txtMontoPago.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            txtMontoPago.Location = new System.Drawing.Point(726, 232);
+            txtMontoPago.MaximumSize = new System.Drawing.Size(400, 40);
+            txtMontoPago.MinimumSize = new System.Drawing.Size(400, 40);
+            txtMontoPago.Name = "txtMontoPago";
+            txtMontoPago.Size = new System.Drawing.Size(400, 26);
+            txtMontoPago.TabIndex = 8;
             // 
             // label1
             // 
@@ -113,6 +125,7 @@
             // 
             // btnValidarCuota
             // 
+            this.btnValidarCuota.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnValidarCuota.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnValidarCuota.Location = new System.Drawing.Point(116, 310);
             this.btnValidarCuota.Name = "btnValidarCuota";
@@ -151,8 +164,8 @@
             // 
             this.panel1.Controls.Add(this.txtFechaVencimiento);
             this.panel1.Controls.Add(this.txtCuota);
-            this.panel1.Controls.Add(this.txtEstado);
             this.panel1.Controls.Add(this.txtMontoPago);
+            this.panel1.Controls.Add(this.txtEstado);
             this.panel1.Controls.Add(this.txtDniSocio);
             this.panel1.Controls.Add(this.txtApellido);
             this.panel1.Controls.Add(this.txtNombre);
@@ -296,6 +309,7 @@
             // 
             this.btnVolver.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnVolver.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.btnVolver.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnVolver.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnVolver.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.btnVolver.Location = new System.Drawing.Point(1006, 644);
@@ -321,6 +335,7 @@
             // 
             this.btnValidarPago.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.btnValidarPago.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(48)))), ((int)(((byte)(144)))));
+            this.btnValidarPago.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnValidarPago.Enabled = false;
             this.btnValidarPago.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnValidarPago.ForeColor = System.Drawing.Color.WhiteSmoke;
@@ -360,17 +375,6 @@
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(0, 20);
             this.label17.TabIndex = 26;
-            // 
-            // txtMontoPago
-            // 
-            txtMontoPago.Enabled = false;
-            txtMontoPago.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            txtMontoPago.Location = new System.Drawing.Point(726, 232);
-            txtMontoPago.MaximumSize = new System.Drawing.Size(400, 40);
-            txtMontoPago.MinimumSize = new System.Drawing.Size(400, 40);
-            txtMontoPago.Name = "txtMontoPago";
-            txtMontoPago.Size = new System.Drawing.Size(400, 26);
-            txtMontoPago.TabIndex = 8;
             // 
             // PagoSocioForm
             // 
@@ -413,7 +417,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cbConceptoPago;
         private System.Windows.Forms.ComboBox cbMedioPago;
-        private System.Windows.Forms.TextBox txtMontoPago;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnValidarCuota;
         private System.Windows.Forms.Label label3;
@@ -436,6 +439,7 @@
         private System.Windows.Forms.Label txtNombre;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txtDni;
+        private System.Windows.Forms.TextBox txtMontoPago;
         private System.Windows.Forms.Label txtFechaVencimiento;
         private System.Windows.Forms.Label txtCuota;
         private System.Windows.Forms.Label txtEstado;
