@@ -22,7 +22,8 @@ namespace ClubDeportivoApp.Forms
             servicio = new RegistroServ(repo);
             lblFechaHoy.Text = $"Fecha y hora: {DateTime.Now.ToString("dd/MM/yyyy HH:mm")}";
         }
-  
+
+ 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
             if(txtNombre.Text == "" || txtApellido.Text == "" || txtDni.Text == "")
@@ -67,9 +68,10 @@ namespace ClubDeportivoApp.Forms
                     //Pregunta: dónde presenta aptoFísico nuevamente?
                     this.Hide();
                     inscripcionSocio.ShowDialog();
-                    this.Show();
+                    this.Close();
                 } else
                 {
+                    int idSocio = servicio.AsignarTipoSocio(id, esSocio);
                     Cliente noSocio = new Cliente(nombre, apellido, dni);
                     MessageBox.Show($"Registro de CLIENTE NO SOCIO {noSocio.Nombre}{noSocio.Apellido} exitoso");
                     // AsignarTipoSocio debiera retornar al socio para poder setear el accesoDiario en caso de que no haya
@@ -78,6 +80,7 @@ namespace ClubDeportivoApp.Forms
                     this.Hide();
                     reserva.ShowDialog();
                     this.Close();
+                    LimpiarFormulario();
                 }
                
             } catch(Exception ex)
