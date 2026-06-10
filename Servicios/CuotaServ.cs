@@ -8,25 +8,16 @@ using System.Threading.Tasks;
 
 namespace ClubDeportivoApp.Servicios
 {
-    public class SocioServ
+    public class CuotaServ
     {
-        private readonly SocioRepo _socioRepo;
+        private readonly CuotaRepo _socioRepo;
 
-        public SocioServ(SocioRepo socioRepo)
+        public CuotaServ(CuotaRepo socioRepo)
         {
             _socioRepo = socioRepo;
         }
 
-        public ClienteDTO BuscarClientePorDni(string dni)
-        {
-            ClienteDTO clienteBuscado = _socioRepo.BuscarClientePorDniRepo(dni);
-            if(clienteBuscado == null)
-            {
-                return null;
-            }
-
-            return clienteBuscado;
-        }
+        
 
         public CuotaPendienteDTO ObtenerCuotaPendienteServ(string dni)
         {

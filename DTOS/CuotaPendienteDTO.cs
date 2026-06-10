@@ -15,6 +15,7 @@ namespace ClubDeportivoApp.DTOS
         public bool EstadoSocio { get; set; }
         public decimal MontoCuota { get; set; }
         public DateTime FechaVencimiento { get; set; }
+        public string EstadoCuota { get; set; }
 
     }
 }

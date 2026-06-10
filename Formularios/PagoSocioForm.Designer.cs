@@ -204,7 +204,7 @@
             this.txtEstado.Name = "txtEstado";
             this.txtEstado.Size = new System.Drawing.Size(66, 20);
             this.txtEstado.TabIndex = 29;
-            this.txtEstado.Text = "Estado:";
+            this.txtEstado.Text = "EstadoReserva:";
             // 
             // txtDniSocio
             // 

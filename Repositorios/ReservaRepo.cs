@@ -1,11 +1,8 @@
 ﻿using ClubDeportivoApp.DTOS;
 using MySql.Data.MySqlClient;
 using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace ClubDeportivoApp.Repositorios
 {
@@ -22,18 +19,13 @@ namespace ClubDeportivoApp.Repositorios
         {
             ReservaDTO reserva = null;
 
-            string query = "SELECT r.id AS idReserva, r.pagada, cl.id AS idCliente, p.nombre, p.apellido, p.dni, a.nombre AS actividad, a.precio, pr.fecha_hora" +
-                " FROM reservas r INNER JOIN programaciones pr" +
-                " ON r.programacion_id = pr.id" +
-                " INNER JOIN actividades a ON pr.actividad_id = a.id" +
-                " INNER JOIN clientes cl ON r.cliente_id = cl.id" +
-                " INNER JOIN personas p ON cl.persona_id = p.id" +
-                " WHERE r.id = @idReserva";
+           
             using(MySqlConnection conn = _conexionDatabase.GetMySqlConnection())
             {
-                using(MySqlCommand cmd = new MySqlCommand(query, conn))
+                using(MySqlCommand cmd = new MySqlCommand("BuscarReservaPorId", conn))
                 {
-                    cmd.Parameters.AddWithValue("@idReserva", idReserva);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("p_id_reserva", idReserva);
 
                     using(MySqlDataReader reader = cmd.ExecuteReader())
                     {
@@ -41,19 +33,58 @@ namespace ClubDeportivoApp.Repositorios
                         {
                             reserva = new ReservaDTO
                             {
-                                IdReserva = Convert.ToInt32(reader["idReserva"]),
-                                IdCliente = Convert.ToInt32(reader["idCliente"]),
+                                IdReserva = Convert.ToInt32(reader["id_reserva"]),
+                                IdCliente = Convert.ToInt32(reader["id_cliente"]),
                                 NombreCliente = reader["nombre"].ToString(),
                                 ApellidoCliente = reader["apellido"].ToString(),
                                 Dni = reader["dni"].ToString(),
                                 Actividad = reader["actividad"].ToString(),
                                 Precio = Convert.ToDecimal(reader["precio"]),
                                 FechaHora = Convert.ToDateTime(reader["fecha_hora"]),
-                                Pagada = Convert.ToBoolean(reader["pagada"])
+                                EstadoReserva = reader["estado"].ToString()                              
 
                             };
                         }
                                             
+                    }
+                }
+            }
+            return reserva;
+        }
+
+        public ReservaDTO BuscarReservaPorDniYActividadRepo(string dni, int idActividad)
+        {
+            ReservaDTO reserva = null;
+
+
+            using (MySqlConnection conn = _conexionDatabase.GetMySqlConnection())
+            {
+                using (MySqlCommand cmd = new MySqlCommand("BuscarReservaPorDniYActividad", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("p_dni", dni);
+                    cmd.Parameters.AddWithValue("p_id_actividad", idActividad);
+
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            reserva = new ReservaDTO
+                            {
+                                IdReserva = Convert.ToInt32(reader["id_reserva"]),
+                                IdCliente = Convert.ToInt32(reader["id_cliente"]),
+                                NombreCliente = reader["nombre"].ToString(),
+                                ApellidoCliente = reader["apellido"].ToString(),
+                                Dni = reader["dni"].ToString(),
+                                IdActividad = Convert.ToInt32(reader["id_actividad"]),
+                                Actividad = reader["actividad"].ToString(),
+                                Precio = Convert.ToDecimal(reader["precio"]),
+                                FechaHora = Convert.ToDateTime(reader["fecha_hora"]),
+                                EstadoReserva = reader["estado"].ToString()
+
+                            };
+                        }
+
                     }
                 }
             }
@@ -65,7 +96,7 @@ namespace ClubDeportivoApp.Repositorios
         {
             using(MySqlConnection conn = _conexionDatabase.GetMySqlConnection())
             {
-                using(MySqlCommand cmd = new MySqlCommand("generarReserva", conn))
+                using(MySqlCommand cmd = new MySqlCommand("GenerarReserva", conn))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
 

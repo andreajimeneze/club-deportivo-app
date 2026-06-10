@@ -5,6 +5,8 @@ using ClubDeportivoApp.Servicios;
 using ClubDeportivoApp.Repositorios;
 using System.Runtime.CompilerServices;
 using ClubDeportivoApp.DTOS;
+using ClubDeportivoApp.Repositories;
+using ClubDeportivoApp.Services;
 
 
 namespace ClubDeportivoApp.Formularios
@@ -13,7 +15,8 @@ namespace ClubDeportivoApp.Formularios
     {
         private readonly ConexionMySql _conexion;
         private readonly ListadosMaestrosServ servicio;
-        private readonly SocioServ socioServ;
+        private readonly ClienteServ clienteServ;
+        private readonly CuotaServ cuotaServ;
         private readonly PagoServ pagoServ;
         private CuotaPendienteDTO cuota;
 
@@ -26,14 +29,17 @@ namespace ClubDeportivoApp.Formularios
             ConceptoPagoRepo cPagoRepo = new ConceptoPagoRepo(_conexion);
             MetodoPagoRepo mPagoRepo = new MetodoPagoRepo(_conexion);
             servicio = new ListadosMaestrosServ(cPagoRepo, mPagoRepo);
-            SocioRepo socioRepo = new SocioRepo(_conexion);
-            socioServ = new SocioServ(socioRepo);
+            ClienteRepo clienteRepo = new ClienteRepo(_conexion);
+            CuotaRepo cuotaRepo = new CuotaRepo(_conexion);
+            clienteServ = new ClienteServ(clienteRepo);
             PagosRepo pagosRepo = new PagosRepo(_conexion);
             pagoServ = new PagoServ(pagosRepo);
+            cuotaServ = new CuotaServ(cuotaRepo);
 
             lblFechaHoy.Text = $"Fecha y hora: {DateTime.Now.ToString("dd/MM/yyyy HH:mm")}";
         }
 
+        // Carga métodos de pago
         private void CargarMetodosPago()
         {
             var lista = servicio.ObtenerMetodosPago();
@@ -49,6 +55,7 @@ namespace ClubDeportivoApp.Formularios
             cbMedioPago.ValueMember = "Id";
         }
 
+        // Carga concepto de pago
         private void CargarConceptosPago()
         {
             var lista = servicio.ObtenerConceptosPago();
@@ -74,20 +81,28 @@ namespace ClubDeportivoApp.Formularios
         {
             string dni = txtDni.Text.Trim();
 
+            // Validación 1: Dni no debe venir vacío
             if (String.IsNullOrEmpty(dni))
             {
                 MessageBox.Show("Debe ingresar un DNI");
                 return;
             }
+            // Validación 2: Dni debe contener solo números
+            if(!int.TryParse(dni, out _))
+            {
+                MessageBox.Show("DNI debe contener solo números");
+                return;
+            }
+            // Busca cliente por dni
+            ClienteDTO clienteBuscado = clienteServ.BuscarClientePorDni(dni);
 
-            ClienteDTO clienteBuscado = socioServ.BuscarClientePorDni(dni);
-
+            // Validación 3: cliente es nulo
             if(clienteBuscado == null)
             {
                 MessageBox.Show("Cliente no existe, verifique el número de DNI");
                 return;
             }
-
+            // Validación 3: Si cliente no es socio no paga cuota
             if(!clienteBuscado.EsSocio)
             {
                 MessageBox.Show("Cliente no es socio");
@@ -95,11 +110,21 @@ namespace ClubDeportivoApp.Formularios
             }
 
             cuota = new CuotaPendienteDTO();
-            cuota = socioServ.ObtenerCuotaPendienteServ(dni);
+            // Obtiene cuota pendiente más antigua
+            cuota = cuotaServ.ObtenerCuotaPendienteServ(clienteBuscado.Dni);
 
+            MessageBox.Show("dni cliente buscado: " + clienteBuscado.Dni);
 
-            cuota = socioServ.ObtenerCuotaPendienteServ(dni);
+            MessageBox.Show("cuota: " + cuota);
 
+            // Valiación 4: Si cuota no existe
+            if (cuota == null)
+            {
+                MessageBox.Show("Socio no tiene cuota pendiente");
+                return;
+            }
+
+            // Validación 5: Si cuota existe, se activan campos para pago
             if (cuota != null)
             {
                 txtMontoPago.Enabled = true;
@@ -108,17 +133,11 @@ namespace ClubDeportivoApp.Formularios
                 btnValidarPago.Enabled = true;
             }
 
-            if (cuota == null)
-            {
-                MessageBox.Show("Socio no tiene cuota pendiente");
-                return;
-            }
-
             txtNombre.Text = $"Nombres:   {cuota.Nombre}";
             txtApellido.Text = $"Apellidos:  {cuota.Apellido}";
             txtDniSocio.Text = $"DNI:    {cuota.Dni}";
             txtCuota.Text = $"Cuota: {Convert.ToString(cuota.MontoCuota)}";
-            txtEstado.Text = $"Estado socio: {(cuota.EstadoSocio == true ? "Activo" : "Inactivo")}";
+            txtEstado.Text = $"EstadoReserva socio: {(cuota.EstadoSocio == true ? "Activo" : "Inactivo")}";
             txtFechaVencimiento.Text = $"Vencimiento: {Convert.ToString(cuota.FechaVencimiento)}";
         }
 

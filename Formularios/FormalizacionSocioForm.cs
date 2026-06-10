@@ -25,7 +25,7 @@ namespace ClubDeportivoApp.Formularios
             _idSocio = idSocio;
             _conexion = conexion;
 
-            PagosRepo repo = new PagosRepo(_conexion);
+            InscripcionRepo repo = new InscripcionRepo(_conexion);
             servicio = new InscripcionSocioServ(repo);
 
             lblNombre.Text = socio.Nombre;
@@ -66,7 +66,8 @@ namespace ClubDeportivoApp.Formularios
 
         private void btnAceptarContrato_Click(object sender, EventArgs e)
         {
-            servicio.FormalizarSocio(_idSocio, montoCuota);
+            bool insc = servicio.FormalizarSocio(_idSocio, montoCuota);
+            
             PagoSocioForm pagoSocio = new PagoSocioForm(_conexion);
             this.Hide();
             pagoSocio.ShowDialog();

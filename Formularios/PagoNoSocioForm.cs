@@ -1,6 +1,5 @@
 ﻿using ClubDeportivoApp.DTOS;
 using ClubDeportivoApp.Modelos;
-using ClubDeportivoApp.Models;
 using ClubDeportivoApp.Repositorios;
 using ClubDeportivoApp.Servicios;
 using System;
@@ -14,20 +13,24 @@ namespace ClubDeportivoApp.Formularios
         private readonly ListadosMaestrosServ servicio;
         private readonly ReservaServ resServ;
         private readonly PagoServ pagoServ;
-        private int idReserva;
-        ReservaDTO reserva = new ReservaDTO();
+        private  int _idReserva;
+        private string dni;
+        private int idActividad;
+        private ReservaDTO reserva = new ReservaDTO();
 
 
-        public PagoNoSocioForm(ConexionMySql conexion)
+        public PagoNoSocioForm(ConexionMySql conexion, int idReserva = 0)
         {
             InitializeComponent();
             _conexion = conexion;
-       
+            _idReserva = idReserva;
+
             ConceptoPagoRepo cPagoRepo = new ConceptoPagoRepo(_conexion);
             MetodoPagoRepo mPagoRepo = new MetodoPagoRepo(_conexion);
+            ActividadRepo actRepo = new ActividadRepo(_conexion);
             ReservaRepo reservRepo = new ReservaRepo(_conexion);
             PagosRepo pagoRepo = new PagosRepo(_conexion);
-            servicio = new ListadosMaestrosServ(cPagoRepo, mPagoRepo);
+            servicio = new ListadosMaestrosServ(cPagoRepo, mPagoRepo, actRepo);
             resServ = new ReservaServ(reservRepo);
             pagoServ = new PagoServ(pagoRepo);
             
@@ -63,36 +66,78 @@ namespace ClubDeportivoApp.Formularios
             cbConceptoPago.DisplayMember = "Nombre";
             cbConceptoPago.ValueMember = "Id";
         }
+
+        private void CargarActividades()
+        {
+            var lista = servicio.ObtenerActividades();
+
+            lista.Insert(0, new Actividad
+            {
+                Id = 0,
+                Nombre = "Seleccione actividad"
+            });
+
+            cbActividades.DataSource = lista;
+            cbActividades.DisplayMember = "Nombre";
+            cbActividades.ValueMember = "Id";
+        }
+
         private void PagoNoSocioForm_Load(object sender, EventArgs e)
         {
             CargarMetodosPago();
             CargarConceptosPago();
+            CargarActividades();
             
         }
 
         private void btnValidarReserva_Click(object sender, EventArgs e)
         {
-            idReserva = Convert.ToInt32(txtReserva.Text);
+            // Búsqueda por reserva
+            if(!string.IsNullOrWhiteSpace(txtReserva.Text))
+            {
+                int idRes = Convert.ToInt32(txtReserva.Text);
+                reserva = resServ.BuscarReservaPorId(idRes);  
+            } else
+            {
+                dni = txtDni.Text.Trim();
+                if(string.IsNullOrEmpty(dni)) {
+                    MessageBox.Show("Debe ingresar un DNI");
+                    return;
+                }
+                if (!int.TryParse(txtDni.Text, out _))
+                {
+                    MessageBox.Show("Dni debe contener solo números");
+                    return;
+                }
+                idActividad = Convert.ToInt32(cbActividades.SelectedValue);
+                MessageBox.Show("id actividad: " + idActividad);
+                MessageBox.Show("dni: " + dni);
 
-            reserva = resServ.BuscarReservaPorId(idReserva);
+                reserva = resServ.BuscarReservaPorDniYActividad(dni, idActividad);              
+            }
 
             if (reserva == null)
             {
-                MessageBox.Show("Reserva no existe. Verifique el número ingresado");
+                MessageBox.Show("Reserva no existe. Verifique la información ingresada");
                 return;
             }
 
-            lblNombre.Text = $"Nombre: {reserva.NombreCliente}";
-            lblApellido.Text = $"Apellido: {reserva.ApellidoCliente}";
-            lblDniSocio.Text = $"DNI: {reserva.Dni}";
 
-            lblActividad.Text = $"Actividad: {reserva.Actividad}";
-            lblFechaHora.Text = $"Fecha y Hora: {Convert.ToString(reserva.FechaHora)}";
-            lblMonto.Text = $"Monto a Pagar: {Convert.ToString(reserva.Precio)}";
+            string mensaje =
+            $"Nombre: {reserva.NombreCliente}\n" +
+            $"Apellido: {reserva.ApellidoCliente}\n" +
+            $"DNI: {reserva.Dni}\n" +
+            $"Actividad: {reserva.Actividad}\n" +
+            $"Fecha y Hora: {Convert.ToString(reserva.FechaHora)}\n" +
+            $"Monto a Pagar: {Convert.ToString(reserva.Precio)}\n";
+            //+
+            //$"Fecha Pago: {Convert.ToString(DateTime.Now)}" +
+            //$"Método Pago: {Convert.ToString(cbMetodosPago.ValueMember)}";
 
-            lblFechaPago.Text = $"Fecha Pago: {Convert.ToString(DateTime.Now)}";
-            lblMetodoPago.Text = $"Método Pago: {Convert.ToString(cbMetodosPago.ValueMember)}";
+            PopUpPersonalizadoForm emergente = new PopUpPersonalizadoForm("Datos Reserva: ", mensaje);
+            emergente.ShowDialog();
         }
+        
         private void btnValidarPago_Click(object sender, EventArgs e)
         {
             decimal montoPago = Convert.ToDecimal(txtMontoPago.Text);
@@ -106,7 +151,7 @@ namespace ClubDeportivoApp.Formularios
                 return;
             }
 
-            bool result = pagoServ.RegistrarPagoActividad(reserva.IdCliente, idReserva, montoPago, reserva.Precio, conceptoPagoId, metodoPagoId);
+            bool result = pagoServ.RegistrarPagoActividad(reserva.IdCliente, _idReserva, montoPago, reserva.Precio, conceptoPagoId, metodoPagoId);
 
             if (result)
             {
@@ -137,6 +182,9 @@ namespace ClubDeportivoApp.Formularios
             this.Close();
         }
 
-        
+        private void lblFechaHoy_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

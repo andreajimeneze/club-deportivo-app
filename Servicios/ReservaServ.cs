@@ -23,6 +23,10 @@ namespace ClubDeportivoApp.Servicios
             return _repo.BuscarReservaPorId(idReserva);
         }
 
+        public ReservaDTO BuscarReservaPorDniYActividad(string dni, int idActividad)
+        {
+            return _repo.BuscarReservaPorDniYActividadRepo(dni, idActividad);
+        }
         public int GenerarReserva(int idActividad, int clienteId, DateTime fecha_hora)
         {
            return _repo.GenerarReservaRepo(idActividad, clienteId, fecha_hora);

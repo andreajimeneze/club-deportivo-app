@@ -24,6 +24,12 @@ namespace ClubDeportivoApp.Servicios
             _cPagorepo = cPagoRepo;
             _mPagoRepo = mPagoRepo;
         }
+        public ListadosMaestrosServ(ConceptoPagoRepo cPagoRepo, MetodoPagoRepo mPagoRepo, ActividadRepo actRepo)
+        {
+            _cPagorepo = cPagoRepo;
+            _mPagoRepo = mPagoRepo;
+            _actRepo = actRepo;
+        }
 
         public List<MetodoPago> ObtenerMetodosPago()
         {

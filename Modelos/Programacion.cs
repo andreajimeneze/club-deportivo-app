@@ -37,5 +37,14 @@ namespace ClubDeportivoApp.Modelos
             }
             return true;
         }
+
+        public void DescontarCupo()
+        {
+            if(CuposDisponibles <= 0)
+            {
+                throw new Exception("No hay cupos disponibles");
+            }
+            CuposDisponibles--;
+        }
     }
 }

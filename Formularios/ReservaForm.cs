@@ -1,7 +1,8 @@
 ﻿using ClubDeportivoApp.DTOS;
 using ClubDeportivoApp.Modelos;
-using ClubDeportivoApp.Models;
+using ClubDeportivoApp.Repositories;
 using ClubDeportivoApp.Repositorios;
+using ClubDeportivoApp.Services;
 using ClubDeportivoApp.Servicios;
 using System;
 using System.Windows.Forms;
@@ -13,8 +14,9 @@ namespace ClubDeportivoApp.Formularios
         private readonly ConexionMySql _conexion;
         private readonly ListadosMaestrosServ listasServ;
         private readonly ProgramacionServ progServ;
-        private readonly SocioServ socioServ;
+        private readonly CuotaServ socioServ;
         private readonly ReservaServ resServ;
+        private readonly ClienteServ cliServ;
         private Actividad actividad;
         private Programacion programacion;
 
@@ -25,18 +27,19 @@ namespace ClubDeportivoApp.Formularios
 
             ActividadRepo actRepo = new ActividadRepo(_conexion);
             ProgramacionRepo progRepo = new ProgramacionRepo(_conexion);
-            SocioRepo socioRepo = new SocioRepo(_conexion);
+            CuotaRepo socioRepo = new CuotaRepo(_conexion);
             ReservaRepo resRepo = new ReservaRepo(_conexion);
+            ClienteRepo cliRepo = new ClienteRepo(_conexion);
             listasServ = new ListadosMaestrosServ(actRepo);
             progServ = new ProgramacionServ(progRepo);
-            socioServ = new SocioServ(socioRepo);
+            socioServ = new CuotaServ(socioRepo);
             resServ = new ReservaServ(resRepo);
-
-            //actividad = new Actividad();
+            cliServ = new ClienteServ(cliRepo);
 
             lblFechaHoy.Text = $"Fecha y hora: {DateTime.Now.ToString("dd/MM/yyyy")}";
         }
 
+        // Carga actividades en combobox
         private void CargarActividades()
         {
             var lista = listasServ.ObtenerActividades();
@@ -52,6 +55,7 @@ namespace ClubDeportivoApp.Formularios
             cbActividades.ValueMember = "Id";
         }
 
+        // Carga programación por idActividad en combobox
         private void CargarProgramacion(int idActividad)
         {
             var lista = progServ.ObtenerProgramacionPorActividad(idActividad);
@@ -72,6 +76,7 @@ namespace ClubDeportivoApp.Formularios
             lblDisponibilidad.Text = "Disponibilidad:";
         }
 
+        // Carga nombre de actividad asociada a programación, en combobox
         private void cbActividades_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cbActividades.SelectedItem is Actividad act && act.Id != 0)
@@ -82,7 +87,7 @@ namespace ClubDeportivoApp.Formularios
                 lblPrecio.Text = $"Precio: {act.Precio}";
             }
         }
-
+        // Carga fecha y hora de actividad asociada a programación, en combobox
         private void cbFechaHora_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cbFechaHora.SelectedItem is Programacion prog && prog.Id != 0)
@@ -96,13 +101,22 @@ namespace ClubDeportivoApp.Formularios
         {
             string dni = txtDni.Text;
 
+            // Validación 1: Dni no puede venir vacío
             if (String.IsNullOrEmpty(dni))
             {
                 MessageBox.Show("Debe ingresar un DNI");
                 return;
             }
+            // Validación 2: Dni debe contener solo números
+            if(!int.TryParse(dni, out _))
+            {
+                MessageBox.Show("DNI debe contener solo números");
+                return;
+            }
+            // Busca cliente por dni
+            ClienteDTO clienteBuscado = cliServ.BuscarClientePorDni(dni);
 
-            ClienteDTO clienteBuscado = socioServ.BuscarClientePorDni(dni);
+            // Validación 3: Si cliente viene nulo
 
             if (clienteBuscado == null)
             {
@@ -110,36 +124,44 @@ namespace ClubDeportivoApp.Formularios
                 return;
             }
 
+            // Validación 4: Si cliente no cuenta con aptoFísico
+            if(!clienteBuscado.AptoFisico)
+            {
+                MessageBox.Show("Cliente no tiene apto físico, por lo que no puede acceder a servicios");
+                return;
+            }
+
+            // Imprime datos del cliente en label de formulario
             lblNombre.Text = $"Nombre: {clienteBuscado.Nombre}";
             lblApellido.Text = $"Apellido: {clienteBuscado.Apellido}";
             lblDniSocio.Text = $"DNI: {clienteBuscado.Dni}";
             lblEsSocio.Text = $"Tipo Cliente: {(clienteBuscado.EsSocio ? "Socio" : "No Socio")}";
 
+            
             if (clienteBuscado.EsSocio)
             {                            
-                lblEstado.Text = $"Estado: {(clienteBuscado.Estado ? "Activo" : "Inactivo")}";
+                lblEstado.Text = $"EstadoReserva: {(clienteBuscado.Estado ? "Activo" : "Inactivo")}";
                 
-                MessageBox.Show("Cliente es socio");
-
-                if(!clienteBuscado.Estado)
+                MessageBox.Show("Cliente ES SOCIO");
+                // Validación 5: Si cliente es socio, verificar si está activo o inactivo
+                if (!clienteBuscado.Estado)
                 {
                     MessageBox.Show("Socio se encuentra inactivo no puede realizar reserva.");
+                    return;
                 } else
                 {
-                    
                     MessageBox.Show("Reserva efectuada exitosamente. Socio no debe pagar");
 
+                    // Se genera la reserva como autorizada (socio no paga) y se descuenta cupo en programación
                     int idReserva = resServ.GenerarReserva(actividad.Id, clienteBuscado.IdCliente, programacion.FechaHora);
-                    
+                    // Validación 6: Si idReserva es 0 o negativo, hubo error al crear la reserva       
                     if(idReserva <= 0)
                     {
                         MessageBox.Show("Error al crear la reserva");
                         return;
                     }
 
-                    
-                    // Ejecutar reserva
-                    // Debiera entregarse un comprobante de reserva
+                    // Falta imprimir comprobante
                 }
 
 
@@ -147,21 +169,22 @@ namespace ClubDeportivoApp.Formularios
 
             } else
             {
-                MessageBox.Show("Cliente NO ES SOCIO");
+                MessageBox.Show("Cliente NO ES SOCIO. Debe pagar por la actividad.");
+                // Se genera la reserva como Pendiente de Pago (no socio paga). Programación no descuenta cupo hasta que se efectúa el pago
                 int idReserva = resServ.GenerarReserva(actividad.Id, clienteBuscado.IdCliente, programacion.FechaHora);
+                // Validación 6b: Si idReserva es 0 o negativo, hubo error al crear la reserva
                 if (idReserva <= 0)
                 {
                     MessageBox.Show("Error al crear la reserva");
                     return;
                 }
-                PagoNoSocioForm pagoNoSocio = new PagoNoSocioForm(_conexion);
+                // Se deriva a no socio al formulario de pago de la actividad. Se traspasa idReserva
+                PagoNoSocioForm pagoNoSocio = new PagoNoSocioForm(_conexion, idReserva);
                 this.Hide();
                 pagoNoSocio.ShowDialog();
                 this.Close();
 
-                // Reserva se ejecuta cuando el no socio realiza el pago en PagoNoSocioForm
-                // Pago no socio debiera llevar los datos del no socio y de la reserva para 
-                // cargar datos por defecto?
+                
 
             }
         }

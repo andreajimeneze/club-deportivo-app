@@ -315,7 +315,7 @@
             this.lblEstado.Name = "lblEstado";
             this.lblEstado.Size = new System.Drawing.Size(66, 20);
             this.lblEstado.TabIndex = 29;
-            this.lblEstado.Text = "Estado:";
+            this.lblEstado.Text = "EstadoReserva:";
             // 
             // lblDniSocio
             // 

@@ -107,7 +107,7 @@
             // 
             // estado
             // 
-            this.estado.HeaderText = "Estado Pago";
+            this.estado.HeaderText = "EstadoReserva Pago";
             this.estado.MinimumWidth = 6;
             this.estado.Name = "estado";
             this.estado.Width = 125;

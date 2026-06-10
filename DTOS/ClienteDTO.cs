@@ -12,6 +12,7 @@ namespace ClubDeportivoApp.DTOS
         public string Nombre { get; set; }
         public string Apellido { get; set; }
         public string Dni { get; set; }
+        public bool AptoFisico { get; set; }
         public bool EsSocio { get; set; }
         public bool Estado { get; set; }
     }

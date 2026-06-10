@@ -7,11 +7,11 @@ namespace ClubDeportivoApp.Servicios
 {
     internal class InscripcionSocioServ
     {
-        private PagosRepo repo;
+        private InscripcionRepo _repo;
 
-        public InscripcionSocioServ(PagosRepo repo)
+        public InscripcionSocioServ(InscripcionRepo repo)
         {
-            this.repo = repo;
+            _repo = repo;
         }
 
         public bool FormalizarSocio(int socioId, decimal montoCuota)
@@ -23,7 +23,7 @@ namespace ClubDeportivoApp.Servicios
                     return false;
                 }
 
-                int result = repo.FormalizarContrato(socioId, montoCuota);
+                int result = _repo.FormalizarContrato(socioId, montoCuota);
 
                 if (result > 0)
                 {

@@ -135,6 +135,12 @@
     <Compile Include="Formularios\FormalizacionSocioForm.Designer.cs">
       <DependentUpon>FormalizacionSocioForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Formularios\PopUpPersonalizadoForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\PopUpPersonalizadoForm.Designer.cs">
+      <DependentUpon>PopUpPersonalizadoForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Formularios\ReservaForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -200,22 +206,23 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositorios\ActividadRepo.cs" />
+    <Compile Include="Repositorios\InscripcionRepo.cs" />
     <Compile Include="Repositorios\MetodoPagoRepo..cs" />
     <Compile Include="Repositorios\PagosRepo.cs" />
     <Compile Include="Repositorios\ConceptoPagoRepo.cs" />
     <Compile Include="Repositorios\ProgramacionRepo.cs" />
-    <Compile Include="Repositorios\RegistroRepo.cs" />
+    <Compile Include="Repositorios\ClienteRepo.cs" />
     <Compile Include="Repositorios\LoginRepo.cs" />
     <Compile Include="Repositorios\ReservaRepo.cs" />
-    <Compile Include="Repositorios\SocioRepo.cs" />
+    <Compile Include="Repositorios\CuotaRepo.cs" />
     <Compile Include="Servicios\InscripcionSocioServ.cs" />
     <Compile Include="Servicios\ListadosMaestrosServ.cs" />
     <Compile Include="Servicios\PagoServ.cs" />
     <Compile Include="Servicios\ProgramacionServ.cs" />
-    <Compile Include="Servicios\RegistroServ.cs" />
+    <Compile Include="Servicios\ClienteServ.cs" />
     <Compile Include="Servicios\LoginServ.cs" />
     <Compile Include="Servicios\ReservaServ.cs" />
-    <Compile Include="Servicios\SocioServ.cs" />
+    <Compile Include="Servicios\CuotaServ.cs" />
     <EmbeddedResource Include="Formularios\AccesoBDForm.resx">
       <DependentUpon>AccesoBDForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -224,6 +231,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\FormalizacionSocioForm.resx">
       <DependentUpon>FormalizacionSocioForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\PopUpPersonalizadoForm.resx">
+      <DependentUpon>PopUpPersonalizadoForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\ReservaForm.resx">
       <DependentUpon>ReservaForm.cs</DependentUpon>

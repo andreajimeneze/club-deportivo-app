@@ -354,8 +354,7 @@ BEGIN
         r.id AS rol_id,
         r.nombre AS rol,
         p.nombre,
-        p.apellido,
-        r.nombre
+        p.apellido
     FROM usuarios u
     INNER JOIN personas p
         ON u.persona_id = p.id
