@@ -117,7 +117,6 @@
             this.lblFechaHoy.Size = new System.Drawing.Size(116, 20);
             this.lblFechaHoy.TabIndex = 25;
             this.lblFechaHoy.Text = "Fecha y hora: ";
-            this.lblFechaHoy.Click += new System.EventHandler(this.lblFechaHoy_Click);
             // 
             // btnVolver
             // 

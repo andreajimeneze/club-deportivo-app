@@ -151,10 +151,13 @@ namespace ClubDeportivoApp.Formularios
                 } else
                 {
                     MessageBox.Show("Reserva efectuada exitosamente. Socio no debe pagar");
+                   
 
                     // Se genera la reserva como autorizada (socio no paga) y se descuenta cupo en programación
                     int idReserva = resServ.GenerarReserva(actividad.Id, clienteBuscado.IdCliente, programacion.FechaHora);
                     // Validación 6: Si idReserva es 0 o negativo, hubo error al crear la reserva       
+                    
+                    
                     if(idReserva <= 0)
                     {
                         MessageBox.Show("Error al crear la reserva");
@@ -170,6 +173,9 @@ namespace ClubDeportivoApp.Formularios
             } else
             {
                 MessageBox.Show("Cliente NO ES SOCIO. Debe pagar por la actividad.");
+                MessageBox.Show("actividad id: " + actividad.Id);
+                MessageBox.Show("programación fecha: " + programacion.FechaHora);
+                MessageBox.Show("cliente id: " + clienteBuscado.IdCliente);
                 // Se genera la reserva como Pendiente de Pago (no socio paga). Programación no descuenta cupo hasta que se efectúa el pago
                 int idReserva = resServ.GenerarReserva(actividad.Id, clienteBuscado.IdCliente, programacion.FechaHora);
                 // Validación 6b: Si idReserva es 0 o negativo, hubo error al crear la reserva
@@ -178,6 +184,7 @@ namespace ClubDeportivoApp.Formularios
                     MessageBox.Show("Error al crear la reserva");
                     return;
                 }
+                MessageBox.Show("Reserva creada con éxito");
                 // Se deriva a no socio al formulario de pago de la actividad. Se traspasa idReserva
                 PagoNoSocioForm pagoNoSocio = new PagoNoSocioForm(_conexion, idReserva);
                 this.Hide();
