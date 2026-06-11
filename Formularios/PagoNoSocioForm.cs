@@ -1,4 +1,5 @@
-﻿using ClubDeportivoApp.DTOS;
+﻿using ClubDeportivoApp.Documentos;
+using ClubDeportivoApp.DTOS;
 using ClubDeportivoApp.Modelos;
 using ClubDeportivoApp.Repositorios;
 using ClubDeportivoApp.Servicios;
@@ -127,22 +128,7 @@ namespace ClubDeportivoApp.Formularios
                 MessageBox.Show("Reserva no existe. Verifique la información ingresada");
                 return;
             }
-
-            // Datos para ventana emergente
-            string titulo = "Datos Reserva: ";
-            mensaje =
-            $"Nombre: {reserva.NombreCliente}\n" +
-            $"Apellido: {reserva.ApellidoCliente}\n" +
-            $"DNI: {reserva.Dni}\n" +
-            $"Actividad: {reserva.Actividad}\n" +
-            $"Fecha y Hora: {Convert.ToString(reserva.FechaHora)}\n" +
-            $"Monto a Pagar: $ {Convert.ToString(reserva.Precio)}\n";
-                    
-            
-            string textoBtn = "Aceptar";
-
-            PopUpPersonalizadoForm emergente = new PopUpPersonalizadoForm(titulo, mensaje, textoBtn);
-            emergente.ShowDialog();
+            MostrarDatosReserva();
         }
         
         private void btnValidarPago_Click(object sender, EventArgs e)
@@ -181,14 +167,8 @@ namespace ClubDeportivoApp.Formularios
             }
 
             MessageBox.Show("Pago registrado con éxito");
-                    
-
-            mensaje += $"Método Pago: {Convert.ToString(cbMetodosPago.Text)}\n" +
-                $"Fecha Pago: {Convert.ToString(DateTime.Now)}\n";
-
-            PopUpPersonalizadoForm imprimible = new PopUpPersonalizadoForm("Comprobante de Pago", mensaje, "Imprimir");
-            imprimible.ShowDialog();
-            //Falta imprimir comprobante pago
+            MostrarComprobantePago();
+          
             this.Hide();
             DashboardForm dashboard = new DashboardForm();
             this.Close();
@@ -207,6 +187,27 @@ namespace ClubDeportivoApp.Formularios
         private void btnCerrar_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void MostrarComprobantePago()
+        {
+            // Datos para ventana emergente
+            string titulo = "Comprobante de Pago";
+            string mensaje = GeneradorComprobantes.MostrarComprobantePagoActividad(reserva, cbMetodosPago.Text);
+            string textoBtn = "Imprimir";
+
+            PopUpPersonalizadoForm emergente = new PopUpPersonalizadoForm(titulo, mensaje, textoBtn);
+            emergente.ShowDialog();
+        }
+
+        private void MostrarDatosReserva()
+        {
+            string titulo = "Datos Reserva";
+            string mensaje = GeneradorComprobantes.MostrarComprobantePagoActividad(reserva, cbMetodosPago.Text);
+            string textoBtn = "Aceptar";
+
+            PopUpPersonalizadoForm emergente = new PopUpPersonalizadoForm(titulo, mensaje, textoBtn);
+            emergente.ShowDialog();
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ClubDeportivoApp.Formularios;
+using ClubDeportivoApp.Modelos;
+using System;
 
 
 namespace ClubDeportivoApp.DTOS
@@ -15,5 +17,6 @@ namespace ClubDeportivoApp.DTOS
         public decimal Precio { get; set; }
         public DateTime FechaHora { get; set; }
         public string EstadoReserva { get; set; }
+
     }
 }

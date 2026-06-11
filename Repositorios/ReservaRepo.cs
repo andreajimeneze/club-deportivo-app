@@ -83,8 +83,7 @@ namespace ClubDeportivoApp.Repositorios
                                 FechaHora = Convert.ToDateTime(reader["fecha_hora"]),
                                 EstadoReserva = reader["estado"].ToString()
 
-                            };
-                            MessageBox.Show("qué tiene reserva: " + reserva);
+                            };                         
                         }
 
                     }
