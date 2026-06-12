@@ -20,16 +20,38 @@ namespace ClubDeportivoApp.Servicios
 
         public ReservaDTO BuscarReservaPorId(int idReserva)
         {
-            return _repo.BuscarReservaPorId(idReserva);
+            ReservaDTO reserva = _repo.BuscarReservaPorId(idReserva);
+
+            if (reserva == null || reserva.EstadoReserva != "Pendiente de pago")
+            {
+                return null;
+            }
+
+            return reserva;
         }
 
         public ReservaDTO BuscarReservaPorDniYActividad(string dni, int idActividad)
         {
-            return _repo.BuscarReservaPorDniYActividadRepo(dni, idActividad);
+            ReservaDTO reserva = _repo.BuscarReservaPorDniYActividadRepo(dni, idActividad);
+
+            if(reserva == null || reserva.EstadoReserva != "Pendiente de pago")
+            {
+                return null;
+            }
+
+            return reserva;
         }
-        public int GenerarReserva(int idActividad, int clienteId, DateTime fecha_hora)
+        public ReservaDTO GenerarReserva(int idActividad, int clienteId, DateTime fecha_hora)
         {
-           return _repo.GenerarReservaRepo(idActividad, clienteId, fecha_hora);
+           int idReserva = _repo.GenerarReservaRepo(idActividad, clienteId, fecha_hora);
+
+            if(idReserva <= 0) {
+                return null;
+            }
+
+            return _repo.BuscarReservaPorId(idReserva);
+
+
         }
     }
 }

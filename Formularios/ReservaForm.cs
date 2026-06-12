@@ -1,4 +1,5 @@
-﻿using ClubDeportivoApp.DTOS;
+﻿using ClubDeportivoApp.Documentos;
+using ClubDeportivoApp.DTOS;
 using ClubDeportivoApp.Modelos;
 using ClubDeportivoApp.Repositories;
 using ClubDeportivoApp.Repositorios;
@@ -19,6 +20,7 @@ namespace ClubDeportivoApp.Formularios
         private readonly ClienteServ cliServ;
         private Actividad actividad;
         private Programacion programacion;
+        private ReservaDTO reserva;
 
         public ReservaForm(ConexionMySql conexion)
         {
@@ -87,6 +89,8 @@ namespace ClubDeportivoApp.Formularios
                 lblPrecio.Text = $"Precio: {act.Precio}";
             }
         }
+        
+                
         // Carga fecha y hora de actividad asociada a programación, en combobox
         private void cbFechaHora_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -146,22 +150,25 @@ namespace ClubDeportivoApp.Formularios
                 // Validación 5: Si cliente es socio, verificar si está activo o inactivo
                 if (!clienteBuscado.Estado)
                 {
-                    MessageBox.Show("Socio se encuentra inactivo no puede realizar reserva.");
+                    MessageBox.Show("Socio se encuentra inactivo, no puede realizar reserva.");
                     return;
                 } else
                 {
                     MessageBox.Show("Reserva efectuada exitosamente. Socio no debe pagar");
+                   
 
                     // Se genera la reserva como autorizada (socio no paga) y se descuenta cupo en programación
-                    int idReserva = resServ.GenerarReserva(actividad.Id, clienteBuscado.IdCliente, programacion.FechaHora);
-                    // Validación 6: Si idReserva es 0 o negativo, hubo error al crear la reserva       
-                    if(idReserva <= 0)
+                    reserva = resServ.GenerarReserva(actividad.Id, clienteBuscado.IdCliente, programacion.FechaHora);
+                    
+                    // Validación 6: Si reserva es nula, hubo error al crear la reserva                                          
+                    if(reserva == null)
                     {
-                        MessageBox.Show("Error al crear la reserva");
+                        MessageBox.Show("No se pudo generar la reserva");
                         return;
                     }
 
-                    // Falta imprimir comprobante
+                    MessageBox.Show("Reserva creada con éxito");
+                    MostrarComprobanteReserva();
                 }
 
 
@@ -170,22 +177,23 @@ namespace ClubDeportivoApp.Formularios
             } else
             {
                 MessageBox.Show("Cliente NO ES SOCIO. Debe pagar por la actividad.");
+
                 // Se genera la reserva como Pendiente de Pago (no socio paga). Programación no descuenta cupo hasta que se efectúa el pago
-                int idReserva = resServ.GenerarReserva(actividad.Id, clienteBuscado.IdCliente, programacion.FechaHora);
+                reserva = resServ.GenerarReserva(actividad.Id, clienteBuscado.IdCliente, programacion.FechaHora);
+                
                 // Validación 6b: Si idReserva es 0 o negativo, hubo error al crear la reserva
-                if (idReserva <= 0)
+                if (reserva  == null)
                 {
-                    MessageBox.Show("Error al crear la reserva");
+                    MessageBox.Show("No se pudo generar la reserva");
                     return;
                 }
+                MessageBox.Show("Reserva creada con éxito");
+                MostrarComprobanteReserva();
                 // Se deriva a no socio al formulario de pago de la actividad. Se traspasa idReserva
-                PagoNoSocioForm pagoNoSocio = new PagoNoSocioForm(_conexion, idReserva);
+                PagoNoSocioForm pagoNoSocio = new PagoNoSocioForm(_conexion, reserva.IdReserva);
                 this.Hide();
                 pagoNoSocio.ShowDialog();
                 this.Close();
-
-                
-
             }
         }
 
@@ -209,6 +217,16 @@ namespace ClubDeportivoApp.Formularios
             CargarActividades();
         }
 
-        
+        private void MostrarComprobanteReserva()
+        {
+            // Datos para ventana emergente
+            string titulo = "Datos Reserva";
+            string mensaje = GeneradorComprobantes.MostrarComprobanteReserva(reserva);
+            string textoBtn = "Imprimir";
+
+            PopUpPersonalizadoForm emergente = new PopUpPersonalizadoForm(titulo, mensaje, textoBtn);
+            emergente.ShowDialog();
+        }
+
     }
 }

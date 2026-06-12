@@ -38,29 +38,24 @@ namespace ClubDeportivoApp.Servicios
             return true;
         }
 
-        public bool RegistrarPagoActividad(int noSocioId, int idReserva, decimal montoAPagar, decimal montoActividad, int conceptoPago, int medioPago)
+        public string RegistrarPagoActividad(int noSocioId, int idReserva, decimal montoAPagar, decimal montoActividad, int conceptoPago, int medioPago)
         {
-            if (montoAPagar < montoActividad)
+            if (montoAPagar != montoActividad)
             {
-                return false;
+                return "Monto a pagar no coincide con el precio de la actividad";
             }
 
-            if (montoAPagar <= 0)
-            {
-                throw new ArgumentException("El monto debe ser mayor a 0");
-            }
-
-            
+                       
              int result = repo.RegistrarPagoActividad(idReserva, montoAPagar, conceptoPago, medioPago);             
                   
 
 
             if (result <= 0)
             {
-                return false;
+                return "Error al realizar el pago";
             }
 
-            return true;
+            return "";
         }
     }
 }

@@ -14,6 +14,7 @@ namespace ClubDeportivoApp.Modelos
         public Cliente Cliente { get; set; }
         public DateTime FechaHoraReserva { get; set; }
         public string Estado { get; set; }
+
     }
 }
 

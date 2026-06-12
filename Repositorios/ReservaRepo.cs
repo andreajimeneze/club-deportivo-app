@@ -2,6 +2,7 @@
 using MySql.Data.MySqlClient;
 using System;
 using System.Data;
+using System.Windows.Forms;
 
 
 namespace ClubDeportivoApp.Repositorios
@@ -82,7 +83,7 @@ namespace ClubDeportivoApp.Repositorios
                                 FechaHora = Convert.ToDateTime(reader["fecha_hora"]),
                                 EstadoReserva = reader["estado"].ToString()
 
-                            };
+                            };                         
                         }
 
                     }

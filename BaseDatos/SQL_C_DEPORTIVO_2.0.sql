@@ -31,7 +31,7 @@ CREATE TABLE personas(
 CREATE TABLE clientes(
     id INT AUTO_INCREMENT PRIMARY KEY,
     persona_id INT NOT NULL UNIQUE,
-    aptoFisico BOOLEAN NOT NULL DEFAULT TRUE,
+    apto_fisico BOOLEAN NOT NULL DEFAULT TRUE,
 
     CONSTRAINT fk_clientes_personas
     FOREIGN KEY(persona_id)
@@ -164,7 +164,7 @@ CREATE TABLE Reservas(
     programacion_id INT NOT NULL,
     cliente_id INT NOT NULL,
     fecha_reserva DATETIME NOT NULL,
-    pagada BOOLEAN DEFAULT false,
+    estado VARCHAR(20) NOT NULL DEFAULT 'Pendiente de pago',
     
     CONSTRAINT fk_reservas_programaciones
     FOREIGN KEY (programacion_id)
@@ -367,6 +367,7 @@ BEGIN
 END //
 
 DELIMITER ;
+
 -- =========================================
 -- PROCEDIMIENTO REGISTRAR CLIENTE
 -- =========================================
@@ -377,72 +378,70 @@ CREATE PROCEDURE RegistrarCliente(
     IN p_nombre VARCHAR(30),
     IN p_apellido VARCHAR(40),
     IN p_dni VARCHAR(10),
-    IN p_aptoFisico BOOLEAN,
+    IN p_apto_fisico BOOLEAN,
+    IN p_es_socio BOOLEAN,
     OUT rta INT
 )
-
 BEGIN
 
     DECLARE existe INT DEFAULT 0;
     DECLARE v_persona_id INT;
     DECLARE v_cliente_id INT;
-    DECLARE v_id_generado INT;
+    DECLARE v_socio_id INT;
+    DECLARE v_no_socio_id INT;
 
-    -- verificar si ya existe persona
+    -- Ante cualquier excepción se revierte todo
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+        SET rta = -2;
+    END;
+
+    START TRANSACTION;
+
+    -- verificar si ya existe la persona
     SELECT COUNT(*)
     INTO existe
     FROM personas
     WHERE dni = p_dni;
 
     IF existe > 0 THEN
+        ROLLBACK;
         SET rta = -1;
 
     ELSE
-        -- insertar persona
+        -- persona
         INSERT INTO personas(nombre, apellido, dni)
         VALUES(p_nombre, p_apellido, p_dni);
 
         SET v_persona_id = LAST_INSERT_ID();
 
-        -- insertar cliente
-        INSERT INTO clientes(persona_id, aptoFisico)
-        VALUES(v_persona_id, p_aptoFisico);
+        -- cliente
+        INSERT INTO clientes(persona_id, apto_fisico)
+        VALUES(v_persona_id, p_apto_fisico);
 
         SET v_cliente_id = LAST_INSERT_ID();
 
-        SET rta = v_cliente_id;
+        -- tipo de cliente
+        IF p_es_socio THEN
 
-    END IF;
-
-END //
-
-DELIMITER ;
-
-
--- =========================================
--- PROCEDIMIENTO ASIGNAR TIPO CLIENTE
--- =========================================
-DELIMITER //
-
-CREATE PROCEDURE asignarTipoCliente(
-    IN p_cliente_id INT,
-    IN p_es_socio BOOLEAN,
-    OUT rta INT
-)
-
-BEGIN
-    IF p_es_socio = TRUE THEN
-		-- si es socio se ingresa a tabla socios
-        INSERT INTO socios(cliente_id, estado)
-        VALUES(p_cliente_id, TRUE);
+            INSERT INTO socios(cliente_id, estado)
+            VALUES(v_cliente_id, FALSE);
             
-	SET rta = LAST_INSERT_ID();
-    ELSE
-		-- si no es socio se ingresa a tabla no_socios
-        INSERT INTO no_socios(cliente_id, acceso_diario)
-        VALUES(p_cliente_id, TRUE);
-        
-        SET rta = LAST_INSERT_ID();
+            SET v_socio_id = LAST_INSERT_ID();
+
+        ELSE
+
+            INSERT INTO no_socios(cliente_id, acceso_diario)
+            VALUES(v_cliente_id, TRUE);
+            
+            SET v_no_socio_id = LAST_INSERT_ID();
+
+        END IF;
+
+        COMMIT;
+
+        SET rta = v_cliente_id;
 
     END IF;
 
@@ -473,7 +472,7 @@ BEGIN
     ROLLBACK;
     GET DIAGNOSTICS CONDITION 1 @sqlstate = RETURNED_SQLSTATE, @msg = MESSAGE_TEXT;
     SET rta = -99;
-    SELECT @sqlstate, @msg;
+    -- SELECT @sqlstate, @msg;
 END;
     
 	START TRANSACTION;
@@ -527,6 +526,36 @@ END //
 
 DELIMITER ;
 
+-- =========================================
+-- PROCEDIMIENTO BUSCAR CLIENTE
+-- =========================================
+
+DELIMITER //
+CREATE PROCEDURE BuscarCliente(
+	p_dni VARCHAR(10)
+)
+
+BEGIN
+	SELECT
+		cl.id AS id_cliente,
+		p.nombre,
+		p.apellido,
+		p.dni,
+        cl.apto_fisico,
+		s.estado,
+			CASE
+				WHEN s.id IS NULL THEN 0
+					ELSE 1
+				END AS es_socio
+			FROM clientes cl
+			JOIN personas p
+				ON p.id = cl.persona_id
+			LEFT JOIN socios s
+				ON s.cliente_id = cl.id
+			WHERE p.dni = p_dni;
+END //
+
+DELIMITER ;
 
 -- =========================================
 -- PROCEDIMIENTO REGISTRAR PAGO CUOTA
@@ -584,6 +613,10 @@ BEGIN
         WHERE id = v_cuota_id;
 
         SET rta = LAST_INSERT_ID();
+        
+        UPDATE socios
+        SET estado = TRUE
+        WHERE id = p_socio_id;
 
         COMMIT;
     END IF;
@@ -599,22 +632,45 @@ DELIMITER ;
 DELIMITER //
 
 CREATE PROCEDURE RegistrarPagoActividad(
-    IN p_reserva_id INT,
-    IN p_monto DECIMAL(10,2),
-    IN p_concepto_id INT,
-    IN p_metodo_id INT,
-    OUT rta INT
+IN p_reserva_id INT,
+IN p_monto DECIMAL(10,2),
+IN p_concepto_id INT,
+IN p_metodo_id INT,
+OUT rta INT
 )
 BEGIN
 
-    DECLARE EXIT HANDLER FOR SQLEXCEPTION
-    BEGIN
-        ROLLBACK;
-        SET rta = -99;
-    END;
+DECLARE v_programacion_id INT;
+DECLARE v_hay_cupo BOOLEAN;
 
-    START TRANSACTION;
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SET rta = -99;
+END;
 
+START TRANSACTION;
+
+-- Obtener la programación asociada a la reserva
+SELECT programacion_id
+INTO v_programacion_id
+FROM reservas
+WHERE id = p_reserva_id;
+
+-- Verificar si aún existen cupos
+SELECT cupos_disponibles > 0
+INTO v_hay_cupo
+FROM programaciones
+WHERE id = v_programacion_id;
+
+IF NOT v_hay_cupo THEN
+
+    SET rta = -2;
+    ROLLBACK;
+
+ELSE
+
+    -- Registrar el pago
     INSERT INTO pagos(
         reserva_id,
         fecha_pago,
@@ -630,17 +686,26 @@ BEGIN
         p_metodo_id
     );
 
+    -- Autorizar la reserva
     UPDATE reservas
-    SET pagada = TRUE
+    SET estado = 'Pagado'
     WHERE id = p_reserva_id;
+
+    -- Descontar el cupo
+    UPDATE programaciones
+    SET cupos_disponibles = cupos_disponibles - 1
+    WHERE id = v_programacion_id;
 
     SET rta = LAST_INSERT_ID();
 
     COMMIT;
 
+END IF;
+
 END //
 
 DELIMITER ;
+
 
 -- =========================================
 -- PROCEDIMIENTO GENERAR CUOTAS MENSUALES
@@ -691,9 +756,10 @@ BEGIN
         p.apellido,
         p.dni,
         s.id,
-        s.estado,
-        c.id AS 'id_cuota',
+        s.estado AS estado_socio,
+        c.id AS id_cuota,
         c.monto_cuota,
+        c.estado_cuota,
         c.fecha_vencimiento
     FROM personas p
     INNER JOIN clientes cl
@@ -703,7 +769,9 @@ BEGIN
     INNER JOIN cuotas c
         ON s.id = c.socio_id
     WHERE p.dni = in_dni
-    AND c.estado_cuota = 'Pendiente';
+    AND c.estado_cuota = 'Pendiente'
+    ORDER BY c.fecha_vencimiento ASC
+		LIMIT 1;
 
 END //
 
@@ -714,60 +782,142 @@ DELIMITER ;
 -- =========================================
 
 DELIMITER //
-CREATE PROCEDURE generarReserva(
-	IN p_id_actividad INT,
-	IN p_cliente_id INT,
-	IN p_fecha_hora DATETIME,
-	OUT rta INT
+
+CREATE PROCEDURE GenerarReserva(
+IN p_id_actividad INT,
+IN p_cliente_id INT,
+IN p_fecha_hora DATETIME,
+OUT rta INT
 )
 BEGIN
-	DECLARE v_programacion_id INT;
-	DECLARE v_reserva_id INT;
 
-	SELECT p.id 
-		INTO v_programacion_id
-		FROM programaciones p
-		WHERE actividad_id = p_id_actividad
-		AND fecha_hora = p_fecha_hora
-		LIMIT 1;
-        
-	IF v_programacion_id IS NULL THEN
-		SET rta = -1;
-	ELSE
-		IF EXISTS(
-			SELECT 1
-			FROM reservas
-			WHERE programacion_id = v_programacion_id
-			  AND cliente_id = p_cliente_id
-		) THEN
-			SET rta = -2;
-		ELSE
-			INSERT INTO reservas(
-				programacion_id, 
-				cliente_id, 
-				fecha_reserva, 
-				pagada
-			) 
-			VALUES(
-				v_programacion_id,
-				p_cliente_id,
-				NOW(),
-				FALSE
-			);
-			
-			SET v_reserva_id = LAST_INSERT_ID();
-			SET rta = v_reserva_id;
-		END IF;
-	END IF;
+DECLARE v_programacion_id INT;
+DECLARE v_reserva_id INT;
+DECLARE v_es_socio BOOLEAN;
+DECLARE v_hay_cupos BOOLEAN;
+
+-- Ante cualquier excepción se revierte todo
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+    ROLLBACK;
+    SET rta = -99;
+END;
+
+START TRANSACTION;
+
+-- Buscar programación
+SELECT p.id
+INTO v_programacion_id
+FROM programaciones p
+WHERE p.actividad_id = p_id_actividad
+  AND p.fecha_hora = p_fecha_hora
+LIMIT 1;
+
+IF v_programacion_id IS NULL THEN
+
+    ROLLBACK;
+    SET rta = -1;
+
+ELSE
+
+    -- Verificar que existan cupos
+    SELECT cupos_disponibles > 0
+    INTO v_hay_cupos
+    FROM programaciones
+    WHERE id = v_programacion_id;
+
+    IF NOT v_hay_cupos THEN
+
+        ROLLBACK;
+        SET rta = -2;
+
+    ELSE
+
+        -- Verificar si el cliente ya posee una reserva
+        IF EXISTS(
+            SELECT 1
+            FROM reservas
+            WHERE programacion_id = v_programacion_id
+              AND cliente_id = p_cliente_id
+        ) THEN
+
+            ROLLBACK;
+            SET rta = -3;
+
+        ELSE
+
+            -- Verificar si es socio activo
+            SELECT EXISTS(
+                SELECT 1
+                FROM socios s
+                WHERE s.cliente_id = p_cliente_id
+                  AND s.estado = TRUE
+            )
+            INTO v_es_socio;
+
+            IF v_es_socio THEN
+
+                -- Reserva autorizada para socio
+                INSERT INTO reservas(
+                    programacion_id,
+                    cliente_id,
+                    fecha_reserva,
+                    estado
+                )
+                VALUES(
+                    v_programacion_id,
+                    p_cliente_id,
+                    NOW(),
+                    'Autorizada'
+                );
+
+                -- El socio ocupa el cupo inmediatamente
+                UPDATE programaciones
+                SET cupos_disponibles = cupos_disponibles - 1
+                WHERE id = v_programacion_id;
+
+            ELSE
+
+                -- El no socio deberá pagar posteriormente
+                INSERT INTO reservas(
+                    programacion_id,
+                    cliente_id,
+                    fecha_reserva,
+                    estado
+                )
+                VALUES(
+                    v_programacion_id,
+                    p_cliente_id,
+					CURDATE(),
+                    'Pendiente de pago'
+                );
+
+            END IF;
+
+            SET v_reserva_id = LAST_INSERT_ID();
+
+            COMMIT;
+
+            SET rta = v_reserva_id;
+
+        END IF;
+
+    END IF;
+
+END IF;
+
 END //
+
 DELIMITER ;
+
+
 
 -- =========================================
 -- PROCEDIMIENTO LISTAR VENCIMIENTOS
 -- =========================================
 
 DELIMITER //
-CREATE PROCEDURE listarVencimientos(
+CREATE PROCEDURE ListarVencimientos(
 	IN p_fecha_vencimiento DATE
 )
 BEGIN
@@ -788,4 +938,82 @@ SELECT
     ON s.id = c.socio_id
     WHERE DATE(c.fecha_vencimiento) = p_fecha_vencimiento;
 END //
+DELIMITER ;
+
+-- =========================================
+-- PROCEDIMIENTO BUSCAR RESERVA POR ID
+-- =========================================
+
+DELIMITER // 
+CREATE PROCEDURE BuscarReservaPorId(
+	IN p_id_reserva INT
+)
+
+BEGIN
+	SELECT 
+		r.id AS id_Reserva, 
+        r.estado, 
+        cl.id AS id_cliente, 
+        p.nombre, 
+        p.apellido, 
+        p.dni, 
+        a.nombre AS actividad, 
+        a.precio, 
+        pr.fecha_hora
+	FROM reservas r 
+    INNER JOIN programaciones pr
+		ON r.programacion_id = pr.id
+	INNER JOIN actividades a 
+		ON pr.actividad_id = a.id
+	INNER JOIN clientes cl 
+		ON r.cliente_id = cl.id
+	INNER JOIN personas p 
+		ON cl.persona_id = p.id
+		WHERE r.id = p_id_reserva
+        AND r.estado = 'Pendiente de pago';
+END //
+DELIMITER ;
+
+
+-- =================================================
+-- PROCEDIMIENTO BUSCAR RESERVA POR DNI Y ACTIVIDAD
+-- =================================================
+
+DELIMITER //
+
+CREATE PROCEDURE BuscarReservaPorDniYActividad(
+    IN p_dni VARCHAR(10),
+    IN p_id_actividad INT
+)
+BEGIN
+
+    SELECT
+        r.id AS id_reserva,
+        cl.id AS id_cliente,
+        p.nombre,
+        p.apellido,
+        p.dni,
+        a.id AS id_actividad,
+        a.nombre AS actividad,
+        a.precio,
+        r.estado,
+        pr.fecha_hora
+    FROM reservas r
+    INNER JOIN programaciones pr
+        ON r.programacion_id = pr.id
+    INNER JOIN actividades a
+        ON pr.actividad_id = a.id
+    INNER JOIN clientes cl
+        ON r.cliente_id = cl.id
+    INNER JOIN personas p
+        ON cl.persona_id = p.id
+    WHERE p.dni = p_dni
+      AND a.id = p_id_actividad
+      AND r.estado = 'Pendiente de pago' 
+      AND pr.fecha_hora >= CURDATE()
+    ORDER BY pr.fecha_hora
+    LIMIT 1;
+
+END //
+
 DELIMITER ;
