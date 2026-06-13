@@ -61,7 +61,7 @@ namespace ClubDeportivoApp.Servicios
         {
             if (!PuedeReservar(cliente))
             {
-                // Mensaje diferenciado según el motivo
+                // Validación 1: Si es apto o si no está activo
                 if (!cliente.AptoFisico)
                     return (false, "El cliente no tiene apto físico. No puede reservar.", null);
 
@@ -71,7 +71,12 @@ namespace ClubDeportivoApp.Servicios
             int idReserva = _repo.GenerarReservaRepo(
                 actividad.Id, cliente.IdCliente, programacion.FechaHora);
 
-            // Códigos de error del stored procedure
+            MessageBox.Show($"actividad.Id: {actividad.Id}\n" +
+                $"cliente.IdCliente: {cliente.IdCliente}\n" +
+                $"programacion.FechaHora: {programacion.FechaHora}\n" +
+                $"idReserva devuelto: {idReserva}");
+
+            // Validación 2: Respecto del Stored Procedure
             if (idReserva == -1)
                 return (false, "No se encontró programación para la fecha indicada.", null);
             if (idReserva == -2)
@@ -89,7 +94,7 @@ namespace ClubDeportivoApp.Servicios
                 // La reserva del socio queda 'Autorizada', no 'Pendiente de pago'
                 // BuscarReservaPorId filtra solo 'Pendiente de pago' → no la encontraría
                 reserva = _repo.BuscarReservaAutorizadaPorId(idReserva); // ver repo abajo
-                return (true, "Reserva autorizada. El socio no abona el servicio por separado.", reserva);
+                return (true, "Reserva autorizada. El socio no debe abonar el servicio.", reserva);
             }
             else
             {

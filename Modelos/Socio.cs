@@ -13,31 +13,21 @@ namespace ClubDeportivoApp.Models
         public bool Estado { get; set; }
 
         public Socio(string nombre, string apellido, string dni, bool aptoFisico)
-         : base(nombre, apellido, dni, aptoFisico)
+            : base(nombre, apellido, dni, aptoFisico)
         {
         }
+
         public Socio(int id, string nombre, string apellido, string dni, bool aptoFisico)
-            : base(id, nombre, apellido, dni, aptoFisico)
+            : base(id, nombre, apellido, dni, aptoFisico) 
         {
+           
         }
 
         public Socio(int id, string nombre, string apellido, string dni, bool aptoFisico, bool estado)
-            : base(nombre, apellido, dni, aptoFisico)
+            : base(id, nombre, apellido, dni, aptoFisico) 
         {
-            IdSocio = id;
             Estado = estado;
-        }
-
-        public string MostrarCliente()
-        {
-            return  $"Nombre: {Nombre}" +
-                    $"Apellido: {Apellido} " +
-                    $"Dni: {Dni}";
-        }
-
-        public bool DebePagar()
-        {
-            return false;
+       
         }
     }
 }
