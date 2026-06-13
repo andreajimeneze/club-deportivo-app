@@ -66,7 +66,7 @@ CREATE TABLE usuarios(
 CREATE TABLE socios(
     id INT AUTO_INCREMENT PRIMARY KEY,
     cliente_id INT NOT NULL UNIQUE,
-    estado BOOLEAN DEFAULT TRUE,
+    estado BOOLEAN DEFAULT FALSE,
 
     CONSTRAINT fk_socios_clientes
     FOREIGN KEY(cliente_id)
@@ -268,71 +268,83 @@ VALUES
 
 INSERT INTO programaciones (actividad_id, fecha_hora, cupos_disponibles)
 VALUES
-(1, '2026-06-09 18:00:00', 20),
-(1, '2026-06-11 18:00:00', 15),
-(1, '2026-06-13 18:00:00', 10),
-(1, '2026-06-16 18:00:00', 0),
-(1, '2026-06-20 18:00:00', 0),
-(2, '2026-06-10 19:00:00', 12),
-(2, '2026-06-12 19:00:00', 8),
-(2, '2026-06-15 19:00:00', 5),
-(2, '2026-06-18 19:00:00', 0),
-(2, '2026-06-22 19:00:00', 0),
-(3, '2026-06-09 20:00:00', 18),
-(3, '2026-06-12 20:00:00', 10),
-(3, '2026-06-14 20:00:00', 7),
-(3, '2026-06-17 20:00:00', 0),
-(3, '2026-06-21 20:00:00', 0),
-(4, '2026-06-10 10:00:00', 4),
-(4, '2026-06-12 10:00:00', 3),
-(4, '2026-06-15 10:00:00', 2),
-(4, '2026-06-18 10:00:00', 0),
-(4, '2026-06-22 10:00:00', 0),
-(5, '2026-06-09 08:00:00', 25),
-(5, '2026-06-11 08:00:00', 20),
-(5, '2026-06-14 08:00:00', 15),
-(5, '2026-06-17 08:00:00', 0),
-(5, '2026-06-20 08:00:00', 0),
-(6, '2026-06-10 17:00:00', 15),
-(6, '2026-06-13 17:00:00', 10),
-(6, '2026-06-16 17:00:00', 5),
-(6, '2026-06-19 17:00:00', 0),
-(6, '2026-06-22 17:00:00', 0),
-(7, '2026-06-09 19:00:00', 15),
-(7, '2026-06-12 19:00:00', 10),
-(7, '2026-06-15 19:00:00', 6),
-(7, '2026-06-18 19:00:00', 0),
-(7, '2026-06-21 19:00:00', 0),
-(8, '2026-06-09 07:00:00', 30),
-(8, '2026-06-12 07:00:00', 25),
-(8, '2026-06-15 07:00:00', 20),
-(8, '2026-06-18 07:00:00', 0),
-(8, '2026-06-22 07:00:00', 0),
-(9, '2026-06-10 08:00:00', 20),
-(9, '2026-06-13 08:00:00', 15),
-(9, '2026-06-16 08:00:00', 10),
-(9, '2026-06-19 08:00:00', 0),
-(9, '2026-06-22 08:00:00', 0),
-(10, '2026-06-09 06:30:00', 12),
-(10, '2026-06-12 06:30:00', 8),
-(10, '2026-06-15 06:30:00', 4),
-(10, '2026-06-18 06:30:00', 0),
-(10, '2026-06-21 06:30:00', 0),
-(11, '2026-06-10 18:30:00', 20),
-(11, '2026-06-13 18:30:00', 15),
-(11, '2026-06-16 18:30:00', 10),
-(11, '2026-06-19 18:30:00', 0),
-(11, '2026-06-22 18:30:00', 0),
-(12, '2026-06-09 09:00:00', 18),
-(12, '2026-06-12 09:00:00', 12),
-(12, '2026-06-15 09:00:00', 8),
-(12, '2026-06-18 09:00:00', 0),
-(12, '2026-06-21 09:00:00', 0),
-(13, '2026-06-10 20:00:00', 25),
-(13, '2026-06-13 20:00:00', 18),
-(13, '2026-06-16 20:00:00', 12),
-(13, '2026-06-19 20:00:00', 0),
-(13, '2026-06-22 20:00:00', 0);
+(1, '2026-07-01 18:00:00', 20),
+(1, '2026-07-03 18:00:00', 15),
+(1, '2026-07-05 18:00:00', 10),
+(1, '2026-07-08 18:00:00', 0),
+(1, '2026-07-12 18:00:00', 0),
+
+(2, '2026-07-02 19:00:00', 12),
+(2, '2026-07-04 19:00:00', 8),
+(2, '2026-07-07 19:00:00', 5),
+(2, '2026-07-10 19:00:00', 0),
+(2, '2026-07-14 19:00:00', 0),
+
+(3, '2026-07-01 20:00:00', 18),
+(3, '2026-07-04 20:00:00', 10),
+(3, '2026-07-06 20:00:00', 7),
+(3, '2026-07-09 20:00:00', 0),
+(3, '2026-07-13 20:00:00', 0),
+
+(4, '2026-07-02 10:00:00', 4),
+(4, '2026-07-04 10:00:00', 3),
+(4, '2026-07-07 10:00:00', 2),
+(4, '2026-07-10 10:00:00', 0),
+(4, '2026-07-14 10:00:00', 0),
+
+(5, '2026-07-01 08:00:00', 25),
+(5, '2026-07-03 08:00:00', 20),
+(5, '2026-07-06 08:00:00', 15),
+(5, '2026-07-09 08:00:00', 0),
+(5, '2026-07-12 08:00:00', 0),
+
+(6, '2026-07-02 17:00:00', 15),
+(6, '2026-07-05 17:00:00', 10),
+(6, '2026-07-08 17:00:00', 5),
+(6, '2026-07-11 17:00:00', 0),
+(6, '2026-07-14 17:00:00', 0),
+
+(7, '2026-07-01 19:00:00', 15),
+(7, '2026-07-04 19:00:00', 10),
+(7, '2026-07-07 19:00:00', 6),
+(7, '2026-07-10 19:00:00', 0),
+(7, '2026-07-13 19:00:00', 0),
+
+(8, '2026-07-01 07:00:00', 30),
+(8, '2026-07-04 07:00:00', 25),
+(8, '2026-07-07 07:00:00', 20),
+(8, '2026-07-10 07:00:00', 0),
+(8, '2026-07-14 07:00:00', 0),
+
+(9, '2026-07-02 08:00:00', 20),
+(9, '2026-07-05 08:00:00', 15),
+(9, '2026-07-08 08:00:00', 10),
+(9, '2026-07-11 08:00:00', 0),
+(9, '2026-07-14 08:00:00', 0),
+
+(10, '2026-07-01 06:30:00', 12),
+(10, '2026-07-04 06:30:00', 8),
+(10, '2026-07-07 06:30:00', 4),
+(10, '2026-07-10 06:30:00', 0),
+(10, '2026-07-13 06:30:00', 0),
+
+(11, '2026-07-02 18:30:00', 20),
+(11, '2026-07-05 18:30:00', 15),
+(11, '2026-07-08 18:30:00', 10),
+(11, '2026-07-11 18:30:00', 0),
+(11, '2026-07-14 18:30:00', 0),
+
+(12, '2026-07-01 09:00:00', 18),
+(12, '2026-07-04 09:00:00', 12),
+(12, '2026-07-07 09:00:00', 8),
+(12, '2026-07-10 09:00:00', 0),
+(12, '2026-07-13 09:00:00', 0),
+
+(13, '2026-07-02 20:00:00', 25),
+(13, '2026-07-05 20:00:00', 18),
+(13, '2026-07-08 20:00:00', 12),
+(13, '2026-07-11 20:00:00', 0),
+(13, '2026-07-14 20:00:00', 0);
 
 
 -- =========================================
@@ -441,7 +453,11 @@ BEGIN
 
         COMMIT;
 
-        SET rta = v_cliente_id;
+        IF p_es_socio THEN
+			SET rta = v_socio_id;
+	ELSE
+    SET rta = v_no_socio_id;
+END IF;
 
     END IF;
 
@@ -530,29 +546,33 @@ DELIMITER ;
 -- PROCEDIMIENTO BUSCAR CLIENTE
 -- =========================================
 
+DROP PROCEDURE IF EXISTS BuscarClientePorDni;
 DELIMITER //
-CREATE PROCEDURE BuscarCliente(
-	p_dni VARCHAR(10)
-)
 
+CREATE PROCEDURE BuscarClientePorDni(
+    IN p_dni VARCHAR(10)
+)
 BEGIN
-	SELECT
-		cl.id AS id_cliente,
-		p.nombre,
-		p.apellido,
-		p.dni,
+    SELECT
+        cl.id AS id_cliente,
+        p.nombre,
+        p.apellido,
+        p.dni,
         cl.apto_fisico,
-		s.estado,
-			CASE
-				WHEN s.id IS NULL THEN 0
-					ELSE 1
-				END AS es_socio
-			FROM clientes cl
-			JOIN personas p
-				ON p.id = cl.persona_id
-			LEFT JOIN socios s
-				ON s.cliente_id = cl.id
-			WHERE p.dni = p_dni;
+        CASE 
+            WHEN s.id IS NOT NULL THEN 'Socio'
+            WHEN ns.id IS NOT NULL THEN 'NoSocio'
+            ELSE 'Cliente'
+        END AS tipo_cliente,
+        s.id AS id_socio,
+        s.estado AS estado_socio,
+        ns.id AS id_no_socio,
+        ns.acceso_diario
+    FROM clientes cl
+    JOIN personas p ON p.id = cl.persona_id
+    LEFT JOIN socios s ON s.cliente_id = cl.id
+    LEFT JOIN no_socios ns ON ns.cliente_id = cl.id
+    WHERE p.dni = p_dni;
 END //
 
 DELIMITER ;
@@ -723,7 +743,7 @@ BEGIN
 	)
 	SELECT
 		s.id,
-		c.mono_cuota, 
+		c.monto_cuota, 
 		DATE_FORMAT(CURDATE(), '%Y-%m-05'),
 		'Pendiente'
 	FROM socios s
@@ -731,7 +751,7 @@ BEGIN
     ON c.socio_id = s.id
 	WHERE NOT EXISTS (
 		SELECT 1
-		FROM cuota c
+		FROM cuotas c
 		WHERE c.socio_id = s.id
 		  AND YEAR(c.fecha_vencimiento) = YEAR(CURDATE())
 		  AND MONTH(c.fecha_vencimiento) = MONTH(CURDATE())
@@ -796,21 +816,28 @@ DECLARE v_reserva_id INT;
 DECLARE v_es_socio BOOLEAN;
 DECLARE v_hay_cupos BOOLEAN;
 
+DECLARE CONTINUE HANDLER FOR NOT FOUND
+BEGIN
+	SET v_programacion_id = NULL;
+END;
+
 -- Ante cualquier excepción se revierte todo
 DECLARE EXIT HANDLER FOR SQLEXCEPTION
 BEGIN
     ROLLBACK;
+    GET DIAGNOSTICS CONDITION 1 @sqlstate = RETURNED_SQLSTATE, @msg = MESSAGE_TEXT;
     SET rta = -99;
+    SELECT @sqlstate, @msg;
 END;
 
 START TRANSACTION;
 
 -- Buscar programación
-SELECT p.id
+SELECT id
 INTO v_programacion_id
-FROM programaciones p
-WHERE p.actividad_id = p_id_actividad
-  AND p.fecha_hora = p_fecha_hora
+FROM programaciones 
+WHERE actividad_id = p_id_actividad
+  AND fecha_hora = p_fecha_hora
 LIMIT 1;
 
 IF v_programacion_id IS NULL THEN
@@ -888,7 +915,7 @@ ELSE
                 VALUES(
                     v_programacion_id,
                     p_cliente_id,
-					CURDATE(),
+					NOW(),
                     'Pendiente de pago'
                 );
 
@@ -953,7 +980,7 @@ BEGIN
 	SELECT 
 		r.id AS id_Reserva, 
         r.estado, 
-        cl.id AS id_cliente, 
+        r.cliente_id AS id_cliente, 
         p.nombre, 
         p.apellido, 
         p.dni, 
