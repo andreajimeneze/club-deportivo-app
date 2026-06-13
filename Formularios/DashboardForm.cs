@@ -49,9 +49,9 @@ namespace ClubDeportivoApp
         }
         private void btnCarnet_Click(object sender, EventArgs e)
         {
-            PagoSocioForm pagoCarnet = new PagoSocioForm(_conexion);
+            CarnetForm carnet = new CarnetForm(_conexion);
             this.Hide();
-            pagoCarnet.ShowDialog();
+            carnet.ShowDialog();
             this.Show();
         }
         private void btnMorosos_Click(object sender, EventArgs e)

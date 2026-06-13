@@ -78,34 +78,51 @@ namespace ClubDeportivoApp.Repositories
 
             using (MySqlConnection conn = _conexionDatabase.GetMySqlConnection())
             {
-                using (
-                    MySqlCommand cmd =
-                    new MySqlCommand("BuscarClientePorDni", conn)
-                )
+                using (MySqlCommand cmd = new MySqlCommand("BuscarClientePorDni", conn))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-
                     cmd.Parameters.AddWithValue("p_dni", dni);
 
-                    using (MySqlDataReader reader =
-                           cmd.ExecuteReader())
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
                         if (reader.Read())
                         {
-                            cliente = new Cliente
-                            {
-                                IdCliente = Convert.ToInt32(reader["id_cliente"]),
-                                Nombre = reader["nombre"].ToString(),
-                                Apellido = reader["apellido"].ToString(),
-                                Dni = reader["dni"].ToString(),
-                                //EsSocio = Convert.ToBoolean(reader["es_socio"]),
-                                //Estado = reader["estado"] != DBNull.Value &&
-                                    //Convert.ToBoolean(reader["estado"]),
-                                AptoFisico = reader["apto_fisico"] != DBNull.Value &&
-                                    Convert.ToBoolean(reader["apto_fisico"])
-                            };
-                        }
+                            int idCliente = Convert.ToInt32(reader["id_cliente"]);
+                            string nombre = reader["nombre"].ToString();
+                            string apellido = reader["apellido"].ToString();
+                            string dniVal = reader["dni"].ToString();
+                            bool aptoFisico = reader["apto_fisico"] != DBNull.Value &&
+                                              Convert.ToBoolean(reader["apto_fisico"]);
+                            string tipo = reader["tipo_cliente"].ToString();
 
+                            if (tipo == "Socio")
+                            {
+                                int idSocio = Convert.ToInt32(reader["id_socio"]);
+                                bool estado = reader["estado_socio"] != DBNull.Value &&
+                                              Convert.ToBoolean(reader["estado_socio"]);
+
+                                cliente = new Socio(idCliente, nombre, apellido, dniVal, aptoFisico, estado)
+                                {
+                                    IdSocio = idSocio
+                                };
+                            }
+                            else if (tipo == "NoSocio")
+                            {
+                                int idNoSocio = Convert.ToInt32(reader["id_no_socio"]);
+                                bool accesoDiario = reader["acceso_diario"] != DBNull.Value &&
+                                                    Convert.ToBoolean(reader["acceso_diario"]);
+
+                                cliente = new NoSocio(idCliente, nombre, apellido, dniVal, aptoFisico)
+                                {
+                                    IdNoSocio = idNoSocio,
+                                    AccesoDiario = accesoDiario
+                                };
+                            }
+                            else
+                            {
+                                cliente = new Cliente(idCliente, nombre, apellido, dniVal, aptoFisico);
+                            }
+                        }
                     }
                 }
             }

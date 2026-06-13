@@ -157,9 +157,19 @@ namespace ClubDeportivoApp.Formularios
                 if (result)
                 {
                     MessageBox.Show("Pago realizado con éxito");
+
+                    if(conceptoPagoId == 1)
+                    {
+                        this.Hide();
+                        CarnetForm carnet = new CarnetForm(_conexion);
+                        carnet.ShowDialog();
+                        this.Close();
+                        return;
+                    }
                     //Falta imprimir comprobante pago
                     this.Hide();
                     DashboardForm dashboard = new DashboardForm();
+                    dashboard.Show();
                     this.Close();
                 }
                 else

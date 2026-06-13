@@ -281,7 +281,7 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Image = global::ClubDeportivoApp.Properties.Resources.Captura_de_pantalla_2026_06_11_1530241;
+            //this.pictureBox1.Image = global::ClubDeportivoApp.Properties.Resources.Captura_de_pantalla_2026_06_11_1530241;
             this.pictureBox1.Location = new System.Drawing.Point(11, 11);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(226, 218);

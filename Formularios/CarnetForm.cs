@@ -14,7 +14,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using QuestPDF.Helpers; 
+using QuestPDF.Helpers;
+using ClubDeportivoApp.Models;
 
 namespace ClubDeportivoApp.Formularios
 {
@@ -23,7 +24,7 @@ namespace ClubDeportivoApp.Formularios
     {
         private readonly ConexionMySql _conexion;
         private readonly ClienteServ _clienteServ;
-        private ClienteDTO _socioActual;
+        private Cliente _socioActual;
 
         public CarnetForm(ConexionMySql conexion)
         {
@@ -50,7 +51,7 @@ namespace ClubDeportivoApp.Formularios
             }
 
             var cliente = _clienteServ.BuscarClientePorDni(dni);
-            if (cliente == null || !cliente.EsSocio)
+            if (cliente == null || !(cliente is Socio))
             {
                 MessageBox.Show("No se encontró un socio activo con ese DNI.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 LimpiarPanelDatos();
@@ -62,7 +63,8 @@ namespace ClubDeportivoApp.Formularios
             lblNombreValor.Text = cliente.Nombre;
             lblApellidoValor.Text = cliente.Apellido;
             lblDniValor.Text = cliente.Dni;
-            lblEstadoValor.Text = cliente.Estado ? "Activo" : "Inactivo";
+            if(cliente is Socio socio)
+            lblEstadoValor.Text = socio.Estado ? "Activo" : "Inactivo";
             btnImprimirCarnet.Enabled = true;
         }
 
@@ -100,7 +102,7 @@ namespace ClubDeportivoApp.Formularios
             }
         }
 
-        private void GenerarPdfCarnet(ClienteDTO socio, string ruta)
+        private void GenerarPdfCarnet(Cliente socio, string ruta)
         {
             QuestPDF.Settings.License = LicenseType.Community;
 
@@ -135,11 +137,11 @@ namespace ClubDeportivoApp.Formularios
 
                             // Espacio
                             col.Item().Height(32);
-
+                            bool estaActivo = socio is Socio s && s.Estado;
                             // Datos del socio
                             col.Item().AlignCenter().Text($"Nombre: {socio.Nombre.ToUpper()} {socio.Apellido.ToUpper()}").FontSize(9).Bold();
                             col.Item().AlignCenter().Text($"DNI: {socio.Dni}").FontSize(9).Bold();
-                            col.Item().AlignCenter().Text($"Estado: {(socio.Estado ? "SOCIO ACTIVO" : "SOCIO INACTIVO")}").FontSize(9).Bold().FontColor(socio.Estado ? QuestPDF.Helpers.Colors.Black : QuestPDF.Helpers.Colors.Black);
+                            col.Item().AlignCenter().Text($"Estado: {(estaActivo ? "SOCIO ACTIVO" : "SOCIO INACTIVO")}").FontSize(9).Bold().FontColor(estaActivo ? QuestPDF.Helpers.Colors.Black : QuestPDF.Helpers.Colors.Black);
 
                             // Espacio
                             col.Item().Height(10);

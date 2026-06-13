@@ -17,9 +17,8 @@ namespace ClubDeportivoApp.Models
         {
         }
         public Socio(int id, string nombre, string apellido, string dni, bool aptoFisico)
-         : base(nombre, apellido, dni, aptoFisico)
+            : base(id, nombre, apellido, dni, aptoFisico)
         {
-            IdSocio = id;
         }
 
         public Socio(int id, string nombre, string apellido, string dni, bool aptoFisico, bool estado)
