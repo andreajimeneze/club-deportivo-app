@@ -13,7 +13,7 @@ namespace ClubDeportivoApp.Repositorios
             _conexionDatabase = conexionDatabase;
         }
 
-        public int FormalizarContrato(int socioId, decimal montoCuota)
+        public int FormalizarInscripcion(int socioId, decimal montoCuota)
         {
             try
             {
@@ -32,7 +32,13 @@ namespace ClubDeportivoApp.Repositorios
                         cmd.Parameters.Add(rtaParameter);
 
                         cmd.ExecuteNonQuery();
-                        return Convert.ToInt32(rtaParameter.Value);
+
+                        object value = cmd.Parameters["rta"].Value;
+
+                        if (value == null || value == DBNull.Value)
+                            return -99;
+
+                        return Convert.ToInt32(value);
                     }
                 }
             }

@@ -101,7 +101,7 @@ namespace ClubDeportivoApp.Formularios
             if(!string.IsNullOrWhiteSpace(txtReserva.Text))
             {
                 int idRes = Convert.ToInt32(txtReserva.Text);
-                reserva = resServ.BuscarReservaPorId(idRes);  
+                reserva = resServ.BuscarReservaPendientePagoPorId(idRes); 
             } else
             {
                 dni = txtDni.Text.Trim();

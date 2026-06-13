@@ -56,6 +56,7 @@
             this.lblNombre = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.cbFechaHora = new System.Windows.Forms.ComboBox();
+            this.lblAptoFisico = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panelLogin.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -230,6 +231,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.lblAptoFisico);
             this.panel1.Controls.Add(this.lblEsSocio);
             this.panel1.Controls.Add(this.label6);
             this.panel1.Controls.Add(this.lblPrecio);
@@ -313,9 +315,9 @@
             this.lblEstado.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblEstado.Location = new System.Drawing.Point(61, 207);
             this.lblEstado.Name = "lblEstado";
-            this.lblEstado.Size = new System.Drawing.Size(66, 20);
+            this.lblEstado.Size = new System.Drawing.Size(123, 20);
             this.lblEstado.TabIndex = 29;
-            this.lblEstado.Text = "EstadoReserva:";
+            this.lblEstado.Text = "Estado Cliente:";
             // 
             // lblDniSocio
             // 
@@ -371,6 +373,16 @@
             this.cbFechaHora.Size = new System.Drawing.Size(400, 33);
             this.cbFechaHora.TabIndex = 41;
             this.cbFechaHora.SelectedIndexChanged += new System.EventHandler(this.cbFechaHora_SelectedIndexChanged);
+            // 
+            // lblAptoFisico
+            // 
+            this.lblAptoFisico.AutoSize = true;
+            this.lblAptoFisico.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAptoFisico.Location = new System.Drawing.Point(61, 248);
+            this.lblAptoFisico.Name = "lblAptoFisico";
+            this.lblAptoFisico.Size = new System.Drawing.Size(98, 20);
+            this.lblAptoFisico.TabIndex = 37;
+            this.lblAptoFisico.Text = "Apto Físico:";
             // 
             // ReservaForm
             // 
@@ -434,5 +446,6 @@
         private System.Windows.Forms.Label lblDisponibilidad;
         private System.Windows.Forms.ComboBox cbFechaHora;
         private System.Windows.Forms.Label lblEsSocio;
+        private System.Windows.Forms.Label lblAptoFisico;
     }
 }

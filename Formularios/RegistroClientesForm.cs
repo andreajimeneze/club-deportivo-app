@@ -12,13 +12,14 @@ namespace ClubDeportivoApp.Forms
     {
         private readonly ConexionMySql _conexion;
         private readonly ClienteServ servicio;
-        
+           
         public RegistroClientesForm(ConexionMySql conexion)
         {
             InitializeComponent();
             _conexion = conexion;
             ClienteRepo repo = new ClienteRepo(_conexion);
             servicio = new ClienteServ(repo);
+        
             lblFechaHoy.Text = $"Fecha y hora: {DateTime.Now.ToString("dd/MM/yyyy HH:mm")}";
         }
 
@@ -63,33 +64,38 @@ namespace ClubDeportivoApp.Forms
             bool esSocio = rbSocio.Checked;
             bool aptoFisico = cbAptoFisico.Checked;
 
-            try { 
-                // Se realiza registro de cliente: Socio / No socio
-               int id = servicio.RealizarRegistro(nombre, apellido, dni, aptoFisico, esSocio);
+            try {
 
-                if (!aptoFisico)
+                Cliente cliente;
+
+                if (rbSocio.Checked)
                 {
-                    MessageBox.Show("Cliente no presentó aptoFísico. Para acceder a servicios debe presentarlo");
+                    cliente = new Socio(nombre, apellido, dni, aptoFisico);
                 }
-                // Si es socio, deriba a formalizar el contrato;
-                // Si no es socio, lleva a reserva
-                if (esSocio)
+                else
                 {
-                    Cliente socio = new Cliente(nombre, apellido, dni);
-                    MessageBox.Show($"Registro de CLIENTE N° {id}: {socio.Nombre}{socio.Apellido} exitoso");
-                   
-                    FormalizacionSocioForm inscripcionSocio = new FormalizacionSocioForm(socio, id,_conexion);
+                    cliente = new NoSocio(nombre, apellido, dni, aptoFisico);
+                }
+                // Se realiza registro de cliente: Socio / No socio
+                var registrado = servicio.RealizarRegistro(cliente, esSocio);
+               
+
+                if (!registrado.Ok)
+                {
+                    MessageBox.Show(registrado.mensaje);
+                    return;
+                }
+
+                MessageBox.Show($"Registro de CLIENTE {(registrado.cliente is Socio ? "SOCIO" : "NO SOCIO")} N° {registrado.cliente.IdCliente}: {registrado.cliente.Nombre} {registrado.cliente.Apellido} exitoso");
+                
+                if (registrado.cliente is Socio nuevoSocio)
+                {
+                    FormalizacionSocioForm inscripcionSocio = new FormalizacionSocioForm(nuevoSocio, _conexion);
                     this.Hide();
                     inscripcionSocio.ShowDialog();
                     this.Close();
                 } else
                 {
-                    Cliente noSocio = new Cliente(nombre, apellido, dni);
-                    MessageBox.Show($"Registro de CLIENTE NO SOCIO {id} {noSocio.Nombre}{noSocio.Apellido} exitoso");
-                  
-                    ReservaForm reserva = new ReservaForm(_conexion);
-                    this.Hide();
-                    reserva.ShowDialog();
                     this.Close();
                 }
                
@@ -116,5 +122,6 @@ namespace ClubDeportivoApp.Forms
         {
             this.Close();
         }
+
     }
 }

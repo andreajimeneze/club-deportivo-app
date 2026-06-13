@@ -5,27 +5,27 @@ namespace ClubDeportivoApp.Models
 {
     public class Cliente : Persona
     {
-        public new int Id { get; set; }
+        public int IdCliente { get; set; }
         public bool AptoFisico { get; set; }
 
         public Cliente() { }
-        public Cliente(string nombre, string apellido, string dni) 
+
+        public Cliente(string nombre, string apellido, string dni, bool aptoFisico)
+        : base(nombre, apellido, dni)
+        {
+            AptoFisico = aptoFisico;
+        }
+        public Cliente(int id, string nombre, string apellido, string dni, bool aptoFisico) 
             :base(nombre, apellido, dni)
         {
-            AptoFisico = true;
+            IdCliente = id;
+            AptoFisico = aptoFisico;
         }
 
         public override string ToString()
         {
             return $"{Apellido}, {Nombre}, {Dni}";
         }
-
-        public virtual void VerificarAptoFisico()
-        {
-            if (!AptoFisico)
-            {
-                Console.WriteLine("Cliente sin apto físico.");
-            }
-        }
+          
     }
 }

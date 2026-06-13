@@ -17,6 +17,10 @@ namespace ClubDeportivoApp.Models
             List<Pago> pagos = new List<Pago>();
                 }
 
+        public Cuota(decimal montoCuota)
+        {
+            this.MontoCuota = montoCuota;
+        }
       
        public Cuota(decimal montoCuota, DateTime fechaVencimiento, string estadoPago, Socio socio)
         {

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ClubDeportivoApp.Interfaces
 {
-    internal interface IPago
+    public interface IPago
     {
         int RegistrarPago(int ? idSocio, int ? idNoSocio, decimal montoAPagar, int conceptoPago, int medioPago);
         //List<Pago> listarPagosVencidos();

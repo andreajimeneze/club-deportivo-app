@@ -1,6 +1,7 @@
 ﻿using ClubDeportivoApp.Documentos;
 using ClubDeportivoApp.DTOS;
 using ClubDeportivoApp.Modelos;
+using ClubDeportivoApp.Models;
 using ClubDeportivoApp.Repositories;
 using ClubDeportivoApp.Repositorios;
 using ClubDeportivoApp.Services;
@@ -15,12 +16,12 @@ namespace ClubDeportivoApp.Formularios
         private readonly ConexionMySql _conexion;
         private readonly ListadosMaestrosServ listasServ;
         private readonly ProgramacionServ progServ;
-        private readonly CuotaServ socioServ;
         private readonly ReservaServ resServ;
         private readonly ClienteServ cliServ;
         private Actividad actividad;
         private Programacion programacion;
         private ReservaDTO reserva;
+      
 
         public ReservaForm(ConexionMySql conexion)
         {
@@ -34,7 +35,6 @@ namespace ClubDeportivoApp.Formularios
             ClienteRepo cliRepo = new ClienteRepo(_conexion);
             listasServ = new ListadosMaestrosServ(actRepo);
             progServ = new ProgramacionServ(progRepo);
-            socioServ = new CuotaServ(socioRepo);
             resServ = new ReservaServ(resRepo);
             cliServ = new ClienteServ(cliRepo);
 
@@ -118,7 +118,7 @@ namespace ClubDeportivoApp.Formularios
                 return;
             }
             // Busca cliente por dni
-            ClienteDTO clienteBuscado = cliServ.BuscarClientePorDni(dni);
+            Cliente clienteBuscado = cliServ.BuscarClientePorDni(dni);
 
             // Validación 3: Si cliente viene nulo
 
@@ -128,68 +128,45 @@ namespace ClubDeportivoApp.Formularios
                 return;
             }
 
-            // Validación 4: Si cliente no cuenta con aptoFísico
-            if(!clienteBuscado.AptoFisico)
-            {
-                MessageBox.Show("Cliente no tiene apto físico, por lo que no puede acceder a servicios");
-                return;
-            }
 
             // Imprime datos del cliente en label de formulario
             lblNombre.Text = $"Nombre: {clienteBuscado.Nombre}";
             lblApellido.Text = $"Apellido: {clienteBuscado.Apellido}";
             lblDniSocio.Text = $"DNI: {clienteBuscado.Dni}";
-            lblEsSocio.Text = $"Tipo Cliente: {(clienteBuscado.EsSocio ? "Socio" : "No Socio")}";
-
-            
-            if (clienteBuscado.EsSocio)
-            {                            
-                lblEstado.Text = $"EstadoReserva: {(clienteBuscado.Estado ? "Activo" : "Inactivo")}";
-                
-                MessageBox.Show("Cliente ES SOCIO");
-                // Validación 5: Si cliente es socio, verificar si está activo o inactivo
-                if (!clienteBuscado.Estado)
-                {
-                    MessageBox.Show("Socio se encuentra inactivo, no puede realizar reserva.");
-                    return;
-                } else
-                {
-                    MessageBox.Show("Reserva efectuada exitosamente. Socio no debe pagar");
-                   
-
-                    // Se genera la reserva como autorizada (socio no paga) y se descuenta cupo en programación
-                    reserva = resServ.GenerarReserva(actividad.Id, clienteBuscado.IdCliente, programacion.FechaHora);
-                    
-                    // Validación 6: Si reserva es nula, hubo error al crear la reserva                                          
-                    if(reserva == null)
-                    {
-                        MessageBox.Show("No se pudo generar la reserva");
-                        return;
-                    }
-
-                    MessageBox.Show("Reserva creada con éxito");
-                    MostrarComprobanteReserva();
-                }
-
-
-                this.Close();
-
-            } else
+            if (clienteBuscado is Socio socio)
             {
-                MessageBox.Show("Cliente NO ES SOCIO. Debe pagar por la actividad.");
+                lblEsSocio.Text = "Tipo Cliente: Socio";
+                lblEstado.Text = $"Estado Cliente: {(socio.Estado ? "Activo" : "Inactivo")}";
+            }
+            else 
+            {
+                lblEsSocio.Text = "Tipo Cliente: No Socio";
+                lblEstado.Text = "Estado Cliente: N/A";
+            }
+            lblAptoFisico.Text = $"Apto Fisico: {(clienteBuscado.AptoFisico ? "SÍ" : "NO")}";
 
-                // Se genera la reserva como Pendiente de Pago (no socio paga). Programación no descuenta cupo hasta que se efectúa el pago
-                reserva = resServ.GenerarReserva(actividad.Id, clienteBuscado.IdCliente, programacion.FechaHora);
-                
-                // Validación 6b: Si idReserva es 0 o negativo, hubo error al crear la reserva
-                if (reserva  == null)
-                {
-                    MessageBox.Show("No se pudo generar la reserva");
-                    return;
-                }
-                MessageBox.Show("Reserva creada con éxito");
-                MostrarComprobanteReserva();
-                // Se deriva a no socio al formulario de pago de la actividad. Se traspasa idReserva
+            var resultado = resServ.GenerarReserva(actividad, clienteBuscado, programacion);
+
+            MessageBox.Show(resultado.mensaje);
+
+            LimpiarFormulario();
+            
+            if(!resultado.Ok)
+            {
+                return;
+            }
+
+            // Se guarda item 3 de método GenerarReserva en reserva
+            reserva = resultado.Item3;
+
+            // Se muestra el comprobante de reserva
+            MostrarComprobanteReserva();
+
+            if (clienteBuscado is Socio)
+            {
+                this.Close();
+            } else 
+            { 
                 PagoNoSocioForm pagoNoSocio = new PagoNoSocioForm(_conexion, reserva.IdReserva);
                 this.Hide();
                 pagoNoSocio.ShowDialog();
@@ -226,6 +203,35 @@ namespace ClubDeportivoApp.Formularios
 
             PopUpPersonalizadoForm emergente = new PopUpPersonalizadoForm(titulo, mensaje, textoBtn);
             emergente.ShowDialog();
+        }
+
+        private void LimpiarFormulario()
+        {
+            // TextBox
+            txtDni.Clear();
+
+            // Labels cliente
+            lblNombre.Text = "Nombre:";
+            lblApellido.Text = "Apellido:";
+            lblDniSocio.Text = "DNI:";
+            lblEsSocio.Text = "Tipo Cliente:";
+            lblEstado.Text = "Estado Cliente:";
+            lblAptoFisico.Text = "Apto Físico:";
+
+            // Labels actividad
+            lblActividad.Text = "Actividad:";
+            lblPrecio.Text = "Precio:";
+            lblFechaHora.Text = "Fecha y Hora:";
+            lblDisponibilidad.Text = "Disponibilidad:";
+
+            // Combos
+            cbActividades.SelectedIndex = -1;
+            cbFechaHora.DataSource = null;
+
+            // Variables internas (MUY IMPORTANTE)
+            actividad = null;
+            programacion = null;
+            reserva = null;
         }
 
     }

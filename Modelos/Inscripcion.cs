@@ -11,8 +11,9 @@ namespace ClubDeportivoApp.Models
 
         public Inscripcion() { }
 
-        public Inscripcion(Socio socio)
+        public Inscripcion(int id, Socio socio)
         {
+            this.Id = id;
             this.FechaInscripcion = DateTime.Now;
             this.Socio = socio;
         }

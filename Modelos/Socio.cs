@@ -9,13 +9,24 @@ namespace ClubDeportivoApp.Models
 {
     public class Socio : Cliente
     {
-        public new int Id { get; set; }
+        public int IdSocio { get; set; }
         public bool Estado { get; set; }
 
-        public Socio(string nombre, string apellido, string dni)
-            : base(nombre, apellido, dni)
+        public Socio(string nombre, string apellido, string dni, bool aptoFisico)
+         : base(nombre, apellido, dni, aptoFisico)
         {
-            Estado = true;
+        }
+        public Socio(int id, string nombre, string apellido, string dni, bool aptoFisico)
+         : base(nombre, apellido, dni, aptoFisico)
+        {
+            IdSocio = id;
+        }
+
+        public Socio(int id, string nombre, string apellido, string dni, bool aptoFisico, bool estado)
+            : base(nombre, apellido, dni, aptoFisico)
+        {
+            IdSocio = id;
+            Estado = estado;
         }
 
         public string MostrarCliente()
@@ -25,14 +36,9 @@ namespace ClubDeportivoApp.Models
                     $"Dni: {Dni}";
         }
 
-        public override void VerificarAptoFisico()
+        public bool DebePagar()
         {
-            base.VerificarAptoFisico();
-
-            if(!AptoFisico)
-            {
-                Estado = false;
-            }
+            return false;
         }
     }
 }

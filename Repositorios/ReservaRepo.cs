@@ -53,6 +53,60 @@ namespace ClubDeportivoApp.Repositorios
             return reserva;
         }
 
+        // Busca cualquier reserva por id sin importar el estado
+        // Usalo internamente; en la BD podés crear un SP similar a BuscarReservaPorId
+        // pero sin el filtro de estado, o bien reutilizás BuscarReservaPorDniYActividad
+        public ReservaDTO BuscarReservaAutorizadaPorId(int idReserva)
+        {
+            ReservaDTO reserva = null;
+
+            using (MySqlConnection conn = _conexionDatabase.GetMySqlConnection())
+            {
+                // Consulta directa: no depende del estado
+                string query = @"
+            SELECT 
+                r.id        AS id_Reserva,
+                r.estado,
+                r.cliente_id AS id_cliente,
+                p.nombre,
+                p.apellido,
+                p.dni,
+                a.nombre    AS actividad,
+                a.precio,
+                pr.fecha_hora
+            FROM reservas r
+            INNER JOIN programaciones pr ON r.programacion_id = pr.id
+            INNER JOIN actividades a     ON pr.actividad_id   = a.id
+            INNER JOIN clientes cl       ON r.cliente_id      = cl.id
+            INNER JOIN personas p        ON cl.persona_id     = p.id
+            WHERE r.id = @idReserva";
+
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@idReserva", idReserva);
+
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            reserva = new ReservaDTO
+                            {
+                                IdReserva = Convert.ToInt32(reader["id_Reserva"]),
+                                IdCliente = Convert.ToInt32(reader["id_cliente"]),
+                                NombreCliente = reader["nombre"].ToString(),
+                                ApellidoCliente = reader["apellido"].ToString(),
+                                Dni = reader["dni"].ToString(),
+                                Actividad = reader["actividad"].ToString(),
+                                Precio = Convert.ToDecimal(reader["precio"]),
+                                FechaHora = Convert.ToDateTime(reader["fecha_hora"]),
+                                EstadoReserva = reader["estado"].ToString()
+                            };
+                        }
+                    }
+                }
+            }
+            return reserva;
+        }
         public ReservaDTO BuscarReservaPorDniYActividadRepo(string dni, int idActividad)
         {
             ReservaDTO reserva = null;

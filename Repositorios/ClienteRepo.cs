@@ -1,5 +1,6 @@
 ﻿using ClubDeportivoApp.DTOS;
 using ClubDeportivoApp.Interfaces;
+using ClubDeportivoApp.Models;
 using MySql.Data.MySqlClient;
 using System;
 using System.Data;
@@ -71,15 +72,15 @@ namespace ClubDeportivoApp.Repositories
             }
         }
 
-        public ClienteDTO BuscarClientePorDniRepo(string dni)
+        public Cliente BuscarClientePorDniRepo(string dni)
         {
-            ClienteDTO cliente = null;
+            Cliente cliente = null;
 
             using (MySqlConnection conn = _conexionDatabase.GetMySqlConnection())
             {
                 using (
                     MySqlCommand cmd =
-                    new MySqlCommand("BuscarCliente", conn)
+                    new MySqlCommand("BuscarClientePorDni", conn)
                 )
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
@@ -91,15 +92,15 @@ namespace ClubDeportivoApp.Repositories
                     {
                         if (reader.Read())
                         {
-                            cliente = new ClienteDTO
+                            cliente = new Cliente
                             {
                                 IdCliente = Convert.ToInt32(reader["id_cliente"]),
                                 Nombre = reader["nombre"].ToString(),
                                 Apellido = reader["apellido"].ToString(),
                                 Dni = reader["dni"].ToString(),
-                                EsSocio = Convert.ToBoolean(reader["es_socio"]),
-                                Estado = reader["estado"] != DBNull.Value &&
-                                    Convert.ToBoolean(reader["estado"]),
+                                //EsSocio = Convert.ToBoolean(reader["es_socio"]),
+                                //Estado = reader["estado"] != DBNull.Value &&
+                                    //Convert.ToBoolean(reader["estado"]),
                                 AptoFisico = reader["apto_fisico"] != DBNull.Value &&
                                     Convert.ToBoolean(reader["apto_fisico"])
                             };

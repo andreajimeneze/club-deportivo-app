@@ -1,4 +1,5 @@
-﻿using ClubDeportivoApp.Forms;
+﻿using ClubDeportivoApp.DTOS;
+using ClubDeportivoApp.Forms;
 using ClubDeportivoApp.Models;
 using ClubDeportivoApp.Repositorios;
 using ClubDeportivoApp.Servicios;
@@ -13,18 +14,18 @@ namespace ClubDeportivoApp.Formularios
     public partial class FormalizacionSocioForm : Form
     {
         private readonly ConexionMySql _conexion;
-        private readonly Cliente _socio;
-        private decimal montoCuota;
-        private int _idSocio;
+        private Socio nuevoSocio;
+        private Cuota cuota;
+        private int montoCuota;
      
         private readonly InscripcionSocioServ servicio;
-        public FormalizacionSocioForm(Cliente socio, int idSocio, ConexionMySql conexion)
+
+        public FormalizacionSocioForm(Socio socio, ConexionMySql conexion)
         {
             InitializeComponent();
-            _socio = socio;
-            _idSocio = idSocio;
+            nuevoSocio = socio;
             _conexion = conexion;
-
+    
             InscripcionRepo repo = new InscripcionRepo(_conexion);
             servicio = new InscripcionSocioServ(repo);
 
@@ -34,10 +35,15 @@ namespace ClubDeportivoApp.Formularios
             lblFechaHoy.Text = $"Fecha y hora: {DateTime.Now.ToString("dd/MM/yyyy HH:mm")}";
         }
 
-
         private void btnImprimir_Click(object sender, EventArgs e)
         {
-            montoCuota = decimal.Parse(txtMontoCuota.Text);
+            if(!Decimal.TryParse(txtMontoCuota.Text, out _)) {
+                MessageBox.Show("Ingrese un monto válido");
+                return;
+            }
+            
+            montoCuota = Convert.ToInt32(txtMontoCuota.Text);
+            
             int diaPago = DateTime.Today.Day;
             string carpeta = @"C:\Contratos";        
 
@@ -47,9 +53,9 @@ namespace ClubDeportivoApp.Formularios
             string ruta = Path.Combine(carpeta, "ContratoSocio.pdf");
 
             GeneradorContrato.GenerarContrato(
-                _socio.Nombre,
-                _socio.Apellido,
-                _socio.Dni,
+                nuevoSocio.Nombre,
+                nuevoSocio.Apellido,
+                nuevoSocio.Dni,
                 montoCuota,
                 diaPago,
                 ruta
@@ -66,7 +72,15 @@ namespace ClubDeportivoApp.Formularios
 
         private void btnAceptarContrato_Click(object sender, EventArgs e)
         {
-            bool insc = servicio.FormalizarSocio(_idSocio, montoCuota);
+            cuota = new Cuota(montoCuota);
+            
+            var resultado = servicio.FormalizarSocio(nuevoSocio, cuota);
+            
+           if (!resultado.Ok)
+            {
+                MessageBox.Show(resultado.mensaje);
+                return;
+            }
             
             PagoSocioForm pagoSocio = new PagoSocioForm(_conexion);
             this.Hide();
@@ -93,7 +107,5 @@ namespace ClubDeportivoApp.Formularios
             registroClientes.ShowDialog();
             this.Close();
         }
-
-
     }
 }

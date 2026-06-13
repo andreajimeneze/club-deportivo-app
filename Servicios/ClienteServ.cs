@@ -1,4 +1,5 @@
 ﻿using ClubDeportivoApp.DTOS;
+using ClubDeportivoApp.Models;
 using ClubDeportivoApp.Repositories;
 using ClubDeportivoApp.Repositorios;
 using System;
@@ -6,10 +7,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace ClubDeportivoApp.Services
 {
-    internal class ClienteServ
+    public class ClienteServ
     {
         private ClienteRepo _repo;
 
@@ -18,23 +20,44 @@ namespace ClubDeportivoApp.Services
             _repo = repo;
         }
 
-        public int RealizarRegistro(string nombre, string apellido, string dni, bool aptoFisico, bool esSocio)
+        public (bool Ok, string mensaje, Cliente cliente) RealizarRegistro(Cliente cliente, bool esSocio)
         {
-            int clienteId = _repo.RegistrarClienteRepo(nombre, apellido, dni, aptoFisico, esSocio);
-
-            if(clienteId == -1)
+            if (cliente == null)
             {
-                throw new Exception("La persona ya se encuentra registrada");
+                return (false, "No se puede realizar registro sin información", null);
+            }
+            
+            Cliente clienteBuscado = BuscarClientePorDni(cliente.Dni);
+
+            if(clienteBuscado != null) {
+                return (false, "Cliente ya se encuentra registrado", null);
+            }
+           
+            int idRegistrado = _repo.RegistrarClienteRepo(cliente.Nombre, cliente.Apellido, cliente.Dni, cliente.AptoFisico, esSocio);
+
+            
+            if(idRegistrado <= 0)
+            {
+                return (false, "Error al realizar el registro", null);
                 
             }
+            cliente.IdCliente = idRegistrado;
 
-            return clienteId;
+            // Si es socio, asignar también IdSocio
+            if (esSocio && cliente is Socio socio)
+            {
+                socio.IdSocio = idRegistrado;  
+            }
+
+            return (true, "Cliente registrado con éxito", cliente);
+
+
         }
 
 
-        public ClienteDTO BuscarClientePorDni(string dni)
+        public Cliente BuscarClientePorDni(string dni)
         {
-            ClienteDTO clienteBuscado = _repo.BuscarClientePorDniRepo(dni);
+            Cliente clienteBuscado = _repo.BuscarClientePorDniRepo(dni);
             if (clienteBuscado == null)
             {
                 return null;
@@ -42,5 +65,31 @@ namespace ClubDeportivoApp.Services
 
             return clienteBuscado;
         }
+
+        //private Cliente MapearADominio(ClienteDTO dto)
+        //{
+        //    if (dto == null) return null;
+
+        //    if (dto.EsSocio)
+        //    {
+        //        // Usar el constructor que acepta (int id, string nombre, string apellido, string dni, bool aptoFisico, bool estado)
+        //        return new Socio(
+        //            dto.IdCliente, 
+        //            dto.Nombre, 
+        //            dto.Apellido, 
+        //            dto.Dni, 
+        //            dto.AptoFisico, 
+        //            dto.Estado);
+        //    }
+
+        //    return new NoSocio(
+            
+        //        dto.IdCliente,
+        //        dto.Nombre,
+        //        dto.Apellido,
+        //        dto.Dni,
+        //        dto.AptoFisico            
+        //    );
+        //}
     }
 }

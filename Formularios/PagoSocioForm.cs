@@ -94,7 +94,7 @@ namespace ClubDeportivoApp.Formularios
                 return;
             }
             // Busca cliente por dni
-            ClienteDTO clienteBuscado = clienteServ.BuscarClientePorDni(dni);
+            var clienteBuscado = clienteServ.BuscarClientePorDni(dni);
 
             // Validación 3: cliente es nulo
             if(clienteBuscado == null)
@@ -102,20 +102,10 @@ namespace ClubDeportivoApp.Formularios
                 MessageBox.Show("Cliente no existe, verifique el número de DNI");
                 return;
             }
-            // Validación 3: Si cliente no es socio no paga cuota
-            if(!clienteBuscado.EsSocio)
-            {
-                MessageBox.Show("Cliente no es socio");
-                return;
-            }
 
             cuota = new CuotaPendienteDTO();
             // Obtiene cuota pendiente más antigua
             cuota = cuotaServ.ObtenerCuotaPendienteServ(clienteBuscado.Dni);
-
-            MessageBox.Show("dni cliente buscado: " + clienteBuscado.Dni);
-
-            MessageBox.Show("cuota: " + cuota);
 
             // Valiación 4: Si cuota no existe
             if (cuota == null)
