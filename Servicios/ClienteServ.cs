@@ -60,30 +60,9 @@ namespace ClubDeportivoApp.Servicios
             return clienteBuscado;
         }
 
-        //private Cliente MapearADominio(ClienteDTO dto)
-        //{
-        //    if (dto == null) return null;
-
-        //    if (dto.EsSocio)
-        //    {
-        //        // Usar el constructor que acepta (int id, string nombre, string apellido, string dni, bool aptoFisico, bool estado)
-        //        return new Socio(
-        //            dto.IdCliente, 
-        //            dto.Nombre, 
-        //            dto.Apellido, 
-        //            dto.Dni, 
-        //            dto.AptoFisico, 
-        //            dto.Estado);
-        //    }
-
-        //    return new NoSocio(
-            
-        //        dto.IdCliente,
-        //        dto.Nombre,
-        //        dto.Apellido,
-        //        dto.Dni,
-        //        dto.AptoFisico            
-        //    );
-        //}
+        public bool ActualizarAptoFisico(Cliente cliente)
+        {
+            return _repo.ActualizarAptoFisico(cliente);
+        }
     }
 }

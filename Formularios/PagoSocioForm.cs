@@ -1,4 +1,5 @@
 ﻿using ClubDeportivoApp.DTOS;
+using ClubDeportivoApp.Modelos;
 using ClubDeportivoApp.Repositorios;
 using ClubDeportivoApp.Servicios;
 using System;
@@ -103,10 +104,10 @@ namespace ClubDeportivoApp.Formularios
             {
                 MessageBox.Show("Cliente no ha formalizado su inscripción como socio");
                 DialogResult respuesta = MessageBox.Show(
-       "No existe una cuota pendiente.\n¿Desea formalizar la inscripción?",
-       "Formalizar inscripción",
-       MessageBoxButtons.OKCancel,
-       MessageBoxIcon.Question);
+                    "Socio no ha firmado el contrato.\n¿Desea formalizar la inscripción?",
+                    "Formalizar inscripción",
+                MessageBoxButtons.OKCancel,
+                MessageBoxIcon.Question);
 
                 if (respuesta == DialogResult.OK)
                 {

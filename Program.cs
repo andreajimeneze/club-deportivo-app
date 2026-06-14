@@ -1,13 +1,7 @@
 ﻿using ClubDeportivoApp.Formularios;
-using ClubDeportivoApp.Models;
-using MySql.Data.MySqlClient;
 using System;
-using System.Collections.Generic;
-using System.Drawing.Text;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
+
 
 namespace ClubDeportivoApp
 {

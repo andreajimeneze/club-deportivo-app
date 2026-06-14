@@ -2,6 +2,8 @@
 using MySql.Data.MySqlClient;
 using System;
 using System.Data;
+using System.Linq;
+using System.Security.Cryptography;
 
 namespace ClubDeportivoApp.Repositorios
 {
@@ -125,6 +127,23 @@ namespace ClubDeportivoApp.Repositorios
                 }
             }
             return cliente;
+        }
+
+        public bool ActualizarAptoFisico(Cliente cliente)
+        {
+            string query = "UPDATE clientes SET apto_fisico = true WHERE id = @id";
+            
+            using(MySqlConnection conn = _conexionDatabase.GetMySqlConnection())
+            {
+                using(MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@id", cliente.IdCliente);
+
+                    int filasAfectadas = cmd.ExecuteNonQuery();
+
+                    return filasAfectadas > 0;
+                }
+            }
         }
 
     }
