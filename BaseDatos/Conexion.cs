@@ -1,5 +1,4 @@
 ﻿
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace ClubDeportivoApp
 {

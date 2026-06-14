@@ -1,11 +1,9 @@
-﻿using ClubDeportivoApp.DTOS;
-using ClubDeportivoApp.Interfaces;
-using ClubDeportivoApp.Models;
+﻿using ClubDeportivoApp.Modelos;
 using MySql.Data.MySqlClient;
 using System;
 using System.Data;
 
-namespace ClubDeportivoApp.Repositories
+namespace ClubDeportivoApp.Repositorios
 {
     public class ClienteRepo
     {

@@ -1,10 +1,7 @@
 ﻿using ClubDeportivoApp.Documentos;
 using ClubDeportivoApp.DTOS;
 using ClubDeportivoApp.Modelos;
-using ClubDeportivoApp.Models;
-using ClubDeportivoApp.Repositories;
 using ClubDeportivoApp.Repositorios;
-using ClubDeportivoApp.Services;
 using ClubDeportivoApp.Servicios;
 using System;
 using System.Windows.Forms;

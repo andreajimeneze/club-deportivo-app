@@ -1,6 +1,6 @@
 ﻿using ClubDeportivoApp.Forms;
 using ClubDeportivoApp.Formularios;
-using ClubDeportivoApp.Models;
+using ClubDeportivoApp.Modelos;
 using System;
 using System.Windows.Forms;
 

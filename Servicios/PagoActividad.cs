@@ -1,9 +1,6 @@
 ﻿using ClubDeportivoApp.DTOS;
 using ClubDeportivoApp.Interfaces;
-using ClubDeportivoApp.Modelos;
-using ClubDeportivoApp.Models;
 using ClubDeportivoApp.Repositorios;
-using System;
 
 
 namespace ClubDeportivoApp.Servicios

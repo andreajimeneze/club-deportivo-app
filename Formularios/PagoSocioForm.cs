@@ -1,13 +1,7 @@
 ﻿using ClubDeportivoApp.DTOS;
-using ClubDeportivoApp.Modelos;
-using ClubDeportivoApp.Models;
-using ClubDeportivoApp.Repositories;
 using ClubDeportivoApp.Repositorios;
-using ClubDeportivoApp.Services;
 using ClubDeportivoApp.Servicios;
-using MySqlX.XDevAPI;
 using System;
-using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 
 

@@ -1,7 +1,7 @@
 ﻿using ClubDeportivoApp.Formularios;
-using ClubDeportivoApp.Models;
-using ClubDeportivoApp.Repositories;
-using ClubDeportivoApp.Services;
+using ClubDeportivoApp.Modelos;
+using ClubDeportivoApp.Repositorios;
+using ClubDeportivoApp.Servicios;
 using System;
 using System.Linq;
 using System.Windows.Forms;

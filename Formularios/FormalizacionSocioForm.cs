@@ -1,6 +1,6 @@
 ﻿using ClubDeportivoApp.DTOS;
 using ClubDeportivoApp.Forms;
-using ClubDeportivoApp.Models;
+using ClubDeportivoApp.Modelos;
 using ClubDeportivoApp.Repositorios;
 using ClubDeportivoApp.Servicios;
 using ClubDeportivoApp.Utilidades;

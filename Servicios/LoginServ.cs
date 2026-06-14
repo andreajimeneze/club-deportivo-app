@@ -1,9 +1,5 @@
-﻿using ClubDeportivoApp.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using ClubDeportivoApp.Models;
+﻿using ClubDeportivoApp.Repositorios;
+using ClubDeportivoApp.Modelos;
 
 
 namespace ClubDeportivoApp.Services

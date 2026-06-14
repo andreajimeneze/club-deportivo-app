@@ -1,22 +1,10 @@
-﻿using ClubDeportivoApp.DTOS;
-using ClubDeportivoApp.Repositories;
-using ClubDeportivoApp.Services;
-using QuestPDF.Fluent;
-using QuestPDF.Infrastructure;
-
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
+﻿using System;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using QuestPDF.Helpers;
-using ClubDeportivoApp.Models;
+using ClubDeportivoApp.Modelos;
 using ClubDeportivoApp.Documentos;
+using ClubDeportivoApp.Servicios;
+using ClubDeportivoApp.Repositorios;
 
 namespace ClubDeportivoApp.Formularios
 {
