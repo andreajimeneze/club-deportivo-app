@@ -21,11 +21,6 @@ namespace ClubDeportivoApp.Servicios
                 return (false, "No se puede realizar registro sin información", null);
             }
             
-            Cliente clienteBuscado = BuscarClientePorDni(cliente.Dni);
-
-            if(clienteBuscado != null) {
-                return (false, "Cliente ya se encuentra registrado", null);
-            }
            
             int idRegistrado = _repo.RegistrarClienteRepo(cliente.Nombre, cliente.Apellido, cliente.Dni, cliente.AptoFisico, esSocio);
 
