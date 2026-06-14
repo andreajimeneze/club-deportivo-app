@@ -27,5 +27,9 @@ namespace ClubDeportivoApp.Models
             return $"{Apellido}, {Nombre}, {Dni}";
         }
           
+        public bool PuedeReservar()
+        {
+            return AptoFisico;
+        }
     }
 }

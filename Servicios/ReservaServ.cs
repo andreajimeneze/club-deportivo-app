@@ -56,18 +56,36 @@ namespace ClubDeportivoApp.Servicios
 
             return reserva;
         }
-        public (bool Ok, string mensaje, ReservaDTO) GenerarReserva(
+        public (bool Ok, string mensaje, ReservaDTO reserva) GenerarReserva(
             Actividad actividad, Cliente cliente, Programacion programacion)
         {
-            if (!PuedeReservar(cliente))
+            // Validación 1: Si está activo
+            if (cliente is Socio socio && !socio.EstaActivo())
             {
-                // Validación 1: Si es apto o si no está activo
-                if (!cliente.AptoFisico)
-                    return (false, "El cliente no tiene apto físico. No puede reservar.", null);
-
                 return (false, "El socio no está activo. Debe regularizar sus cuotas.", null);
             }
 
+            if (!cliente.PuedeReservar())
+            {
+             return (false, "El cliente no tiene apto físico. No puede reservar.", null);
+                
+            }
+
+            if (programacion == null)
+            {
+                return (false, "No se encontró programación.", null);
+            }
+
+            if (!programacion.EstaVigente())
+            {
+                return (false, "Actividad no está vigente.", null);
+            }
+
+            if(!programacion.EstaDisponible())
+            {
+                return (false, "Actividad no tiene cupos disponibles.", null);
+            }
+           
             int idReserva = _repo.GenerarReservaRepo(
                 actividad.Id, cliente.IdCliente, programacion.FechaHora);
 
@@ -76,46 +94,24 @@ namespace ClubDeportivoApp.Servicios
                 $"programacion.FechaHora: {programacion.FechaHora}\n" +
                 $"idReserva devuelto: {idReserva}");
 
-            // Validación 2: Respecto del Stored Procedure
-            if (idReserva == -1)
-                return (false, "No se encontró programación para la fecha indicada.", null);
-            if (idReserva == -2)
-                return (false, "No hay cupos disponibles para esta actividad.", null);
-            if (idReserva == -3)
-                return (false, "El cliente ya tiene una reserva para esta programación.", null);
             if (idReserva <= 0)
                 return (false, "Error inesperado al crear la reserva.", null);
 
-            // *** FIX: usar método correcto según tipo de cliente ***
-            ReservaDTO reserva;
+            ReservaDTO reserva = BuscarReservaPorId(idReserva);
+            if(reserva == null)
+            {
+                return (false, "Error al intentar obtener la reserva", null);
+            }
 
             if (cliente is Socio)
             {
-                // La reserva del socio queda 'Autorizada', no 'Pendiente de pago'
-                // BuscarReservaPorId filtra solo 'Pendiente de pago' → no la encontraría
-                reserva = _repo.BuscarReservaAutorizadaPorId(idReserva); // ver repo abajo
+                programacion.DescontarCupo();
                 return (true, "Reserva autorizada. El socio no debe abonar el servicio.", reserva);
             }
             else
             {
-                // No socio → estado 'Pendiente de pago' → el método existente funciona
-                reserva = _repo.BuscarReservaPorId(idReserva);
                 return (true, "Reserva creada. El cliente debe abonar el servicio.", reserva);
             }
-        }
-        public bool PuedeReservar(Cliente cliente)
-        {
-            if(!cliente.AptoFisico)
-            {
-                return false;
-            }
-
-            if(cliente is Socio socio)
-            {
-                return socio.Estado;
-            }
-            
-            return true;
         }
     }
 }

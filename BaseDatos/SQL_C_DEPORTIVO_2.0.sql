@@ -399,10 +399,8 @@ BEGIN
     DECLARE existe INT DEFAULT 0;
     DECLARE v_persona_id INT;
     DECLARE v_cliente_id INT;
-    DECLARE v_socio_id INT;
     DECLARE v_no_socio_id INT;
 
-    -- Ante cualquier excepción se revierte todo
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
     BEGIN
         ROLLBACK;
@@ -411,53 +409,44 @@ BEGIN
 
     START TRANSACTION;
 
-    -- verificar si ya existe la persona
     SELECT COUNT(*)
     INTO existe
     FROM personas
     WHERE dni = p_dni;
 
     IF existe > 0 THEN
+
         ROLLBACK;
         SET rta = -1;
 
     ELSE
-        -- persona
+
+        -- Persona
         INSERT INTO personas(nombre, apellido, dni)
         VALUES(p_nombre, p_apellido, p_dni);
 
         SET v_persona_id = LAST_INSERT_ID();
 
-        -- cliente
+        -- Cliente
         INSERT INTO clientes(persona_id, apto_fisico)
         VALUES(v_persona_id, p_apto_fisico);
 
         SET v_cliente_id = LAST_INSERT_ID();
 
-        -- tipo de cliente
-        IF p_es_socio THEN
-
-            INSERT INTO socios(cliente_id, estado)
-            VALUES(v_cliente_id, FALSE);
-            
-            SET v_socio_id = LAST_INSERT_ID();
-
-        ELSE
+        -- Sólo los no socios se agregan aquí
+        IF NOT p_es_socio THEN
 
             INSERT INTO no_socios(cliente_id, acceso_diario)
             VALUES(v_cliente_id, TRUE);
-            
+
             SET v_no_socio_id = LAST_INSERT_ID();
 
         END IF;
 
         COMMIT;
 
-        IF p_es_socio THEN
-			SET rta = v_socio_id;
-	ELSE
-    SET rta = v_no_socio_id;
-END IF;
+        -- Siempre devolvemos el cliente_id
+        SET rta = v_cliente_id;
 
     END IF;
 
@@ -472,70 +461,76 @@ DELIMITER ;
 DELIMITER //
 
 CREATE PROCEDURE FormalizarInscripcion(
-    IN p_socio_id INT,
-    IN p_monto_cuota DECIMAL,
+    IN p_cliente_id INT,
+    IN p_monto_cuota DECIMAL(10,2),
     OUT rta INT
 )
-
 BEGIN
+
     DECLARE existe INT DEFAULT 0;
+    DECLARE v_socio_id INT;
     DECLARE v_inscripcion_id INT;
     DECLARE v_cuota_id INT;
-    
-    -- manejo de errores
-    DECLARE EXIT HANDLER FOR SQLEXCEPTION
-BEGIN
-    ROLLBACK;
-    GET DIAGNOSTICS CONDITION 1 @sqlstate = RETURNED_SQLSTATE, @msg = MESSAGE_TEXT;
-    SET rta = -99;
-    -- SELECT @sqlstate, @msg;
-END;
-    
-	START TRANSACTION;
 
-    -- verificar si ya tiene inscripción
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+        SET rta = -99;
+    END;
+
+    START TRANSACTION;
+
+    -- Verificar si ya es socio
     SELECT COUNT(*)
     INTO existe
-    FROM inscripciones
-    WHERE socio_id = p_socio_id;
+    FROM socios
+    WHERE cliente_id = p_cliente_id;
 
     IF existe > 0 THEN
-		ROLLBACK;
-        SET rta = -1;
-        
-    ELSE
-		-- crear inscripción
-		INSERT INTO inscripciones(
-			socio_id,
-			fecha_inscripcion
-		)
-		VALUES(
-			p_socio_id,
-			CURDATE()
-		);
 
-		SET v_inscripcion_id = LAST_INSERT_ID();
-			
-		-- definir cuota inicial con estado pendiente
-		INSERT INTO cuotas(
-			socio_id,
-			monto_cuota,
-			fecha_vencimiento,
-			estado_cuota
-		)
-		VALUES(
-			p_socio_id,
-			p_monto_cuota,
-			CURDATE(),
-			'Pendiente'
-			);
-			
-		SET v_cuota_id = LAST_INSERT_ID();
-		
-		COMMIT;
-		
-		SET rta = v_inscripcion_id;
-			
+        ROLLBACK;
+        SET rta = -1;
+
+    ELSE
+
+        -- Crear socio
+        INSERT INTO socios(cliente_id, estado)
+        VALUES(p_cliente_id, FALSE);
+
+        SET v_socio_id = LAST_INSERT_ID();
+
+        -- Crear inscripción
+        INSERT INTO inscripciones(
+            socio_id,
+            fecha_inscripcion
+        )
+        VALUES(
+            v_socio_id,
+            CURDATE()
+        );
+
+        SET v_inscripcion_id = LAST_INSERT_ID();
+
+        -- Crear cuota inicial
+        INSERT INTO cuotas(
+            socio_id,
+            monto_cuota,
+            fecha_vencimiento,
+            estado_cuota
+        )
+        VALUES(
+            v_socio_id,
+            p_monto_cuota,
+            CURDATE(),
+            'Pendiente'
+        );
+
+        SET v_cuota_id = LAST_INSERT_ID();
+
+        COMMIT;
+
+        SET rta = v_socio_id;
+
     END IF;
 
 END //
@@ -997,7 +992,8 @@ BEGIN
 	INNER JOIN personas p 
 		ON cl.persona_id = p.id
 		WHERE r.id = p_id_reserva
-        AND r.estado = 'Pendiente de pago';
+        AND r.estado = 'Pendiente de pago'
+        OR r.estado = 'Autorizada';
 END //
 DELIMITER ;
 

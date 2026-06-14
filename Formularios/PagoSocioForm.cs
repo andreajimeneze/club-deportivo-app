@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using ClubDeportivoApp.DTOS;
 using ClubDeportivoApp.Repositories;
 using ClubDeportivoApp.Services;
+using ClubDeportivoApp.Models;
 
 
 namespace ClubDeportivoApp.Formularios
@@ -17,7 +18,7 @@ namespace ClubDeportivoApp.Formularios
         private readonly ListadosMaestrosServ servicio;
         private readonly ClienteServ clienteServ;
         private readonly CuotaServ cuotaServ;
-        private readonly PagoServ pagoServ;
+        private readonly PagoCuota pagoServ;
         private CuotaPendienteDTO cuota;
 
 
@@ -33,7 +34,7 @@ namespace ClubDeportivoApp.Formularios
             CuotaRepo cuotaRepo = new CuotaRepo(_conexion);
             clienteServ = new ClienteServ(clienteRepo);
             PagosRepo pagosRepo = new PagosRepo(_conexion);
-            pagoServ = new PagoServ(pagosRepo);
+            pagoServ = new PagoCuota(pagosRepo);
             cuotaServ = new CuotaServ(cuotaRepo);
 
             lblFechaHoy.Text = $"Fecha y hora: {DateTime.Now.ToString("dd/MM/yyyy HH:mm")}";
@@ -103,6 +104,11 @@ namespace ClubDeportivoApp.Formularios
                 return;
             }
 
+            if(!(clienteBuscado is Socio))
+            {
+                MessageBox.Show("Cliente no es socio");
+            }
+
             cuota = new CuotaPendienteDTO();
             // Obtiene cuota pendiente más antigua
             cuota = cuotaServ.ObtenerCuotaPendienteServ(clienteBuscado.Dni);
@@ -149,33 +155,34 @@ namespace ClubDeportivoApp.Formularios
             decimal montoAPagar = Convert.ToDecimal(txtMontoPago.Text);
             int metodoPagoId = int.Parse(cbMedioPago.SelectedValue.ToString());
             int conceptoPagoId = int.Parse(cbConceptoPago.SelectedValue.ToString());
+            
             try
             {
                
-                bool result = pagoServ.RegistrarPagoCuota(cuota.IdSocio, montoAPagar, cuota.MontoCuota, conceptoPagoId, metodoPagoId);
+                var resultado = pagoServ.RegistrarPago(cuota, montoAPagar, conceptoPagoId, metodoPagoId);
 
-                if (result)
+                if(!resultado.Ok)
                 {
-                    MessageBox.Show("Pago realizado con éxito");
+                    MessageBox.Show(resultado.mensaje);
+                    return;
+                }
 
-                    if(conceptoPagoId == 1)
-                    {
-                        this.Hide();
-                        CarnetForm carnet = new CarnetForm(_conexion);
-                        carnet.ShowDialog();
-                        this.Close();
-                        return;
-                    }
-                    //Falta imprimir comprobante pago
+                MessageBox.Show(resultado.mensaje);
+
+                    // Si es la primera cuota (de inscripción) deriva al carnet
+                if (conceptoPagoId == 1)
+                {
                     this.Hide();
-                    DashboardForm dashboard = new DashboardForm();
-                    dashboard.Show();
+                    CarnetForm carnet = new CarnetForm(_conexion);
+                    carnet.ShowDialog();
                     this.Close();
-                }
-                else
-                {
-                    MessageBox.Show("Error al ejecutar el pago");
-                }
+                    return;
+                 }
+                //Falta imprimir comprobante pago
+                this.Hide();
+                DashboardForm dashboard = new DashboardForm();
+                dashboard.Show();
+                this.Close();
 
             }
             catch (Exception ex)

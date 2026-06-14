@@ -133,6 +133,7 @@ namespace ClubDeportivoApp.Formularios
             lblNombre.Text = $"Nombre: {clienteBuscado.Nombre}";
             lblApellido.Text = $"Apellido: {clienteBuscado.Apellido}";
             lblDniSocio.Text = $"DNI: {clienteBuscado.Dni}";
+
             if (clienteBuscado is Socio socio)
             {
                 lblEsSocio.Text = "Tipo Cliente: Socio";
@@ -156,8 +157,8 @@ namespace ClubDeportivoApp.Formularios
                 return;
             }
 
-            // Se guarda item 3 de método GenerarReserva en reserva
-            reserva = resultado.Item3;
+            // Se guarda item 3 de retorno de método GenerarReserva en variable reserva
+            reserva = resultado.reserva;
 
             // Se muestra el comprobante de reserva
             MostrarComprobanteReserva();

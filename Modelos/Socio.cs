@@ -27,7 +27,11 @@ namespace ClubDeportivoApp.Models
             : base(id, nombre, apellido, dni, aptoFisico) 
         {
             Estado = estado;
-       
+        }
+
+        public bool EstaActivo()
+        {
+            return Estado;
         }
     }
 }

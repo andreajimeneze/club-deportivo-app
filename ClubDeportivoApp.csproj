@@ -114,6 +114,7 @@
   <ItemGroup>
     <Compile Include="BaseDatos\Conexion.cs" />
     <Compile Include="BaseDatos\ConexionMySql.cs" />
+    <Compile Include="Documentos\GeneradorCarnet.cs" />
     <Compile Include="Documentos\GeneradorComprobantes.cs" />
     <Compile Include="DTOS\ClienteDTO.cs" />
     <Compile Include="DTOS\CuotaPendienteDTO.cs" />
@@ -222,7 +223,8 @@
     <Compile Include="Repositorios\CuotaRepo.cs" />
     <Compile Include="Servicios\InscripcionSocioServ.cs" />
     <Compile Include="Servicios\ListadosMaestrosServ.cs" />
-    <Compile Include="Servicios\PagoServ.cs" />
+    <Compile Include="Servicios\PagoActividad.cs" />
+    <Compile Include="Servicios\PagoCuota.cs" />
     <Compile Include="Servicios\ProgramacionServ.cs" />
     <Compile Include="Servicios\ClienteServ.cs" />
     <Compile Include="Servicios\LoginServ.cs" />

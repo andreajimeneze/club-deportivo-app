@@ -1,15 +1,9 @@
-﻿using ClubDeportivoApp.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace ClubDeportivoApp.Interfaces
 {
-    public interface IPago
+    public interface IPago<T>
     {
-        int RegistrarPago(int ? idSocio, int ? idNoSocio, decimal montoAPagar, int conceptoPago, int medioPago);
+        (bool Ok, string mensaje, T data) RegistrarPago(T entidad, decimal montoAPagar, int idConceptoPago, int idMedioPago);
         //List<Pago> listarPagosVencidos();
     }
 

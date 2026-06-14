@@ -31,11 +31,7 @@ namespace ClubDeportivoApp.Modelos
 
         public bool EstaDisponible()
         {
-            if(CuposDisponibles <= 0)
-            {
-                return false;
-            }
-            return true;
+            return CuposDisponibles > 0;
         }
 
         public void DescontarCupo()
@@ -45,6 +41,11 @@ namespace ClubDeportivoApp.Modelos
                 throw new Exception("No hay cupos disponibles");
             }
             CuposDisponibles--;
+        }
+
+        public bool EstaVigente()
+        {
+            return FechaHora > DateTime.Now;
         }
     }
 }

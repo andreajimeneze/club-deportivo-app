@@ -13,8 +13,7 @@ namespace ClubDeportivoApp.Formularios
         private readonly ConexionMySql _conexion;
         private readonly ListadosMaestrosServ servicio;
         private readonly ReservaServ resServ;
-        private readonly PagoServ pagoServ;
-        private  int _idReserva;
+        private readonly PagoActividad pagoServ;
         private string dni;
         private int idActividad;
         private ReservaDTO reserva = new ReservaDTO();
@@ -25,7 +24,6 @@ namespace ClubDeportivoApp.Formularios
         {
             InitializeComponent();
             _conexion = conexion;
-            _idReserva = idReserva;
 
             ConceptoPagoRepo cPagoRepo = new ConceptoPagoRepo(_conexion);
             MetodoPagoRepo mPagoRepo = new MetodoPagoRepo(_conexion);
@@ -34,7 +32,7 @@ namespace ClubDeportivoApp.Formularios
             PagosRepo pagoRepo = new PagosRepo(_conexion);
             servicio = new ListadosMaestrosServ(cPagoRepo, mPagoRepo, actRepo);
             resServ = new ReservaServ(reservRepo);
-            pagoServ = new PagoServ(pagoRepo);
+            pagoServ = new PagoActividad(pagoRepo);
             
             lblFechaHoy.Text = $"Fecha y hora: {DateTime.Now.ToString("dd/MM/yyyy")}";
         }
@@ -148,7 +146,6 @@ namespace ClubDeportivoApp.Formularios
             decimal montoPago = Convert.ToDecimal(txtMontoPago.Text);
             int metodoPagoId = int.Parse(cbMetodosPago.SelectedValue.ToString());
             int conceptoPagoId = int.Parse(cbConceptoPago.SelectedValue.ToString());
-            _idReserva = reserva.IdReserva;
                       
             // Validación 6: Si no se realiza selección en combobox 
             if (cbMetodosPago.SelectedIndex == 0 || cbConceptoPago.SelectedIndex == 0)
@@ -157,12 +154,13 @@ namespace ClubDeportivoApp.Formularios
                 return;
             }
 
+            
            
-            string result = pagoServ.RegistrarPagoActividad(reserva.IdCliente, _idReserva, montoPago, reserva.Precio, conceptoPagoId, metodoPagoId);
+            var resultado = pagoServ.RegistrarPago(reserva, montoPago, conceptoPagoId, metodoPagoId);
 
-            if (!string.IsNullOrEmpty(result))
+            if (!resultado.Ok)
             {
-                MessageBox.Show(result);
+                MessageBox.Show(resultado.mensaje);
                 return;
             }
 
