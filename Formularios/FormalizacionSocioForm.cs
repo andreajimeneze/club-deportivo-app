@@ -14,24 +14,24 @@ namespace ClubDeportivoApp.Formularios
     public partial class FormalizacionSocioForm : Form
     {
         private readonly ConexionMySql _conexion;
-        private Socio nuevoSocio;
+        private Cliente _nuevoSocio;
         private Cuota cuota;
         private int montoCuota;
      
         private readonly InscripcionSocioServ servicio;
 
-        public FormalizacionSocioForm(Socio socio, ConexionMySql conexion)
+        public FormalizacionSocioForm(Cliente nuevoSocio, ConexionMySql conexion)
         {
             InitializeComponent();
-            nuevoSocio = socio;
+            _nuevoSocio = nuevoSocio;
             _conexion = conexion;
     
             InscripcionRepo repo = new InscripcionRepo(_conexion);
             servicio = new InscripcionSocioServ(repo);
 
-            lblNombre.Text = socio.Nombre;
-            lblApellido.Text = socio.Apellido;
-            lblDni.Text = socio.Dni;
+            lblNombre.Text = _nuevoSocio.Nombre;
+            lblApellido.Text = _nuevoSocio.Apellido;
+            lblDni.Text = _nuevoSocio.Dni;
             lblFechaHoy.Text = $"Fecha y hora: {DateTime.Now.ToString("dd/MM/yyyy HH:mm")}";
         }
 
@@ -53,9 +53,9 @@ namespace ClubDeportivoApp.Formularios
             string ruta = Path.Combine(carpeta, "ContratoSocio.pdf");
 
             GeneradorContrato.GenerarContrato(
-                nuevoSocio.Nombre,
-                nuevoSocio.Apellido,
-                nuevoSocio.Dni,
+                _nuevoSocio.Nombre,
+                _nuevoSocio.Apellido,
+                _nuevoSocio.Dni,
                 montoCuota,
                 diaPago,
                 ruta
@@ -74,7 +74,7 @@ namespace ClubDeportivoApp.Formularios
         {
             cuota = new Cuota(montoCuota);
             
-            var resultado = servicio.FormalizarSocio(nuevoSocio, cuota);
+            var resultado = servicio.FormalizarSocio(_nuevoSocio, cuota);
             
            if (!resultado.Ok)
             {

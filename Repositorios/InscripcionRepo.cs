@@ -13,7 +13,7 @@ namespace ClubDeportivoApp.Repositorios
             _conexionDatabase = conexionDatabase;
         }
 
-        public int FormalizarInscripcion(int socioId, decimal montoCuota)
+        public int FormalizarInscripcion(int clienteId, decimal montoCuota)
         {
             try
             {
@@ -23,7 +23,7 @@ namespace ClubDeportivoApp.Repositorios
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
 
-                        cmd.Parameters.AddWithValue("p_socio_id", socioId);
+                        cmd.Parameters.AddWithValue("p_cliente_id", clienteId);
                         cmd.Parameters.AddWithValue("p_monto_cuota", montoCuota);
 
                         MySqlParameter rtaParameter = new MySqlParameter("rta", MySqlDbType.Int32);

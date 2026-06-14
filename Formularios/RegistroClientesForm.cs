@@ -61,7 +61,7 @@ namespace ClubDeportivoApp.Forms
             string nombre = txtNombre.Text.Trim();
             string apellido = txtApellido.Text.Trim();
             string dni = txtDni.Text.Trim();
-            bool esSocio = rbSocio.Checked;
+            bool QuiereSerSocio = rbSocio.Checked;
             bool aptoFisico = cbAptoFisico.Checked;
 
             try {
@@ -77,7 +77,7 @@ namespace ClubDeportivoApp.Forms
                     cliente = new NoSocio(nombre, apellido, dni, aptoFisico);
                 }
                 // Se realiza registro de cliente: Socio / No socio
-                var registrado = servicio.RealizarRegistro(cliente, esSocio);
+                var registrado = servicio.RealizarRegistro(cliente, QuiereSerSocio);
                
 
                 if (!registrado.Ok)
@@ -88,9 +88,9 @@ namespace ClubDeportivoApp.Forms
 
                 MessageBox.Show($"Registro de CLIENTE {(registrado.cliente is Socio ? "SOCIO" : "NO SOCIO")} N° {registrado.cliente.IdCliente}: {registrado.cliente.Nombre} {registrado.cliente.Apellido} exitoso");
                 
-                if (registrado.cliente is Socio nuevoSocio)
+                if (QuiereSerSocio)
                 {
-                    FormalizacionSocioForm inscripcionSocio = new FormalizacionSocioForm(nuevoSocio, _conexion);
+                    FormalizacionSocioForm inscripcionSocio = new FormalizacionSocioForm(registrado.cliente, _conexion);
                     this.Hide();
                     inscripcionSocio.ShowDialog();
                     this.Close();

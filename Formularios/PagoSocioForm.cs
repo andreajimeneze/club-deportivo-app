@@ -1,13 +1,14 @@
-﻿using ClubDeportivoApp.Modelos;
-using System;
-using System.Windows.Forms;
-using ClubDeportivoApp.Servicios;
-using ClubDeportivoApp.Repositorios;
-using System.Runtime.CompilerServices;
-using ClubDeportivoApp.DTOS;
-using ClubDeportivoApp.Repositories;
-using ClubDeportivoApp.Services;
+﻿using ClubDeportivoApp.DTOS;
+using ClubDeportivoApp.Modelos;
 using ClubDeportivoApp.Models;
+using ClubDeportivoApp.Repositories;
+using ClubDeportivoApp.Repositorios;
+using ClubDeportivoApp.Services;
+using ClubDeportivoApp.Servicios;
+using MySqlX.XDevAPI;
+using System;
+using System.Runtime.CompilerServices;
+using System.Windows.Forms;
 
 
 namespace ClubDeportivoApp.Formularios
@@ -104,9 +105,24 @@ namespace ClubDeportivoApp.Formularios
                 return;
             }
 
-            if(!(clienteBuscado is Socio))
+            if(clienteBuscado != null &&!(clienteBuscado is Socio) && !(clienteBuscado is NoSocio))
             {
-                MessageBox.Show("Cliente no es socio");
+                MessageBox.Show("Cliente no ha formalizado su inscripción como socio");
+                DialogResult respuesta = MessageBox.Show(
+       "No existe una cuota pendiente.\n¿Desea formalizar la inscripción?",
+       "Formalizar inscripción",
+       MessageBoxButtons.OKCancel,
+       MessageBoxIcon.Question);
+
+                if (respuesta == DialogResult.OK)
+                {
+                    using (FormalizacionSocioForm frm = new FormalizacionSocioForm(clienteBuscado, _conexion))
+                    {
+                        frm.ShowDialog();
+                    }
+                }
+
+                return;
             }
 
             cuota = new CuotaPendienteDTO();

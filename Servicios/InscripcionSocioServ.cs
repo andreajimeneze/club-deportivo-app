@@ -14,16 +14,16 @@ namespace ClubDeportivoApp.Servicios
             _repo = repo;
         }
 
-        public (bool Ok, string mensaje, int idInscripcion) FormalizarSocio(Socio socio, Cuota cuota)
+        public (bool Ok, string mensaje, int idInscripcion) FormalizarSocio(Cliente cliente, Cuota cuota)
         {
             try
             {
-                if (socio.IdSocio <= 0 || cuota.MontoCuota <= 0)
+                if (cliente.IdCliente <= 0 || cuota.MontoCuota <= 0)
                 {
                     return (false, "Cliente o cuota no válidas", 0);
                 }
 
-                int idInscripcion = _repo.FormalizarInscripcion(socio.IdSocio, cuota.MontoCuota);
+                int idInscripcion = _repo.FormalizarInscripcion(cliente.IdCliente, cuota.MontoCuota);
 
                 if (idInscripcion <= 0)
                 {
