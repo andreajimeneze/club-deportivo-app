@@ -224,8 +224,10 @@ VALUES
 
 INSERT INTO personas(nombre, apellido, dni)
 VALUES
-('Andrea', 'Jiménez', 24753731),
-('Angélica', 'Dos Reis', 38333222);
+('Andrea', 'Jiménez', '24753731'),
+('Ramiro', 'Meñica', '38333222'),
+('Ariel', 'González', '12341234'),
+('Gastón', 'Manes', '98765432');
 
 INSERT INTO usuarios(
     persona_id,
@@ -234,8 +236,11 @@ INSERT INTO usuarios(
     rol_id
 )
 VALUES
-(1, 'andrea', '1234', 1),
-(2, 'angelica', '5678', 2);
+(1, 'Andrea', '1234', 1),
+(2, 'Ramiro', '1234', 1),
+(3, 'Ariel', '1234', 1),
+(4, 'Gastón', '1234', 1);
+
 
 INSERT INTO metodos_pago(nombre)
 VALUES
@@ -760,7 +765,7 @@ DELIMITER ;
 
 DELIMITER //
 
-CREATE PROCEDURE ObtenerCuotaPendiente(
+CREATE PROCEDURE ObtenerCuotasPorDni(
     IN in_dni VARCHAR(10)
 )
 
@@ -783,11 +788,8 @@ BEGIN
         ON cl.id = s.cliente_id
     INNER JOIN cuotas c
         ON s.id = c.socio_id
-    WHERE p.dni = in_dni
-    AND c.estado_cuota = 'Pendiente'
-    ORDER BY c.fecha_vencimiento ASC
-		LIMIT 1;
-
+    WHERE p.dni = in_dni;
+    
 END //
 
 DELIMITER ;
@@ -991,9 +993,7 @@ BEGIN
 		ON r.cliente_id = cl.id
 	INNER JOIN personas p 
 		ON cl.persona_id = p.id
-		WHERE r.id = p_id_reserva
-        AND r.estado = 'Pendiente de pago'
-        OR r.estado = 'Autorizada';
+		WHERE r.id = p_id_reserva;
 END //
 DELIMITER ;
 
@@ -1001,7 +1001,6 @@ DELIMITER ;
 -- =================================================
 -- PROCEDIMIENTO BUSCAR RESERVA POR DNI Y ACTIVIDAD
 -- =================================================
-
 DELIMITER //
 
 CREATE PROCEDURE BuscarReservaPorDniYActividad(
@@ -1009,7 +1008,6 @@ CREATE PROCEDURE BuscarReservaPorDniYActividad(
     IN p_id_actividad INT
 )
 BEGIN
-
     SELECT
         r.id AS id_reserva,
         cl.id AS id_cliente,
@@ -1032,11 +1030,7 @@ BEGIN
         ON cl.persona_id = p.id
     WHERE p.dni = p_dni
       AND a.id = p_id_actividad
-      AND r.estado = 'Pendiente de pago' 
-      AND pr.fecha_hora >= CURDATE()
-    ORDER BY pr.fecha_hora
-    LIMIT 1;
-
+    ORDER BY pr.fecha_hora;
 END //
 
 DELIMITER ;

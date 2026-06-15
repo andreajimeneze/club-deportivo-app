@@ -1,5 +1,6 @@
 ﻿using ClubDeportivoApp.Documentos;
 using ClubDeportivoApp.DTOS;
+using ClubDeportivoApp.Helpers;
 using ClubDeportivoApp.Modelos;
 using ClubDeportivoApp.Repositorios;
 using ClubDeportivoApp.Servicios;
@@ -18,7 +19,8 @@ namespace ClubDeportivoApp.Formularios
         private Actividad actividad;
         private Programacion programacion;
         private ReservaDTO reserva;
-      
+        private Cliente clienteBuscado;
+
 
         public ReservaForm(ConexionMySql conexion)
         {
@@ -35,7 +37,7 @@ namespace ClubDeportivoApp.Formularios
             resServ = new ReservaServ(resRepo);
             cliServ = new ClienteServ(cliRepo);
 
-            lblFechaHoy.Text = $"Fecha y hora: {DateTime.Now.ToString("dd/MM/yyyy")}";
+            lblFechaHoy.Text = $"Fecha y hora: {DateTime.Now.ToString("dd/MM/yyyy HH:mm")}";
         }
 
         // Carga actividades en combobox
@@ -86,8 +88,7 @@ namespace ClubDeportivoApp.Formularios
                 lblPrecio.Text = $"Precio: {act.Precio}";
             }
         }
-        
-                
+               
         // Carga fecha y hora de actividad asociada a programación, en combobox
         private void cbFechaHora_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -98,26 +99,21 @@ namespace ClubDeportivoApp.Formularios
                 lblDisponibilidad.Text = $"{(prog.EstaDisponible() ? "Disponibilidad: Sí" : "Disponibilidad: No")}";
             }
         }
-        private void btnReserva_Click(object sender, EventArgs e)
-        {
-            string dni = txtDni.Text;
 
-            // Validación 1: Dni no puede venir vacío
-            if (String.IsNullOrEmpty(dni))
+        private void btnValidarCliente_Click(object sender, EventArgs e)
+        {
+            string dni = txtDni.Text.Trim();
+
+            // Valida DNI con helper
+            if(!ValidacionDatos.ValidarDni(dni, out string mensaje))
             {
-                MessageBox.Show("Debe ingresar un DNI");
-                return;
-            }
-            // Validación 2: Dni debe contener solo números
-            if(!int.TryParse(dni, out _))
-            {
-                MessageBox.Show("DNI debe contener solo números");
+                MessageBox.Show(mensaje);
                 return;
             }
             // Busca cliente por dni
-            Cliente clienteBuscado = cliServ.BuscarClientePorDni(dni);
+            clienteBuscado = cliServ.BuscarClientePorDni(dni);
 
-            // Validación 3: Si cliente viene nulo
+            // Validación 4: Si cliente viene nulo
 
             if (clienteBuscado == null)
             {
@@ -125,7 +121,9 @@ namespace ClubDeportivoApp.Formularios
                 return;
             }
 
-            if(!clienteBuscado.PuedeReservar())
+            // Validación 5: Si cliente no puede reservar
+            // Además da posibilidad de que presente el documento en ese momento para poder reservar.
+            if (!clienteBuscado.PuedeReservar())
             {
                 MessageBox.Show("Cliente no ha presentado certificado de Apto Físico");
                 DialogResult respuesta = MessageBox.Show(
@@ -140,10 +138,13 @@ namespace ClubDeportivoApp.Formularios
                     return;
                 }
 
+                // Limpia el textBox
+               // txtDni.Clear();
+
                 return;
             }
 
-            // Imprime datos del cliente en label de formulario
+            // Imprime datos del cliente en label de formulario (para verificación visual de datos)
             lblNombre.Text = $"Nombre: {clienteBuscado.Nombre}";
             lblApellido.Text = $"Apellido: {clienteBuscado.Apellido}";
             lblDniSocio.Text = $"DNI: {clienteBuscado.Dni}";
@@ -153,17 +154,23 @@ namespace ClubDeportivoApp.Formularios
                 lblEsSocio.Text = "Tipo Cliente: Socio";
                 lblEstado.Text = $"Estado Cliente: {(socio.Estado ? "Activo" : "Inactivo")}";
             }
-            else 
+            else
             {
                 lblEsSocio.Text = "Tipo Cliente: No Socio";
                 lblEstado.Text = "Estado Cliente: N/A";
             }
             lblAptoFisico.Text = $"Apto Fisico: {(clienteBuscado.AptoFisico ? "SÍ" : "NO")}";
 
+        }
+        private void btnReserva_Click(object sender, EventArgs e)
+        {
+            // Aplica método generar reserva
             var resultado = resServ.GenerarReserva(actividad, clienteBuscado, programacion);
 
-            MessageBox.Show(resultado.mensaje);
+            // Envía menssaje según el caso (validaciones en el método)
+             MessageBox.Show(resultado.mensaje);
 
+            // Limpia el formulario
             LimpiarFormulario();
             
             if(!resultado.Ok)
@@ -209,6 +216,7 @@ namespace ClubDeportivoApp.Formularios
             CargarActividades();
         }
 
+        
         private void MostrarComprobanteReserva()
         {
             // Datos para ventana emergente
@@ -243,11 +251,10 @@ namespace ClubDeportivoApp.Formularios
             cbActividades.SelectedIndex = -1;
             cbFechaHora.DataSource = null;
 
-            // Variables internas (MUY IMPORTANTE)
+            // Variables internas
             actividad = null;
             programacion = null;
             reserva = null;
-        }
-
+        }        
     }
 }

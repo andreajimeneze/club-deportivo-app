@@ -59,5 +59,10 @@ namespace ClubDeportivoApp.Servicios
         {
             return _repo.ActualizarAptoFisico(cliente);
         }
+
+        public int AsignarANoSocio(Cliente cliente)
+        {
+            return _repo.AsignarANoSocio(cliente);
+        }
     }
 }

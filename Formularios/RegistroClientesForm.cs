@@ -1,4 +1,5 @@
 ﻿using ClubDeportivoApp.Formularios;
+using ClubDeportivoApp.Helpers;
 using ClubDeportivoApp.Modelos;
 using ClubDeportivoApp.Repositorios;
 using ClubDeportivoApp.Servicios;
@@ -27,27 +28,6 @@ namespace ClubDeportivoApp.Forms
  
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-            // Validación 1: los campos del formulario son obligatorios.
-            if(txtNombre.Text == "" || txtApellido.Text == "" || txtDni.Text == "")
-            {
-                MessageBox.Show("Debe completar todos los campos para poder realizar el registro");
-                return;
-            }
-
-            // Validación 2: Dni debe contener solo campos numéricos.
-            if(!int.TryParse(txtDni.Text, out _))
-            {
-                MessageBox.Show("Dni debe contener solo números");
-                return;
-            }
-
-            // Validación 3: Nombre y apellido no deben contener números:
-            if(txtNombre.Text.Any(char.IsDigit) || txtApellido.Text.Any(char.IsDigit))
-            {
-                MessageBox.Show("Nombre y apellido no deben contener números");
-                return;
-            }
-
             // Campos ingresados en formulario se guardan en variables
             string nombre = txtNombre.Text.Trim();
             string apellido = txtApellido.Text.Trim();
@@ -55,6 +35,28 @@ namespace ClubDeportivoApp.Forms
             bool quiereSerSocio = rbSocio.Checked;
             bool noSocio = rbNoSocio.Checked;
             bool aptoFisico = cbAptoFisico.Checked;
+
+            // Validación 1: los campos del formulario son obligatorios.
+            if (nombre == "" || apellido == "" || dni == "")
+            {
+                MessageBox.Show("Debe completar todos los campos para poder realizar el registro");
+                return;
+            }
+
+            // Validación 2: Valida DNI con helper
+            if (!ValidacionDatos.ValidarDni(dni, out string mensaje))
+            {
+                MessageBox.Show(mensaje);
+                return;
+            }
+
+            // Validación 3: Nombre y apellido no deben contener números:
+            if (!ValidacionDatos.SoloLetras(nombre) || !ValidacionDatos.SoloLetras(apellido))
+            {
+                MessageBox.Show("Nombre y apellido no deben contener números ni caracteres especial");
+                return;
+            }
+
 
             Cliente clienteBuscado = servicio.BuscarClientePorDni(dni);
 

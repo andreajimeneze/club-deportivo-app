@@ -1,5 +1,6 @@
 ﻿using ClubDeportivoApp.Documentos;
 using ClubDeportivoApp.DTOS;
+using ClubDeportivoApp.Helpers;
 using ClubDeportivoApp.Modelos;
 using ClubDeportivoApp.Repositorios;
 using ClubDeportivoApp.Servicios;
@@ -14,17 +15,16 @@ namespace ClubDeportivoApp.Formularios
         private readonly ListadosMaestrosServ servicio;
         private readonly ReservaServ resServ;
         private readonly PagoActividad pagoServ;
-        private string dni;
-        private int idActividad;
         private ReservaDTO reserva = new ReservaDTO();
-        string mensaje;
+        private int _idActividad;
+   
 
 
-        public PagoNoSocioForm(ConexionMySql conexion, int idReserva = 0)
+        public PagoNoSocioForm(ConexionMySql conexion, int idActividad = 0)
         {
             InitializeComponent();
             _conexion = conexion;
-
+            _idActividad = idActividad;
             ConceptoPagoRepo cPagoRepo = new ConceptoPagoRepo(_conexion);
             MetodoPagoRepo mPagoRepo = new MetodoPagoRepo(_conexion);
             ActividadRepo actRepo = new ActividadRepo(_conexion);
@@ -34,7 +34,7 @@ namespace ClubDeportivoApp.Formularios
             resServ = new ReservaServ(reservRepo);
             pagoServ = new PagoActividad(pagoRepo);
             
-            lblFechaHoy.Text = $"Fecha y hora: {DateTime.Now.ToString("dd/MM/yyyy")}";
+            lblFechaHoy.Text = $"Fecha y hora: {DateTime.Now.ToString("dd/MM/yyyy HH:mm")}";
         }
 
         // Carga de métodos de pago
@@ -95,51 +95,47 @@ namespace ClubDeportivoApp.Formularios
 
         private void btnValidarReserva_Click(object sender, EventArgs e)
         {
+            (bool Ok, string mensaje, ReservaDTO reserva) resultado;
+
             // Búsqueda por reserva: Si el campo id reserva no está vacío, busca por id.
-            if(!string.IsNullOrWhiteSpace(txtReserva.Text))
+            // De lo contrario, busca por DNI
+            if (!string.IsNullOrWhiteSpace(txtReserva.Text.Trim()))
             {
-                int idRes = Convert.ToInt32(txtReserva.Text);
-                reserva = resServ.BuscarReservaPendientePagoPorId(idRes); 
+                int idRes = Convert.ToInt32(txtReserva.Text.Trim());
+                resultado = resServ.BuscarReservaPendientePagoPorId(idRes);
             } else
             {
-                dni = txtDni.Text.Trim();
-                // Validación 1: Si dni es nulo
-                if(string.IsNullOrEmpty(dni)) {
-                    MessageBox.Show("Debe ingresar un DNI");
-                    return;
-                }
-                // Validación 2: Si dni tiene letras u otros caracteres
-                if (!int.TryParse(txtDni.Text, out _))
+                string dni = txtDni.Text.Trim();
+                // Validación 1: Valida DNI con helper
+                if (!ValidacionDatos.ValidarDni(dni, out string mensaje))
                 {
-                    MessageBox.Show("Dni debe contener solo números");
+                    MessageBox.Show(mensaje);
                     return;
                 }
 
-                idActividad = Convert.ToInt32(cbActividades.SelectedValue);
+                _idActividad = Convert.ToInt32(cbActividades.SelectedValue);
                 
-                reserva = resServ.BuscarReservaPorDniYActividad(dni, idActividad);              
+                resultado = resServ.BuscarReservaPendientePorDniYActividad(dni, _idActividad); 
             }
 
-            // Validación 3: Si la reserva es nula
-            if (reserva == null)
+            if (!resultado.Ok)
             {
-                MessageBox.Show("Reserva no existe. Verifique la información ingresada");
+                MessageBox.Show(resultado.mensaje);
                 return;
             }
-            MostrarDatosReserva();
+
+            reserva = resultado.reserva;
+            MessageBox.Show(resultado.mensaje);
+
+            MostrarComprobanteReserva();
         }
         
         private void btnValidarPago_Click(object sender, EventArgs e)
         {
-            // Validación 4: Si campo monto se deja vacío
-            if (string.IsNullOrEmpty(txtMontoPago.Text))
+            // Validación 5: Valida monto en helper
+            if (!ValidacionDatos.ValidarMonto(txtMontoPago.Text.Trim(), out string mensaje))
             {
-                MessageBox.Show("Debe ingresar un monto");
-                return;
-            }
-            // Validación 5: Si se ingresan caracteres distintos a numéricos
-            if (!Decimal.TryParse(txtMontoPago.Text, out _)) {
-                MessageBox.Show("Ingrese un monto válido");
+                MessageBox.Show(mensaje);
                 return;
             }
 
@@ -154,8 +150,7 @@ namespace ClubDeportivoApp.Formularios
                 return;
             }
 
-            
-           
+            // Registra pago           
             var resultado = pagoServ.RegistrarPago(reserva, montoPago, conceptoPagoId, metodoPagoId);
 
             if (!resultado.Ok)
@@ -164,16 +159,19 @@ namespace ClubDeportivoApp.Formularios
                 return;
             }
 
-            MessageBox.Show("Pago registrado con éxito");
+            MessageBox.Show(resultado.mensaje);
+
             MostrarComprobantePago();
           
             this.Hide();
-            DashboardForm dashboard = new DashboardForm();
             this.Close();
         }
 
         private void btnVolver_Click(object sender, EventArgs e)
         {
+            this.Hide();
+            ReservaForm reserva = new ReservaForm(_conexion);
+            reserva.ShowDialog();
             this.Close();
         }
 
@@ -198,11 +196,12 @@ namespace ClubDeportivoApp.Formularios
             emergente.ShowDialog();
         }
 
-        private void MostrarDatosReserva()
+        private void MostrarComprobanteReserva()
         {
+            // Datos para ventana emergente
             string titulo = "Datos Reserva";
-            string mensaje = GeneradorComprobantes.MostrarComprobantePagoActividad(reserva, cbMetodosPago.Text);
-            string textoBtn = "Aceptar";
+            string mensaje = GeneradorComprobantes.MostrarComprobanteReserva(reserva);
+            string textoBtn = "Imprimir";
 
             PopUpPersonalizadoForm emergente = new PopUpPersonalizadoForm(titulo, mensaje, textoBtn);
             emergente.ShowDialog();

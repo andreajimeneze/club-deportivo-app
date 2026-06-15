@@ -5,7 +5,7 @@ using ClubDeportivoApp.Repositorios;
 
 namespace ClubDeportivoApp.Servicios
 {
-    public class PagoCuota : IPago<CuotaPendienteDTO>
+    public class PagoCuota : IPago<CuotaDTO>
     {
         private PagosRepo _repo;
  
@@ -15,7 +15,7 @@ namespace ClubDeportivoApp.Servicios
             _repo = repo;
         }
 
-        public (bool Ok, string mensaje, CuotaPendienteDTO data) RegistrarPago(CuotaPendienteDTO cuota, decimal montoAPagar, int idConceptoPago, int idMedioPago)
+        public (bool Ok, string mensaje, CuotaDTO data) RegistrarPago(CuotaDTO cuota, decimal montoAPagar, int idConceptoPago, int idMedioPago)
         {
                      
             if(cuota == null)

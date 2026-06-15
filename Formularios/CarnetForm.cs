@@ -1,10 +1,11 @@
-﻿using System;
+﻿using ClubDeportivoApp.Documentos;
+using ClubDeportivoApp.Helpers;
+using ClubDeportivoApp.Modelos;
+using ClubDeportivoApp.Repositorios;
+using ClubDeportivoApp.Servicios;
+using System;
 using System.IO;
 using System.Windows.Forms;
-using ClubDeportivoApp.Modelos;
-using ClubDeportivoApp.Documentos;
-using ClubDeportivoApp.Servicios;
-using ClubDeportivoApp.Repositorios;
 
 namespace ClubDeportivoApp.Formularios
 {
@@ -27,15 +28,10 @@ namespace ClubDeportivoApp.Formularios
         private void btnBuscar_Click(object sender, EventArgs e)
         {
             string dni = txtDni.Text.Trim();
-            if (string.IsNullOrEmpty(dni))
+            // Validación 1: Valida DNI con helper
+            if (!ValidacionDatos.ValidarDni(dni, out string mensaje))
             {
-                MessageBox.Show("Debe ingresar un DNI.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            if (!int.TryParse(dni, out _))
-            {
-                MessageBox.Show("El DNI debe contener solo números.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(mensaje);
                 return;
             }
 

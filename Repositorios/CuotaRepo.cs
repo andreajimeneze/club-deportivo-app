@@ -1,6 +1,7 @@
 ﻿using ClubDeportivoApp.DTOS;
 using MySql.Data.MySqlClient;
 using System;
+using System.Collections.Generic;
 using System.Data;
 
 namespace ClubDeportivoApp.Repositorios
@@ -14,9 +15,9 @@ namespace ClubDeportivoApp.Repositorios
             _conexionDatabase = conexionDatabase;
         }
 
-        public CuotaPendienteDTO ObtenerCuotaPendienteRepo(string dni)
+        public List<CuotaDTO> ObtenerCuotasRepo(string dni)
         {
-            CuotaPendienteDTO cuota = null;
+            List<CuotaDTO> cuotas = new List<CuotaDTO>();
 
             using (
                 MySqlConnection conn =
@@ -25,7 +26,7 @@ namespace ClubDeportivoApp.Repositorios
             {
                 using (
                     MySqlCommand cmd =
-                    new MySqlCommand("ObtenerCuotaPendiente", conn)
+                    new MySqlCommand("ObtenerCuotasPorDni", conn)
                 )
                 {
                     cmd.CommandType =
@@ -38,9 +39,9 @@ namespace ClubDeportivoApp.Repositorios
                     using (MySqlDataReader reader =
                            cmd.ExecuteReader())
                     {
-                        if (reader.Read())
+                        while (reader.Read())
                         {
-                            cuota = new CuotaPendienteDTO
+                            CuotaDTO cuota = new CuotaDTO
                             {
                                 Nombre = reader["nombre"].ToString(),
                                 Apellido = reader["apellido"].ToString(),
@@ -50,13 +51,15 @@ namespace ClubDeportivoApp.Repositorios
                                 MontoCuota = Convert.ToDecimal(reader["monto_cuota"]),
                                 FechaVencimiento = Convert.ToDateTime(reader["fecha_vencimiento"]),
                                 EstadoCuota = reader["estado_cuota"].ToString()
-                            };  
+                            };
+
+                            cuotas.Add(cuota);
                         }
                     }
 
                 }
             }
-            return cuota;
+            return cuotas;
         }
 
     }

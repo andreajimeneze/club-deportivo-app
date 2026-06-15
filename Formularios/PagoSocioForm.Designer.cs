@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            //System.Windows.Forms.TextBox txtMontoPago;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PagoSocioForm));
             this.label1 = new System.Windows.Forms.Label();
             this.cbConceptoPago = new System.Windows.Forms.ComboBox();
@@ -164,7 +163,6 @@
             // 
             this.panel1.Controls.Add(this.txtFechaVencimiento);
             this.panel1.Controls.Add(this.txtCuota);
-            this.panel1.Controls.Add(this.txtMontoPago);
             this.panel1.Controls.Add(this.txtEstado);
             this.panel1.Controls.Add(this.txtDniSocio);
             this.panel1.Controls.Add(this.txtApellido);
@@ -202,7 +200,7 @@
             this.txtEstado.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtEstado.Location = new System.Drawing.Point(61, 165);
             this.txtEstado.Name = "txtEstado";
-            this.txtEstado.Size = new System.Drawing.Size(66, 20);
+            this.txtEstado.Size = new System.Drawing.Size(128, 20);
             this.txtEstado.TabIndex = 29;
             this.txtEstado.Text = "EstadoReserva:";
             // 
@@ -362,6 +360,7 @@
             this.txtDni.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtDni.Location = new System.Drawing.Point(258, 164);
             this.txtDni.MaximumSize = new System.Drawing.Size(400, 40);
+            this.txtDni.MaxLength = 10;
             this.txtDni.MinimumSize = new System.Drawing.Size(400, 40);
             this.txtDni.Name = "txtDni";
             this.txtDni.Size = new System.Drawing.Size(400, 26);
@@ -378,6 +377,7 @@
             // 
             // PagoSocioForm
             // 
+            this.AcceptButton = this.btnValidarCuota;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(250)))), ((int)(((byte)(200)))));
@@ -394,7 +394,7 @@
             this.Controls.Add(this.panelLogin);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.txtMontoPago);
+            this.Controls.Add(txtMontoPago);
             this.Controls.Add(this.cbMedioPago);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.cbConceptoPago);
@@ -439,10 +439,10 @@
         private System.Windows.Forms.Label txtNombre;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txtDni;
-        private System.Windows.Forms.TextBox txtMontoPago;
         private System.Windows.Forms.Label txtFechaVencimiento;
         private System.Windows.Forms.Label txtCuota;
         private System.Windows.Forms.Label txtEstado;
         private System.Windows.Forms.Label label17;
+        System.Windows.Forms.TextBox txtMontoPago;
     }
 }

@@ -146,6 +146,22 @@ namespace ClubDeportivoApp.Repositorios
             }
         }
 
+        public int AsignarANoSocio(Cliente cliente)
+        {
+            string query =
+                "INSERT INTO no_socios(cliente_id, acceso_diario) VALUES(@id, true)";
+
+            using (MySqlConnection conn = _conexionDatabase.GetMySqlConnection())
+            {
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@id", cliente.IdCliente);
+
+                    return cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
     }
 }
 
