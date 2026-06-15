@@ -222,6 +222,7 @@
     <Compile Include="Repositorios\LoginRepo.cs" />
     <Compile Include="Repositorios\ReservaRepo.cs" />
     <Compile Include="Repositorios\CuotaRepo.cs" />
+    <Compile Include="Repositorios\VencimientoRepo.cs" />
     <Compile Include="Servicios\InscripcionSocioServ.cs" />
     <Compile Include="Servicios\ListadosMaestrosServ.cs" />
     <Compile Include="Servicios\PagoActividad.cs" />

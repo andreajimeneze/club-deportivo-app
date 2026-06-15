@@ -526,7 +526,7 @@ BEGIN
         VALUES(
             v_socio_id,
             p_monto_cuota,
-            CURDATE(),
+            DATE_ADD(CURDATE(), INTERVAL 1 MONTH),
             'Pendiente'
         );
 
