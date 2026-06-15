@@ -1,5 +1,6 @@
 ﻿using ClubDeportivoApp.DTOS;
 using ClubDeportivoApp.Forms;
+using ClubDeportivoApp.Helpers;
 using ClubDeportivoApp.Modelos;
 using ClubDeportivoApp.Repositorios;
 using ClubDeportivoApp.Servicios;
@@ -37,11 +38,13 @@ namespace ClubDeportivoApp.Formularios
 
         private void btnImprimir_Click(object sender, EventArgs e)
         {
-            if(!Decimal.TryParse(txtMontoCuota.Text, out _)) {
-                MessageBox.Show("Ingrese un monto válido");
+            // Validación 6: Valida monto en helper
+            if (!ValidacionDatos.ValidarMonto(txtMontoCuota.Text.Trim(), out string mensaje))
+            {
+                MessageBox.Show(mensaje);
                 return;
             }
-            
+
             montoCuota = Convert.ToInt32(txtMontoCuota.Text);
             
             int diaPago = DateTime.Today.Day;

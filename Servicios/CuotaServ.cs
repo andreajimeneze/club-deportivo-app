@@ -1,5 +1,7 @@
 ﻿using ClubDeportivoApp.DTOS;
 using ClubDeportivoApp.Repositorios;
+using System.Collections.Generic;
+using System.Linq;
 
 
 namespace ClubDeportivoApp.Servicios
@@ -15,22 +17,22 @@ namespace ClubDeportivoApp.Servicios
 
         
 
-        public CuotaPendienteDTO ObtenerCuotaPendienteServ(string dni)
+        public CuotaDTO ObtenerCuotaPendienteServ(string dni)
         {
-            CuotaPendienteDTO cuota = new CuotaPendienteDTO();
+            //CuotaDTO cuotaPendiente = new CuotaDTO();
 
-            if(dni == "" || dni.Length > 10)
-            {
-                return null;
-            }
+            return _socioRepo.ObtenerCuotasRepo(dni)
+                .Where(c => c.EstadoCuota == "Pendiente")
+                .OrderBy(c => c.FechaVencimiento)
+                .FirstOrDefault();
 
-            cuota = _socioRepo.ObtenerCuotaPendienteRepo(dni);
+            //cuotaPendiente = cuotas.Find(c => c.EstadoCuota == "Pendiente").
 
-            if(cuota == null)
-            {
-                return null;
-            }
-            return cuota;
+            //if(cuota == null)
+            //{
+            //    return null;
+            //}
+            //return cuota;
         }
     }
 }

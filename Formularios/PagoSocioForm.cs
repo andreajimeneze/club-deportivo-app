@@ -1,4 +1,6 @@
-﻿using ClubDeportivoApp.DTOS;
+﻿using ClubDeportivoApp.Documentos;
+using ClubDeportivoApp.DTOS;
+using ClubDeportivoApp.Helpers;
 using ClubDeportivoApp.Modelos;
 using ClubDeportivoApp.Repositorios;
 using ClubDeportivoApp.Servicios;
@@ -15,7 +17,7 @@ namespace ClubDeportivoApp.Formularios
         private readonly ClienteServ clienteServ;
         private readonly CuotaServ cuotaServ;
         private readonly PagoCuota pagoServ;
-        private CuotaPendienteDTO cuota;
+        private CuotaDTO cuota;
 
 
           public PagoSocioForm(ConexionMySql conexion)
@@ -78,22 +80,16 @@ namespace ClubDeportivoApp.Formularios
         {
             string dni = txtDni.Text.Trim();
 
-            // Validación 1: Dni no debe venir vacío
-            if (String.IsNullOrEmpty(dni))
+            // Validación 1: Valida DNI con helper
+            if (!ValidacionDatos.ValidarDni(dni, out string mensaje))
             {
-                MessageBox.Show("Debe ingresar un DNI");
-                return;
-            }
-            // Validación 2: Dni debe contener solo números
-            if(!int.TryParse(dni, out _))
-            {
-                MessageBox.Show("DNI debe contener solo números");
+                MessageBox.Show(mensaje);
                 return;
             }
             // Busca cliente por dni
             var clienteBuscado = clienteServ.BuscarClientePorDni(dni);
 
-            // Validación 3: cliente es nulo
+            // Validación 2: cliente es nulo
             if(clienteBuscado == null)
             {
                 MessageBox.Show("Cliente no existe, verifique el número de DNI");
@@ -115,23 +111,31 @@ namespace ClubDeportivoApp.Formularios
                     {
                         frm.ShowDialog();
                     }
-                }
-
-                return;
+                } else
+                {
+                    int idNoSocio = clienteServ.AsignarANoSocio(clienteBuscado);
+                    MessageBox.Show("Cliente ha sido asignado como no socio");
+                    this.Close();
+                }               
             }
 
-            cuota = new CuotaPendienteDTO();
+            cuota = new CuotaDTO();
             // Obtiene cuota pendiente más antigua
             cuota = cuotaServ.ObtenerCuotaPendienteServ(clienteBuscado.Dni);
 
-            // Valiación 4: Si cuota no existe
+            // Valiación 3: Si cuota no existe
             if (cuota == null)
             {
+
                 MessageBox.Show("Socio no tiene cuota pendiente");
+                btnValidarPago.Enabled = false;
+                txtMontoPago.Enabled = false;
+                cbConceptoPago.Enabled = false;
+                cbMedioPago.Enabled = false;
                 return;
             }
 
-            // Validación 5: Si cuota existe, se activan campos para pago
+            // Validación 4: Si cuota existe, se activan campos para pago
             if (cuota != null)
             {
                 txtMontoPago.Enabled = true;
@@ -152,14 +156,21 @@ namespace ClubDeportivoApp.Formularios
         {
             if (cuota == null)
             {
-                MessageBox.Show($"Primero debe validar el socio {cuota.IdSocio}");
+                MessageBox.Show($"Primero debe validar el socio");
                 return;
             }
 
-            // 2. Validar combos
+            // Validación 5: Valida combos
             if (cbMedioPago.SelectedIndex == 0 || cbConceptoPago.SelectedIndex == 0)
             {
                 MessageBox.Show("Debe seleccionar método y concepto de pago");
+                return;
+            }
+
+            // Validación 6: Valida monto en helper
+            if (!ValidacionDatos.ValidarMonto(txtMontoPago.Text.Trim(), out string mensaje))
+            {
+                MessageBox.Show(mensaje);
                 return;
             }
 
@@ -169,8 +180,7 @@ namespace ClubDeportivoApp.Formularios
             
             try
             {
-               
-                var resultado = pagoServ.RegistrarPago(cuota, montoAPagar, conceptoPagoId, metodoPagoId);
+               var resultado = pagoServ.RegistrarPago(cuota, montoAPagar, conceptoPagoId, metodoPagoId);
 
                 if(!resultado.Ok)
                 {
@@ -180,7 +190,9 @@ namespace ClubDeportivoApp.Formularios
 
                 MessageBox.Show(resultado.mensaje);
 
-                    // Si es la primera cuota (de inscripción) deriva al carnet
+                MostrarComprobantePago();
+
+                // Si es la primera cuota (de inscripción) deriva al carnet
                 if (conceptoPagoId == 1)
                 {
                     this.Hide();
@@ -215,6 +227,17 @@ namespace ClubDeportivoApp.Formularios
         private void btnVolver_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void MostrarComprobantePago()
+        {
+            // Datos para ventana emergente
+            string titulo = "Comprobante de Pago";
+            string mensaje = GeneradorComprobantes.MostrarComprobantePagoCuota(cuota, cbMedioPago.Text);
+            string textoBtn = "Imprimir";
+
+            PopUpPersonalizadoForm emergente = new PopUpPersonalizadoForm(titulo, mensaje, textoBtn);
+            emergente.ShowDialog();
         }
     }
 }

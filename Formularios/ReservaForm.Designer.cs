@@ -44,6 +44,7 @@
             this.txtDni = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.lblAptoFisico = new System.Windows.Forms.Label();
             this.lblEsSocio = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.lblPrecio = new System.Windows.Forms.Label();
@@ -56,7 +57,7 @@
             this.lblNombre = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.cbFechaHora = new System.Windows.Forms.ComboBox();
-            this.lblAptoFisico = new System.Windows.Forms.Label();
+            this.btnValidarCliente = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panelLogin.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -66,7 +67,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(257, 280);
+            this.label1.Location = new System.Drawing.Point(257, 340);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(178, 20);
             this.label1.TabIndex = 1;
@@ -76,7 +77,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(257, 379);
+            this.label2.Location = new System.Drawing.Point(257, 439);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(206, 20);
             this.label2.TabIndex = 2;
@@ -186,7 +187,7 @@
             this.cbActividades.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbActividades.FormattingEnabled = true;
             this.cbActividades.ItemHeight = 25;
-            this.cbActividades.Location = new System.Drawing.Point(261, 309);
+            this.cbActividades.Location = new System.Drawing.Point(261, 369);
             this.cbActividades.MaximumSize = new System.Drawing.Size(400, 0);
             this.cbActividades.MaxLength = 32767;
             this.cbActividades.MinimumSize = new System.Drawing.Size(400, 0);
@@ -202,7 +203,7 @@
             this.btnConfirmarReserva.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnConfirmarReserva.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnConfirmarReserva.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.btnConfirmarReserva.Location = new System.Drawing.Point(311, 576);
+            this.btnConfirmarReserva.Location = new System.Drawing.Point(341, 576);
             this.btnConfirmarReserva.Name = "btnConfirmarReserva";
             this.btnConfirmarReserva.Size = new System.Drawing.Size(241, 75);
             this.btnConfirmarReserva.TabIndex = 37;
@@ -215,6 +216,7 @@
             this.txtDni.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtDni.Location = new System.Drawing.Point(261, 215);
             this.txtDni.MaximumSize = new System.Drawing.Size(400, 40);
+            this.txtDni.MaxLength = 10;
             this.txtDni.MinimumSize = new System.Drawing.Size(400, 40);
             this.txtDni.Name = "txtDni";
             this.txtDni.Size = new System.Drawing.Size(400, 26);
@@ -224,7 +226,7 @@
             // 
             this.label17.AutoSize = true;
             this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label17.Location = new System.Drawing.Point(582, 402);
+            this.label17.Location = new System.Drawing.Point(582, 462);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(0, 20);
             this.label17.TabIndex = 40;
@@ -247,6 +249,16 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(414, 488);
             this.panel1.TabIndex = 39;
+            // 
+            // lblAptoFisico
+            // 
+            this.lblAptoFisico.AutoSize = true;
+            this.lblAptoFisico.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAptoFisico.Location = new System.Drawing.Point(61, 248);
+            this.lblAptoFisico.Name = "lblAptoFisico";
+            this.lblAptoFisico.Size = new System.Drawing.Size(98, 20);
+            this.lblAptoFisico.TabIndex = 37;
+            this.lblAptoFisico.Text = "Apto Físico:";
             // 
             // lblEsSocio
             // 
@@ -365,7 +377,7 @@
             this.cbFechaHora.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbFechaHora.FormattingEnabled = true;
             this.cbFechaHora.ItemHeight = 25;
-            this.cbFechaHora.Location = new System.Drawing.Point(261, 420);
+            this.cbFechaHora.Location = new System.Drawing.Point(261, 480);
             this.cbFechaHora.MaximumSize = new System.Drawing.Size(400, 0);
             this.cbFechaHora.MaxLength = 32767;
             this.cbFechaHora.MinimumSize = new System.Drawing.Size(400, 0);
@@ -374,15 +386,20 @@
             this.cbFechaHora.TabIndex = 41;
             this.cbFechaHora.SelectedIndexChanged += new System.EventHandler(this.cbFechaHora_SelectedIndexChanged);
             // 
-            // lblAptoFisico
+            // btnValidarCliente
             // 
-            this.lblAptoFisico.AutoSize = true;
-            this.lblAptoFisico.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAptoFisico.Location = new System.Drawing.Point(61, 248);
-            this.lblAptoFisico.Name = "lblAptoFisico";
-            this.lblAptoFisico.Size = new System.Drawing.Size(98, 20);
-            this.lblAptoFisico.TabIndex = 37;
-            this.lblAptoFisico.Text = "Apto Físico:";
+            this.btnValidarCliente.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.btnValidarCliente.BackColor = System.Drawing.Color.LightGray;
+            this.btnValidarCliente.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnValidarCliente.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnValidarCliente.ForeColor = System.Drawing.Color.DimGray;
+            this.btnValidarCliente.Location = new System.Drawing.Point(367, 264);
+            this.btnValidarCliente.Name = "btnValidarCliente";
+            this.btnValidarCliente.Size = new System.Drawing.Size(187, 55);
+            this.btnValidarCliente.TabIndex = 42;
+            this.btnValidarCliente.Text = "VALIDAR CLIENTE";
+            this.btnValidarCliente.UseVisualStyleBackColor = false;
+            this.btnValidarCliente.Click += new System.EventHandler(this.btnValidarCliente_Click);
             // 
             // ReservaForm
             // 
@@ -390,6 +407,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1200, 800);
             this.ControlBox = false;
+            this.Controls.Add(this.btnValidarCliente);
             this.Controls.Add(this.cbFechaHora);
             this.Controls.Add(this.label17);
             this.Controls.Add(this.panel1);
@@ -447,5 +465,6 @@
         private System.Windows.Forms.ComboBox cbFechaHora;
         private System.Windows.Forms.Label lblEsSocio;
         private System.Windows.Forms.Label lblAptoFisico;
+        private System.Windows.Forms.Button btnValidarCliente;
     }
 }

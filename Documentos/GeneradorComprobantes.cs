@@ -15,8 +15,8 @@ namespace ClubDeportivoApp.Documentos
             }
 
 
-            string datoPago =reserva.EstadoReserva == "Autorizada" ? "Monto a Pagar: $ 0" : $"Monto a Pagar: $ {Convert.ToString(reserva.Precio)}\n";
-           
+            string datoPago = reserva.EstadoReserva == "Autorizada" ? "Monto a Pagar: $ 0" : $"Monto a Pagar: $ {Convert.ToString(reserva.Precio)}\n";
+
 
             string datosReserva =
                 //$"Id Reserva: {reserva.IdReserva}" +
@@ -27,9 +27,9 @@ namespace ClubDeportivoApp.Documentos
                 $"Fecha y Hora: {Convert.ToString(reserva.FechaHora)}\n" +
                 datoPago;
 
-           
 
-            return datosReserva;            
+
+            return datosReserva;
         }
 
         public static string MostrarComprobantePagoActividad(ReservaDTO reserva, string metodoPago)
@@ -42,6 +42,17 @@ namespace ClubDeportivoApp.Documentos
             $"Actividad: {reserva.Actividad}\n" +
             $"Fecha y Hora: {Convert.ToString(reserva.FechaHora)}\n" +
             $"Monto a Pagar: $ {Convert.ToString(reserva.Precio)}\n" +
+            $"Método Pago: {Convert.ToString(metodoPago)}\n" +
+            $"Fecha Pago: {Convert.ToString(DateTime.Now)}\n";
+        }
+
+        public static string MostrarComprobantePagoCuota(CuotaDTO cuota, string metodoPago)
+        {
+            return
+            $"Nombre: {cuota.Nombre}\n" +
+            $"Apellido: {cuota.Apellido}\n" +
+            $"DNI: {cuota.Dni}\n" +
+            $"Monto a Pagar: $ {Convert.ToString(cuota.MontoCuota)}\n" +
             $"Método Pago: {Convert.ToString(metodoPago)}\n" +
             $"Fecha Pago: {Convert.ToString(DateTime.Now)}\n";
         }

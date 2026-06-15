@@ -263,6 +263,7 @@
             this.txtDni.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtDni.Location = new System.Drawing.Point(256, 418);
             this.txtDni.MaximumSize = new System.Drawing.Size(400, 40);
+            this.txtDni.MaxLength = 10;
             this.txtDni.MinimumSize = new System.Drawing.Size(400, 40);
             this.txtDni.Name = "txtDni";
             this.txtDni.Size = new System.Drawing.Size(400, 26);

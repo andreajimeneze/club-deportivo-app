@@ -1,6 +1,7 @@
 ﻿using ClubDeportivoApp.DTOS;
 using ClubDeportivoApp.Modelos;
 using ClubDeportivoApp.Repositorios;
+using System;
 using System.Windows.Forms;
 
 namespace ClubDeportivoApp.Servicios
@@ -26,28 +27,45 @@ namespace ClubDeportivoApp.Servicios
             return reserva;
         }
 
-        public ReservaDTO BuscarReservaPendientePagoPorId(int idReserva)
+        public (bool Ok, string mensaje, ReservaDTO reserva) BuscarReservaPendientePagoPorId(int idReserva)
         {
             ReservaDTO reserva = _repo.BuscarReservaPorId(idReserva);
 
-            if (reserva == null || reserva.EstadoReserva != "Pendiente de pago")
+            if (reserva == null)
             {
-                return null;
+                return (false, "Reserva no existe", null);
             }
 
-            return reserva;
-        }
+            if (reserva != null && reserva.EstadoReserva != "Pendiente de pago")
+            {
+                return (false, "Reserva se encuentra pagada", null);
+            }
 
-        public ReservaDTO BuscarReservaPorDniYActividad(string dni, int idActividad)
+            if (reserva.FechaHora.Date < DateTime.Today)
+                return (false, "Reserva no vigente", null);
+
+            return (true, "Reserva obtenida exitosamente", reserva);
+        }
+        
+
+        public (bool Ok, string mensaje, ReservaDTO reserva) BuscarReservaPendientePorDniYActividad(string dni, int idActividad)
         {
             ReservaDTO reserva = _repo.BuscarReservaPorDniYActividadRepo(dni, idActividad);
 
-            if(reserva == null || reserva.EstadoReserva != "Pendiente de pago")
+            if(reserva == null)
             {
-                return null;
+                return (false, "Reserva no existe", null);
             }
 
-            return reserva;
+            if(reserva != null && reserva.EstadoReserva != "Pendiente de pago")
+            {
+                return (false, "Reserva se encuentra pagada", null);
+            }
+
+            if (reserva.FechaHora.Date < DateTime.Today)
+                return (false, "Reserva no vigente", null);
+
+            return (true, "Reserva obtenida exitosamente", reserva);
         }
         public (bool Ok, string mensaje, ReservaDTO reserva) GenerarReserva(
             Actividad actividad, Cliente cliente, Programacion programacion)
@@ -78,23 +96,33 @@ namespace ClubDeportivoApp.Servicios
             {
                 return (false, "Actividad no tiene cupos disponibles.", null);
             }
-           
+
+            //ReservaDTO reservaBuscada = BuscarReservaPorDniYActividad(cliente.Dni, programacion.Actividad.Id);
+
+            //if(reservaBuscada == null)
+            //{
+            //    return (false, "NO EXISTE RESERVA PREVIA.", null);
+            //}
+
+            //    if(reservaBuscada.IdCliente == cliente.IdCliente)
+            //{
+            //    return (false, "Cliente ya tiene reserva de esa actividad", null);
+            //}
+
             int idReserva = _repo.GenerarReservaRepo(
                 actividad.Id, cliente.IdCliente, programacion.FechaHora);
-
-            MessageBox.Show($"actividad.Id: {actividad.Id}\n" +
-                $"cliente.IdCliente: {cliente.IdCliente}\n" +
-                $"programacion.FechaHora: {programacion.FechaHora}\n" +
-                $"idReserva devuelto: {idReserva}");
 
             if (idReserva <= 0)
                 return (false, "Error inesperado al crear la reserva.", null);
 
             ReservaDTO reserva = BuscarReservaPorId(idReserva);
+
+
             if(reserva == null)
             {
                 return (false, "Error al intentar obtener la reserva", null);
             }
+
 
             if (cliente is Socio)
             {

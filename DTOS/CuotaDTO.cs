@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ClubDeportivoApp.DTOS
 {
-    public class CuotaPendienteDTO
+    public class CuotaDTO
     {
+        public int IdCuota { get; set; }
         public int IdSocio { get; set; }
         public string Nombre { get; set; }
         public string Apellido { get; set; }
