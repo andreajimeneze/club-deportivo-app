@@ -1,10 +1,7 @@
 ﻿using ClubDeportivoApp.Documentos;
 using ClubDeportivoApp.DTOS;
 using ClubDeportivoApp.Modelos;
-using ClubDeportivoApp.Models;
-using ClubDeportivoApp.Repositories;
 using ClubDeportivoApp.Repositorios;
-using ClubDeportivoApp.Services;
 using ClubDeportivoApp.Servicios;
 using System;
 using System.Windows.Forms;
@@ -128,6 +125,23 @@ namespace ClubDeportivoApp.Formularios
                 return;
             }
 
+            if(!clienteBuscado.PuedeReservar())
+            {
+                MessageBox.Show("Cliente no ha presentado certificado de Apto Físico");
+                DialogResult respuesta = MessageBox.Show(
+                    "¿Cliente realiza entrega de certificado válido?",
+                    "Presentar certificado",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+                if (respuesta == DialogResult.Yes)
+                {
+                    cliServ.ActualizarAptoFisico(clienteBuscado);
+                    return;
+                }
+
+                return;
+            }
 
             // Imprime datos del cliente en label de formulario
             lblNombre.Text = $"Nombre: {clienteBuscado.Nombre}";

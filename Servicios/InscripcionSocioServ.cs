@@ -1,4 +1,4 @@
-﻿using ClubDeportivoApp.Models;
+﻿using ClubDeportivoApp.Modelos;
 using ClubDeportivoApp.Repositorios;
 using System;
 

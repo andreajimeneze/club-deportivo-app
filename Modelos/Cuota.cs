@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 
-namespace ClubDeportivoApp.Models
+namespace ClubDeportivoApp.Modelos
 {
     public class Cuota 
     {

@@ -1,15 +1,9 @@
-﻿using ClubDeportivoApp.DTOS;
-using ClubDeportivoApp.Models;
-using ClubDeportivoApp.Repositories;
+﻿
+using ClubDeportivoApp.Modelos;
 using ClubDeportivoApp.Repositorios;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
-namespace ClubDeportivoApp.Services
+
+namespace ClubDeportivoApp.Servicios
 {
     public class ClienteServ
     {
@@ -27,11 +21,6 @@ namespace ClubDeportivoApp.Services
                 return (false, "No se puede realizar registro sin información", null);
             }
             
-            Cliente clienteBuscado = BuscarClientePorDni(cliente.Dni);
-
-            if(clienteBuscado != null) {
-                return (false, "Cliente ya se encuentra registrado", null);
-            }
            
             int idRegistrado = _repo.RegistrarClienteRepo(cliente.Nombre, cliente.Apellido, cliente.Dni, cliente.AptoFisico, esSocio);
 
@@ -66,30 +55,9 @@ namespace ClubDeportivoApp.Services
             return clienteBuscado;
         }
 
-        //private Cliente MapearADominio(ClienteDTO dto)
-        //{
-        //    if (dto == null) return null;
-
-        //    if (dto.EsSocio)
-        //    {
-        //        // Usar el constructor que acepta (int id, string nombre, string apellido, string dni, bool aptoFisico, bool estado)
-        //        return new Socio(
-        //            dto.IdCliente, 
-        //            dto.Nombre, 
-        //            dto.Apellido, 
-        //            dto.Dni, 
-        //            dto.AptoFisico, 
-        //            dto.Estado);
-        //    }
-
-        //    return new NoSocio(
-            
-        //        dto.IdCliente,
-        //        dto.Nombre,
-        //        dto.Apellido,
-        //        dto.Dni,
-        //        dto.AptoFisico            
-        //    );
-        //}
+        public bool ActualizarAptoFisico(Cliente cliente)
+        {
+            return _repo.ActualizarAptoFisico(cliente);
+        }
     }
 }

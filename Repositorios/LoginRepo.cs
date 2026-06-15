@@ -1,8 +1,8 @@
-﻿using ClubDeportivoApp.Models;
+﻿using ClubDeportivoApp.Modelos;
 using MySql.Data.MySqlClient;
 using System.Data;
 
-namespace ClubDeportivoApp.Repositories
+namespace ClubDeportivoApp.Repositorios
 {
     internal class LoginRepo
     {

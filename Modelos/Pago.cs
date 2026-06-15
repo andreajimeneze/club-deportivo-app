@@ -1,8 +1,7 @@
-﻿using ClubDeportivoApp.Modelos;
-using System;
+﻿using System;
 
 
-namespace ClubDeportivoApp.Models
+namespace ClubDeportivoApp.Modelos
 {
     public class Pago
     {

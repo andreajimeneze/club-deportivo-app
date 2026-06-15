@@ -1,7 +1,8 @@
 ﻿using ClubDeportivoApp.Formularios;
-using ClubDeportivoApp.Models;
-using ClubDeportivoApp.Repositories;
-using ClubDeportivoApp.Services;
+using ClubDeportivoApp.Modelos;
+using ClubDeportivoApp.Repositorios;
+using ClubDeportivoApp.Servicios;
+using MySqlX.XDevAPI;
 using System;
 using System.Linq;
 using System.Windows.Forms;
@@ -47,8 +48,24 @@ namespace ClubDeportivoApp.Forms
                 return;
             }
 
+            // Campos ingresados en formulario se guardan en variables
+            string nombre = txtNombre.Text.Trim();
+            string apellido = txtApellido.Text.Trim();
+            string dni = txtDni.Text.Trim();
+            bool quiereSerSocio = rbSocio.Checked;
+            bool noSocio = rbNoSocio.Checked;
+            bool aptoFisico = cbAptoFisico.Checked;
+
+            Cliente clienteBuscado = servicio.BuscarClientePorDni(dni);
+
+            if (clienteBuscado != null)
+            {
+                MessageBox.Show("Cliente ya se encuentra registrado");
+                return;
+            }
+
             // Validación 4: Debe seleccionar si será socio o no socio
-            if (!rbSocio.Checked && !rbNoSocio.Checked)
+            if (!quiereSerSocio && !noSocio)
             {
                 MessageBox.Show(
                     "Debe seleccionar si el cliente será socio o no socio."
@@ -57,18 +74,12 @@ namespace ClubDeportivoApp.Forms
                 return;
             }
 
-           // Campos ingresados en formulario se guardan en variables
-            string nombre = txtNombre.Text.Trim();
-            string apellido = txtApellido.Text.Trim();
-            string dni = txtDni.Text.Trim();
-            bool QuiereSerSocio = rbSocio.Checked;
-            bool aptoFisico = cbAptoFisico.Checked;
 
             try {
 
                 Cliente cliente;
 
-                if (rbSocio.Checked)
+                if (quiereSerSocio)
                 {
                     cliente = new Socio(nombre, apellido, dni, aptoFisico);
                 }
@@ -76,8 +87,9 @@ namespace ClubDeportivoApp.Forms
                 {
                     cliente = new NoSocio(nombre, apellido, dni, aptoFisico);
                 }
+
                 // Se realiza registro de cliente: Socio / No socio
-                var registrado = servicio.RealizarRegistro(cliente, QuiereSerSocio);
+                var registrado = servicio.RealizarRegistro(cliente, quiereSerSocio);
                
 
                 if (!registrado.Ok)
@@ -88,7 +100,7 @@ namespace ClubDeportivoApp.Forms
 
                 MessageBox.Show($"Registro de CLIENTE {(registrado.cliente is Socio ? "SOCIO" : "NO SOCIO")} N° {registrado.cliente.IdCliente}: {registrado.cliente.Nombre} {registrado.cliente.Apellido} exitoso");
                 
-                if (QuiereSerSocio)
+                if (quiereSerSocio)
                 {
                     FormalizacionSocioForm inscripcionSocio = new FormalizacionSocioForm(registrado.cliente, _conexion);
                     this.Hide();

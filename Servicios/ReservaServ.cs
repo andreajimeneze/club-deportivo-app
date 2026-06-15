@@ -1,13 +1,6 @@
 ﻿using ClubDeportivoApp.DTOS;
 using ClubDeportivoApp.Modelos;
-using ClubDeportivoApp.Models;
 using ClubDeportivoApp.Repositorios;
-using Mysqlx;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ClubDeportivoApp.Servicios

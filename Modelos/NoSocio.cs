@@ -1,5 +1,5 @@
 ﻿
-namespace ClubDeportivoApp.Models
+namespace ClubDeportivoApp.Modelos
 {
     public class NoSocio : Cliente
     {
