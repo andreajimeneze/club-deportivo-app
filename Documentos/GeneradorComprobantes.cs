@@ -19,7 +19,7 @@ namespace ClubDeportivoApp.Documentos
 
 
             string datosReserva =
-                $"Id Reserva: {reserva.IdReserva}" +
+                $"Id Reserva: {reserva.IdReserva}\n" +
                 $"Nombre: {reserva.NombreCliente}\n" +
                 $"Apellido: {reserva.ApellidoCliente}\n" +
                 $"DNI: {reserva.Dni}\n" +

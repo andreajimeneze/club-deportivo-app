@@ -125,27 +125,15 @@ namespace ClubDeportivoApp.Formularios
             }
 
             reserva = resultado.reserva;
-            MessageBox.Show(resultado.mensaje);
 
-            MostrarComprobanteReserva();
+            txtMontoPago.Text = reserva.Precio.ToString();
+            txtMontoPago.ReadOnly = true;
+
+            MessageBox.Show(resultado.mensaje);
         }
         
         private void btnValidarPago_Click(object sender, EventArgs e)
-        {
-
-
-            //Validación 5: Valida monto en helper
-            if (!ValidacionDatos.ValidarMonto(txtMontoPago.Text.Trim(), out string mensaje))
-            {
-                MessageBox.Show(mensaje);
-                return;
-            }
-
-            //if (reserva != null)
-            //{
-            //    txtMontoPago.Text = reserva.Precio.ToString();
-            //    txtMontoPago.ReadOnly = true;
-            //}
+        {      
 
             decimal montoPago = Convert.ToDecimal(txtMontoPago.Text);
             int metodoPagoId = int.Parse(cbMetodosPago.SelectedValue.ToString());
@@ -166,6 +154,7 @@ namespace ClubDeportivoApp.Formularios
                 MessageBox.Show(resultado.mensaje);
                 return;
             }
+
 
             MessageBox.Show(resultado.mensaje);
 
@@ -198,17 +187,6 @@ namespace ClubDeportivoApp.Formularios
             // Datos para ventana emergente
             string titulo = "Comprobante de Pago";
             string mensaje = GeneradorComprobantes.MostrarComprobantePagoActividad(reserva, cbMetodosPago.Text);
-            string textoBtn = "Imprimir";
-
-            PopUpPersonalizadoForm emergente = new PopUpPersonalizadoForm(titulo, mensaje, textoBtn);
-            emergente.ShowDialog();
-        }
-
-        private void MostrarComprobanteReserva()
-        {
-            // Datos para ventana emergente
-            string titulo = "Datos Reserva";
-            string mensaje = GeneradorComprobantes.MostrarComprobanteReserva(reserva);
             string textoBtn = "Imprimir";
 
             PopUpPersonalizadoForm emergente = new PopUpPersonalizadoForm(titulo, mensaje, textoBtn);
