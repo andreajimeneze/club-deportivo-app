@@ -81,7 +81,7 @@ namespace ClubDeportivoApp.Formularios
                 GeneradorCarnet.GenerarPdfCarnet(_socioActual, archivo);
 
                 System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(archivo) { UseShellExecute = true });
-                MessageBox.Show($"Carnet generado correctamente en:\n{archivo}", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //MessageBox.Show($"Carnet generado correctamente en:\n{archivo}", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {

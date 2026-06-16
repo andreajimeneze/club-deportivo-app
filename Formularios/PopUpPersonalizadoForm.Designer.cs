@@ -31,6 +31,7 @@
             this.lblTitulo = new System.Windows.Forms.Label();
             this.lblMensaje = new System.Windows.Forms.Label();
             this.btnAccion = new System.Windows.Forms.Button();
+            this.btnCancelar = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblTitulo
@@ -58,13 +59,25 @@
             // 
             this.btnAccion.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnAccion.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAccion.Location = new System.Drawing.Point(322, 340);
+            this.btnAccion.Location = new System.Drawing.Point(204, 338);
             this.btnAccion.Name = "btnAccion";
             this.btnAccion.Size = new System.Drawing.Size(166, 56);
             this.btnAccion.TabIndex = 2;
             this.btnAccion.Text = "ACEPTAR";
             this.btnAccion.UseVisualStyleBackColor = true;
             this.btnAccion.Click += new System.EventHandler(this.btnAceptar_Click);
+            // 
+            // btnCancelar
+            // 
+            this.btnCancelar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnCancelar.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCancelar.Location = new System.Drawing.Point(385, 338);
+            this.btnCancelar.Name = "btnCancelar";
+            this.btnCancelar.Size = new System.Drawing.Size(166, 56);
+            this.btnCancelar.TabIndex = 3;
+            this.btnCancelar.Text = "Cancelar";
+            this.btnCancelar.UseVisualStyleBackColor = true;
+            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
             // 
             // PopUpPersonalizadoForm
             // 
@@ -73,6 +86,7 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(207)))), ((int)(((byte)(227)))), ((int)(((byte)(216)))));
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.ControlBox = false;
+            this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnAccion);
             this.Controls.Add(this.lblMensaje);
             this.Controls.Add(this.lblTitulo);
@@ -90,5 +104,6 @@
         private System.Windows.Forms.Label lblTitulo;
         private System.Windows.Forms.Label lblMensaje;
         private System.Windows.Forms.Button btnAccion;
+        private System.Windows.Forms.Button btnCancelar;
     }
 }
