@@ -5,12 +5,12 @@ using ClubDeportivoApp.Repositorios;
 
 namespace ClubDeportivoApp.Servicios
 {
-    public class PagoCuota : IPago<CuotaDTO>
+    public class PagoCuotaServ : IPago<CuotaDTO>
     {
         private PagosRepo _repo;
  
 
-        public PagoCuota(PagosRepo repo)
+        public PagoCuotaServ(PagosRepo repo)
         {
             _repo = repo;
         }

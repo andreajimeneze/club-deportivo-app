@@ -54,7 +54,7 @@ namespace ClubDeportivoApp.Documentos
                             //col.Item().AlignCenter().Text("Sistema de Gestión").FontSize(7).FontColor(QuestPDF.Helpers.Colors.Black);
                         });
                 });
-            });
+            }).GeneratePdf(ruta); 
         }
 
     }

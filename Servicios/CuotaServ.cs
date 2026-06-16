@@ -19,20 +19,10 @@ namespace ClubDeportivoApp.Servicios
 
         public CuotaDTO ObtenerCuotaPendienteServ(string dni)
         {
-            //CuotaDTO cuotaPendiente = new CuotaDTO();
-
             return _socioRepo.ObtenerCuotasRepo(dni)
                 .Where(c => c.EstadoCuota == "Pendiente")
                 .OrderBy(c => c.FechaVencimiento)
                 .FirstOrDefault();
-
-            //cuotaPendiente = cuotas.Find(c => c.EstadoCuota == "Pendiente").
-
-            //if(cuota == null)
-            //{
-            //    return null;
-            //}
-            //return cuota;
         }
     }
 }

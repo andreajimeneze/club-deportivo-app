@@ -16,7 +16,7 @@ namespace ClubDeportivoApp.Formularios
         private readonly ListadosMaestrosServ servicio;
         private readonly ClienteServ clienteServ;
         private readonly CuotaServ cuotaServ;
-        private readonly PagoCuota pagoServ;
+        private readonly PagoCuotaServ pagoServ;
         private CuotaDTO cuota;
 
 
@@ -32,7 +32,7 @@ namespace ClubDeportivoApp.Formularios
             CuotaRepo cuotaRepo = new CuotaRepo(_conexion);
             clienteServ = new ClienteServ(clienteRepo);
             PagosRepo pagosRepo = new PagosRepo(_conexion);
-            pagoServ = new PagoCuota(pagosRepo);
+            pagoServ = new PagoCuotaServ(pagosRepo);
             cuotaServ = new CuotaServ(cuotaRepo);
 
             lblFechaHoy.Text = $"Fecha y hora: {DateTime.Now.ToString("dd/MM/yyyy HH:mm")}";

@@ -116,7 +116,6 @@
     <Compile Include="BaseDatos\ConexionMySql.cs" />
     <Compile Include="Documentos\GeneradorCarnet.cs" />
     <Compile Include="Documentos\GeneradorComprobantes.cs" />
-    <Compile Include="DTOS\ClienteDTO.cs" />
     <Compile Include="DTOS\CuotaDTO.cs" />
     <Compile Include="DTOS\ReservaDTO.cs" />
     <Compile Include="Formularios\AccesoBDForm.cs">
@@ -184,10 +183,8 @@
       <DependentUpon>VencimientosForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Helpers\ValidacionDatos.cs" />
-    <Compile Include="Interfaces\IContrato.cs" />
     <Compile Include="Interfaces\IListado.cs" />
     <Compile Include="Interfaces\IPago.cs" />
-    <Compile Include="Interfaces\IRegistro.cs" />
     <Compile Include="Modelos\Actividad.cs" />
     <Compile Include="Modelos\Carnet.cs" />
     <Compile Include="Modelos\ConceptoPago.cs" />
@@ -226,7 +223,7 @@
     <Compile Include="Servicios\InscripcionSocioServ.cs" />
     <Compile Include="Servicios\ListadosMaestrosServ.cs" />
     <Compile Include="Servicios\PagoActividad.cs" />
-    <Compile Include="Servicios\PagoCuota.cs" />
+    <Compile Include="Servicios\PagoCuotaServ.cs" />
     <Compile Include="Servicios\ProgramacionServ.cs" />
     <Compile Include="Servicios\ClienteServ.cs" />
     <Compile Include="Servicios\LoginServ.cs" />
