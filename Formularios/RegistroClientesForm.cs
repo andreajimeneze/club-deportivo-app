@@ -100,7 +100,7 @@ namespace ClubDeportivoApp.Forms
                     return;
                 }
 
-                MessageBox.Show($"Registro de CLIENTE {(registrado.cliente is Socio ? "SOCIO" : "NO SOCIO")} N° {registrado.cliente.IdCliente}: {registrado.cliente.Nombre} {registrado.cliente.Apellido} exitoso");
+                MessageBox.Show($"Registro exitoso de CLIENTE {(registrado.cliente is Socio ? "SOCIO" : "NO SOCIO")} N° {registrado.cliente.IdCliente}: {registrado.cliente.Nombre} {registrado.cliente.Apellido}");
                 
                 if (quiereSerSocio)
                 {

@@ -138,17 +138,18 @@ namespace ClubDeportivoApp.Formularios
             // Validación 4: Si cuota existe, se activan campos para pago
             if (cuota != null)
             {
-                txtMontoPago.Enabled = true;
                 cbConceptoPago.Enabled = true;
                 cbMedioPago.Enabled = true;
                 btnValidarPago.Enabled = true;
             }
 
+            txtMontoPago.Text = Convert.ToString(cuota.MontoCuota);
+            txtMontoPago.ReadOnly = true;
             txtNombre.Text = $"Nombres:   {cuota.Nombre}";
             txtApellido.Text = $"Apellidos:  {cuota.Apellido}";
             txtDniSocio.Text = $"DNI:    {cuota.Dni}";
             txtCuota.Text = $"Cuota: {Convert.ToString(cuota.MontoCuota)}";
-            txtEstado.Text = $"EstadoReserva socio: {(cuota.EstadoSocio == true ? "Activo" : "Inactivo")}";
+            txtEstado.Text = $"Estado Reserva socio: {(cuota.EstadoSocio == true ? "Activo" : "Inactivo")}";
             txtFechaVencimiento.Text = $"Vencimiento: {Convert.ToString(cuota.FechaVencimiento)}";
         }
 
@@ -164,13 +165,6 @@ namespace ClubDeportivoApp.Formularios
             if (cbMedioPago.SelectedIndex == 0 || cbConceptoPago.SelectedIndex == 0)
             {
                 MessageBox.Show("Debe seleccionar método y concepto de pago");
-                return;
-            }
-
-            // Validación 6: Valida monto en helper
-            if (!ValidacionDatos.ValidarMonto(txtMontoPago.Text.Trim(), out string mensaje))
-            {
-                MessageBox.Show(mensaje);
                 return;
             }
 

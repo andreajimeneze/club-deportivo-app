@@ -28,6 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.txtMontoPago = new System.Windows.Forms.TextBox();
+            this.txtMontoPago.ReadOnly = true;
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PagoSocioForm));
             this.label1 = new System.Windows.Forms.Label();
@@ -64,17 +66,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panelLogin.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // txtMontoPago
-            // 
-            txtMontoPago.Enabled = false;
-            txtMontoPago.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            txtMontoPago.Location = new System.Drawing.Point(726, 232);
-            txtMontoPago.MaximumSize = new System.Drawing.Size(400, 40);
-            txtMontoPago.MinimumSize = new System.Drawing.Size(400, 40);
-            txtMontoPago.Name = "txtMontoPago";
-            txtMontoPago.Size = new System.Drawing.Size(400, 26);
-            txtMontoPago.TabIndex = 8;
             // 
             // label1
             // 
@@ -200,9 +191,9 @@
             this.txtEstado.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtEstado.Location = new System.Drawing.Point(61, 165);
             this.txtEstado.Name = "txtEstado";
-            this.txtEstado.Size = new System.Drawing.Size(128, 20);
+            this.txtEstado.Size = new System.Drawing.Size(133, 20);
             this.txtEstado.TabIndex = 29;
-            this.txtEstado.Text = "EstadoReserva:";
+            this.txtEstado.Text = "Estado Reserva:";
             // 
             // txtDniSocio
             // 
@@ -375,6 +366,17 @@
             this.label17.Size = new System.Drawing.Size(0, 20);
             this.label17.TabIndex = 26;
             // 
+            // txtMontoPago
+            // 
+            txtMontoPago.ReadOnly = true;
+            txtMontoPago.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            txtMontoPago.Location = new System.Drawing.Point(726, 232);
+            txtMontoPago.MaximumSize = new System.Drawing.Size(400, 40);
+            txtMontoPago.MinimumSize = new System.Drawing.Size(400, 40);
+            txtMontoPago.Name = "txtMontoPago";
+            txtMontoPago.Size = new System.Drawing.Size(400, 26);
+            txtMontoPago.TabIndex = 8;
+            // 
             // PagoSocioForm
             // 
             this.AcceptButton = this.btnValidarCuota;
@@ -394,7 +396,7 @@
             this.Controls.Add(this.panelLogin);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.label4);
-            this.Controls.Add(txtMontoPago);
+            this.Controls.Add(this.txtMontoPago);
             this.Controls.Add(this.cbMedioPago);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.cbConceptoPago);
@@ -439,10 +441,10 @@
         private System.Windows.Forms.Label txtNombre;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txtDni;
+        private System.Windows.Forms.TextBox txtMontoPago;
         private System.Windows.Forms.Label txtFechaVencimiento;
         private System.Windows.Forms.Label txtCuota;
         private System.Windows.Forms.Label txtEstado;
         private System.Windows.Forms.Label label17;
-        System.Windows.Forms.TextBox txtMontoPago;
     }
 }

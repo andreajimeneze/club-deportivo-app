@@ -46,8 +46,8 @@ namespace ClubDeportivoApp.Servicios
 
             return (true, "Reserva obtenida exitosamente", reserva);
         }
-        
-
+            
+            
         public (bool Ok, string mensaje, ReservaDTO reserva) BuscarReservaPendientePorDniYActividad(string dni, int idActividad)
         {
             ReservaDTO reserva = _repo.BuscarReservaPorDniYActividadRepo(dni, idActividad);
@@ -76,11 +76,13 @@ namespace ClubDeportivoApp.Servicios
                 return (false, "El socio no está activo. Debe regularizar sus cuotas.", null);
             }
 
-            if (!cliente.PuedeReservar())
+            if (!cliente.TieneAptoFisico())
             {
              return (false, "El cliente no tiene apto físico. No puede reservar.", null);
                 
             }
+
+           
 
             if (programacion == null)
             {
@@ -97,17 +99,6 @@ namespace ClubDeportivoApp.Servicios
                 return (false, "Actividad no tiene cupos disponibles.", null);
             }
 
-            //ReservaDTO reservaBuscada = BuscarReservaPorDniYActividad(cliente.Dni, programacion.Actividad.Id);
-
-            //if(reservaBuscada == null)
-            //{
-            //    return (false, "NO EXISTE RESERVA PREVIA.", null);
-            //}
-
-            //    if(reservaBuscada.IdCliente == cliente.IdCliente)
-            //{
-            //    return (false, "Cliente ya tiene reserva de esa actividad", null);
-            //}
 
             int idReserva = _repo.GenerarReservaRepo(
                 actividad.Id, cliente.IdCliente, programacion.FechaHora);

@@ -26,7 +26,11 @@ namespace ClubDeportivoApp.Modelos
         {
             return $"{Apellido}, {Nombre}, {Dni}";
         }
-          
+        
+        public bool TieneAptoFisico()
+        {
+            return AptoFisico;
+        }
         public bool PuedeReservar()
         {
             return AptoFisico;

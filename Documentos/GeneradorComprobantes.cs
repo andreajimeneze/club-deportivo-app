@@ -19,7 +19,7 @@ namespace ClubDeportivoApp.Documentos
 
 
             string datosReserva =
-                //$"Id Reserva: {reserva.IdReserva}" +
+                $"Id Reserva: {reserva.IdReserva}" +
                 $"Nombre: {reserva.NombreCliente}\n" +
                 $"Apellido: {reserva.ApellidoCliente}\n" +
                 $"DNI: {reserva.Dni}\n" +
@@ -41,7 +41,7 @@ namespace ClubDeportivoApp.Documentos
             $"DNI: {reserva.Dni}\n" +
             $"Actividad: {reserva.Actividad}\n" +
             $"Fecha y Hora: {Convert.ToString(reserva.FechaHora)}\n" +
-            $"Monto a Pagar: $ {Convert.ToString(reserva.Precio)}\n" +
+            $"Monto Pagado: $ {Convert.ToString(reserva.Precio)}\n" +
             $"Método Pago: {Convert.ToString(metodoPago)}\n" +
             $"Fecha Pago: {Convert.ToString(DateTime.Now)}\n";
         }
@@ -52,7 +52,7 @@ namespace ClubDeportivoApp.Documentos
             $"Nombre: {cuota.Nombre}\n" +
             $"Apellido: {cuota.Apellido}\n" +
             $"DNI: {cuota.Dni}\n" +
-            $"Monto a Pagar: $ {Convert.ToString(cuota.MontoCuota)}\n" +
+            $"Monto Pagado: $ {Convert.ToString(cuota.MontoCuota)}\n" +
             $"Método Pago: {Convert.ToString(metodoPago)}\n" +
             $"Fecha Pago: {Convert.ToString(DateTime.Now)}\n";
         }

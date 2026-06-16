@@ -169,13 +169,13 @@ namespace ClubDeportivoApp.Formularios
 
             // Envía menssaje según el caso (validaciones en el método)
              MessageBox.Show(resultado.mensaje);
-
-            // Limpia el formulario
-            LimpiarFormulario();
-            
-            if(!resultado.Ok)
+           
+            if (!resultado.Ok)
             {
-                return;
+                 // Limpia el formulario
+                  LimpiarProgramacion();
+                  return;
+                           
             }
 
             // Se guarda item 3 de retorno de método GenerarReserva en variable reserva
@@ -227,8 +227,8 @@ namespace ClubDeportivoApp.Formularios
             PopUpPersonalizadoForm emergente = new PopUpPersonalizadoForm(titulo, mensaje, textoBtn);
             emergente.ShowDialog();
         }
-
-        private void LimpiarFormulario()
+        
+        private void LimpiarDatosCliente()
         {
             // TextBox
             txtDni.Clear();
@@ -240,7 +240,9 @@ namespace ClubDeportivoApp.Formularios
             lblEsSocio.Text = "Tipo Cliente:";
             lblEstado.Text = "Estado Cliente:";
             lblAptoFisico.Text = "Apto Físico:";
-
+        }
+        private void LimpiarProgramacion()
+        {           
             // Labels actividad
             lblActividad.Text = "Actividad:";
             lblPrecio.Text = "Precio:";
@@ -248,7 +250,7 @@ namespace ClubDeportivoApp.Formularios
             lblDisponibilidad.Text = "Disponibilidad:";
 
             // Combos
-            cbActividades.SelectedIndex = -1;
+            cbActividades.SelectedIndex = 0;
             cbFechaHora.DataSource = null;
 
             // Variables internas
