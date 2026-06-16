@@ -27,6 +27,7 @@ namespace ClubDeportivoApp.Servicios
             return reserva;
         }
 
+        
         public (bool Ok, string mensaje, ReservaDTO reserva) BuscarReservaPendientePagoPorId(int idReserva)
         {
             ReservaDTO reserva = _repo.BuscarReservaPorId(idReserva);
@@ -46,8 +47,17 @@ namespace ClubDeportivoApp.Servicios
 
             return (true, "Reserva obtenida exitosamente", reserva);
         }
-            
-            
+
+        public (bool Ok, string mensaje, ReservaDTO reserva) BuscarReservaExistentePorDniYActividad(string dni, int idActividad)
+        {
+            ReservaDTO reserva = _repo.BuscarReservaPorDniYActividadRepo(dni, idActividad);
+
+            if (reserva == null)
+            {
+                return (false, "Reserva no existe", null);
+            }
+            return (true, "Reserva obtenida exitosamente", reserva);
+        }
         public (bool Ok, string mensaje, ReservaDTO reserva) BuscarReservaPendientePorDniYActividad(string dni, int idActividad)
         {
             ReservaDTO reserva = _repo.BuscarReservaPorDniYActividadRepo(dni, idActividad);
@@ -82,9 +92,7 @@ namespace ClubDeportivoApp.Servicios
                 
             }
 
-           
-
-            if (programacion == null)
+           if (programacion == null)
             {
                 return (false, "No se encontró programación.", null);
             }
@@ -99,6 +107,12 @@ namespace ClubDeportivoApp.Servicios
                 return (false, "Actividad no tiene cupos disponibles.", null);
             }
 
+            var reservaBuscada = BuscarReservaExistentePorDniYActividad(cliente.Dni, actividad.Id);
+
+            if(reservaBuscada.reserva != null)
+            {
+                return (false, "Reserva ya fue realizada por el cliente", null);
+            }
 
             int idReserva = _repo.GenerarReservaRepo(
                 actividad.Id, cliente.IdCliente, programacion.FechaHora);
