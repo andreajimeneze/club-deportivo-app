@@ -17,12 +17,19 @@ namespace ClubDeportivoApp.Servicios
 
         
 
-        public CuotaDTO ObtenerCuotaPendienteServ(string dni)
+        public (bool Ok, string mensaje, CuotaDTO cuota) ObtenerCuotaPendienteServ(string dni)
         {
-            return _socioRepo.ObtenerCuotasRepo(dni)
+            CuotaDTO cuota = _socioRepo.ObtenerCuotasRepo(dni)
                 .Where(c => c.EstadoCuota == "Pendiente")
                 .OrderBy(c => c.FechaVencimiento)
                 .FirstOrDefault();
+
+            if(cuota == null)
+            {
+                return (false, "Cuota no existe", null);
+            }
+
+            return (true, "Cuota pendiente obtenida con éxito", cuota);
         }
     }
 }

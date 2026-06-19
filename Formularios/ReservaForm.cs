@@ -114,7 +114,6 @@ namespace ClubDeportivoApp.Formularios
             clienteBuscado = cliServ.BuscarClientePorDni(dni);
 
             // Validación 4: Si cliente viene nulo
-
             if (clienteBuscado == null)
             {
                 MessageBox.Show("Cliente no existe, verifique el número de DNI");
@@ -141,11 +140,6 @@ namespace ClubDeportivoApp.Formularios
                 return;
             }
 
-            // Activa combos y botón tras validación de cliente
-            cbActividades.Enabled = true;
-            cbFechaHora.Enabled = true;
-            btnConfirmarReserva.Enabled = true;
-
             // Imprime datos del cliente en label de formulario (para verificación visual de datos)
             lblNombre.Text = $"Nombre: {clienteBuscado.Nombre}";
             lblApellido.Text = $"Apellido: {clienteBuscado.Apellido}";
@@ -166,6 +160,25 @@ namespace ClubDeportivoApp.Formularios
         }
         private void btnReserva_Click(object sender, EventArgs e)
         {
+            // Validaciones antes de llamar al servicio
+            if (clienteBuscado == null)
+            {
+                MessageBox.Show("Debe validar el cliente primero.");
+                return;
+            }
+
+            if (actividad == null || actividad.Id == 0)
+            {
+                MessageBox.Show("Debe seleccionar una actividad.");
+                return;
+            }
+
+            if (programacion == null || programacion.Id == 0)
+            {
+                MessageBox.Show("Debe seleccionar una fecha y hora.");
+                return;
+            }
+
             // Aplica método generar reserva
             var resultado = resServ.GenerarReserva(actividad, clienteBuscado, programacion);
 
@@ -174,8 +187,9 @@ namespace ClubDeportivoApp.Formularios
            
             if (!resultado.Ok)
             {
-                 // Limpia el formulario
-                  LimpiarProgramacion();
+                // Limpia el formulario
+                //LimpiarProgramacion();
+                txtDni.Clear();
                   return;
                            
             }
@@ -230,35 +244,58 @@ namespace ClubDeportivoApp.Formularios
             emergente.ShowDialog();
         }
         
-        private void LimpiarDatosCliente()
-        {
-            // TextBox
-            txtDni.Clear();
+        //private void LimpiarDatosCliente()
+        //{
+        //    // TextBox
+        //    txtDni.Clear();
 
-            // Labels cliente
+        //    // Labels cliente
+        //    lblNombre.Text = "Nombre:";
+        //    lblApellido.Text = "Apellido:";
+        //    lblDniSocio.Text = "DNI:";
+        //    lblEsSocio.Text = "Tipo Cliente:";
+        //    lblEstado.Text = "Estado Cliente:";
+        //    lblAptoFisico.Text = "Apto Físico:";
+        //}
+        //private void LimpiarProgramacion()
+        //{           
+        //    // Labels actividad
+        //    lblActividad.Text = "Actividad:";
+        //    lblPrecio.Text = "Precio:";
+        //    lblFechaHora.Text = "Fecha y Hora:";
+        //    lblDisponibilidad.Text = "Disponibilidad:";
+
+        //    // Combos
+        //    cbActividades.SelectedIndex = 0;
+        //    cbFechaHora.DataSource = null;
+
+        //    // Variables internas
+        //    actividad = null;
+        //    programacion = null;
+        //    reserva = null;
+        //}
+
+        private void txtDni_TextChanged(object sender, EventArgs e)
+        {
+            bool validaTexto = !string.IsNullOrEmpty(txtDni.Text.Trim()) && txtDni.Text.Length == 8;
+            cbActividades.Enabled = validaTexto;
+            cbFechaHora.Enabled = validaTexto;
+            btnConfirmarReserva.Enabled = validaTexto;
             lblNombre.Text = "Nombre:";
             lblApellido.Text = "Apellido:";
             lblDniSocio.Text = "DNI:";
             lblEsSocio.Text = "Tipo Cliente:";
             lblEstado.Text = "Estado Cliente:";
             lblAptoFisico.Text = "Apto Físico:";
-        }
-        private void LimpiarProgramacion()
-        {           
-            // Labels actividad
             lblActividad.Text = "Actividad:";
             lblPrecio.Text = "Precio:";
             lblFechaHora.Text = "Fecha y Hora:";
             lblDisponibilidad.Text = "Disponibilidad:";
 
-            // Combos
-            cbActividades.SelectedIndex = 0;
-            cbFechaHora.DataSource = null;
-
-            // Variables internas
             actividad = null;
             programacion = null;
             reserva = null;
-        }        
+
+        }
     }
 }

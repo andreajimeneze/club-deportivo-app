@@ -45,12 +45,12 @@
             this.label12 = new System.Windows.Forms.Label();
             this.btnConfirmarPago = new System.Windows.Forms.Button();
             this.txtReserva = new System.Windows.Forms.TextBox();
-            this.btnValidarReserva = new System.Windows.Forms.Button();
             this.txtDni = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.cbActividades = new System.Windows.Forms.ComboBox();
+            this.btnValidarReserva = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panelLogin.SuspendLayout();
             this.SuspendLayout();
@@ -166,12 +166,12 @@
             // 
             // txtMontoPago
             // 
-            this.txtMontoPago.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtMontoPago.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtMontoPago.Location = new System.Drawing.Point(716, 270);
             this.txtMontoPago.MaximumSize = new System.Drawing.Size(400, 40);
             this.txtMontoPago.MinimumSize = new System.Drawing.Size(400, 40);
             this.txtMontoPago.Name = "txtMontoPago";
-            this.txtMontoPago.Size = new System.Drawing.Size(400, 26);
+            this.txtMontoPago.Size = new System.Drawing.Size(400, 30);
             this.txtMontoPago.TabIndex = 30;
             // 
             // cbMetodosPago
@@ -243,21 +243,6 @@
             this.txtReserva.Size = new System.Drawing.Size(400, 26);
             this.txtReserva.TabIndex = 38;
             // 
-            // btnValidarReserva
-            // 
-            this.btnValidarReserva.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.btnValidarReserva.BackColor = System.Drawing.Color.LightGray;
-            this.btnValidarReserva.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnValidarReserva.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnValidarReserva.ForeColor = System.Drawing.Color.DimGray;
-            this.btnValidarReserva.Location = new System.Drawing.Point(347, 594);
-            this.btnValidarReserva.Name = "btnValidarReserva";
-            this.btnValidarReserva.Size = new System.Drawing.Size(213, 58);
-            this.btnValidarReserva.TabIndex = 41;
-            this.btnValidarReserva.Text = "VALIDAR DATOS";
-            this.btnValidarReserva.UseVisualStyleBackColor = false;
-            this.btnValidarReserva.Click += new System.EventHandler(this.btnValidarReserva_Click);
-            // 
             // txtDni
             // 
             this.txtDni.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -312,18 +297,30 @@
             this.cbActividades.Size = new System.Drawing.Size(400, 33);
             this.cbActividades.TabIndex = 47;
             // 
+            // btnValidarReserva
+            // 
+            this.btnValidarReserva.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnValidarReserva.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnValidarReserva.Location = new System.Drawing.Point(354, 592);
+            this.btnValidarReserva.Name = "btnValidarReserva";
+            this.btnValidarReserva.Size = new System.Drawing.Size(190, 53);
+            this.btnValidarReserva.TabIndex = 48;
+            this.btnValidarReserva.Text = "Validar Reserva";
+            this.btnValidarReserva.UseVisualStyleBackColor = true;
+            this.btnValidarReserva.Click += new System.EventHandler(this.btnValidarReserva_Click);
+            // 
             // PagoNoSocioForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1200, 800);
             this.ControlBox = false;
+            this.Controls.Add(this.btnValidarReserva);
             this.Controls.Add(this.cbActividades);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.txtDni);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.btnValidarReserva);
             this.Controls.Add(this.txtReserva);
             this.Controls.Add(this.btnConfirmarPago);
             this.Controls.Add(this.lblReserva);
@@ -367,11 +364,11 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Button btnConfirmarPago;
         private System.Windows.Forms.TextBox txtReserva;
-        private System.Windows.Forms.Button btnValidarReserva;
         private System.Windows.Forms.TextBox txtDni;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cbActividades;
+        private System.Windows.Forms.Button btnValidarReserva;
     }
 }

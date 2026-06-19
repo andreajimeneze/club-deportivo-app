@@ -17,6 +17,7 @@ namespace ClubDeportivoApp.Formularios
         private readonly PagoActividad pagoServ;
         private ReservaDTO reserva = new ReservaDTO();
         private int _idActividad;
+        private decimal montoReserva;
    
 
 
@@ -119,10 +120,7 @@ namespace ClubDeportivoApp.Formularios
                 return;
             }
             if (esReserva)
-            {
-                //txtDni.Enabled = false;
-                //cbActividades.Enabled = false;
-
+            {               
                 if(!ValidacionDatos.SoloNumeros(txtReserva.Text.Trim(), out string mensaje))
                 {
                     MessageBox.Show(mensaje);
@@ -132,13 +130,15 @@ namespace ClubDeportivoApp.Formularios
                 int idRes = Convert.ToInt32(txtReserva.Text.Trim());
                 resultado = resServ.BuscarReservaPendientePagoPorId(idRes);
 
-                txtDni.Text = resultado.reserva.Dni;
-                cbActividades.Text = resultado.reserva.Actividad;
-            } else
-            {
-                //txtDni.Enabled = true;
-                //cbActividades.Enabled = true;
+                if(resultado.Ok || resultado.reserva != null)
+                {
+                    txtDni.Text = resultado.reserva.Dni;
+                    cbActividades.Text = resultado.reserva.Actividad;
+                }
 
+
+            } else
+            {               
                 string dni = txtDni.Text.Trim();
                 // Validación 1: Valida DNI con helper
                 if (!ValidacionDatos.ValidarDni(dni, out string mensaje))
@@ -157,8 +157,12 @@ namespace ClubDeportivoApp.Formularios
                 
                 resultado = resServ.BuscarReservaPendientePorDniYActividad(dni, _idActividad);
 
-                txtReserva.Text = Convert.ToString(resultado.reserva.IdReserva);
-                cbActividades.Text = resultado.reserva.Actividad;
+                if(resultado.Ok || resultado.reserva != null)
+                {
+                    txtReserva.Text = Convert.ToString(resultado.reserva.IdReserva);
+                    cbActividades.Text = resultado.reserva.Actividad;
+                }
+                
             }
 
             if (!resultado.Ok)
@@ -168,8 +172,9 @@ namespace ClubDeportivoApp.Formularios
             }
 
             reserva = resultado.reserva;
-
-            txtMontoPago.Text = reserva.Precio.ToString();
+            montoReserva = reserva.Precio;
+            
+            txtMontoPago.Text = $"${reserva.Precio:N2}";
             txtMontoPago.ReadOnly = true;
             cbConceptoPago.Enabled = true;
             cbMetodosPago.Enabled = true;
@@ -181,7 +186,7 @@ namespace ClubDeportivoApp.Formularios
         private void btnValidarPago_Click(object sender, EventArgs e)
         {      
 
-            decimal montoPago = Convert.ToDecimal(txtMontoPago.Text);
+            decimal montoPago = montoReserva;
             int metodoPagoId = int.Parse(cbMetodosPago.SelectedValue.ToString());
             int conceptoPagoId = int.Parse(cbConceptoPago.SelectedValue.ToString());
                       

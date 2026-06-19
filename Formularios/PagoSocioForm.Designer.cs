@@ -28,9 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.txtMontoPago = new System.Windows.Forms.TextBox();
-            this.txtMontoPago.ReadOnly = true;
             this.components = new System.ComponentModel.Container();
+            //System.Windows.Forms.TextBox txtMontoPago;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PagoSocioForm));
             this.label1 = new System.Windows.Forms.Label();
             this.cbConceptoPago = new System.Windows.Forms.ComboBox();
@@ -66,6 +65,17 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panelLogin.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // txtMontoPago
+            // 
+            txtMontoPago.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            txtMontoPago.Location = new System.Drawing.Point(726, 232);
+            txtMontoPago.MaximumSize = new System.Drawing.Size(400, 40);
+            txtMontoPago.MinimumSize = new System.Drawing.Size(400, 40);
+            txtMontoPago.Name = "txtMontoPago";
+            txtMontoPago.ReadOnly = true;
+            txtMontoPago.Size = new System.Drawing.Size(400, 30);
+            txtMontoPago.TabIndex = 8;
             // 
             // label1
             // 
@@ -119,9 +129,9 @@
             this.btnValidarCuota.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnValidarCuota.Location = new System.Drawing.Point(116, 310);
             this.btnValidarCuota.Name = "btnValidarCuota";
-            this.btnValidarCuota.Size = new System.Drawing.Size(212, 60);
+            this.btnValidarCuota.Size = new System.Drawing.Size(185, 50);
             this.btnValidarCuota.TabIndex = 6;
-            this.btnValidarCuota.Text = "VALIDAR CUOTA";
+            this.btnValidarCuota.Text = "Validar Cuota";
             this.btnValidarCuota.UseVisualStyleBackColor = true;
             this.btnValidarCuota.Click += new System.EventHandler(this.btnValidarCuota_Click);
             // 
@@ -326,13 +336,13 @@
             this.btnValidarPago.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(48)))), ((int)(((byte)(144)))));
             this.btnValidarPago.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnValidarPago.Enabled = false;
-            this.btnValidarPago.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnValidarPago.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnValidarPago.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.btnValidarPago.Location = new System.Drawing.Point(885, 493);
             this.btnValidarPago.Name = "btnValidarPago";
             this.btnValidarPago.Size = new System.Drawing.Size(241, 75);
             this.btnValidarPago.TabIndex = 23;
-            this.btnValidarPago.Text = "VALIDAR PAGO";
+            this.btnValidarPago.Text = "CONFIRMAR PAGO";
             this.btnValidarPago.UseVisualStyleBackColor = false;
             this.btnValidarPago.Click += new System.EventHandler(this.btnValidarPago_Click);
             // 
@@ -366,17 +376,6 @@
             this.label17.Size = new System.Drawing.Size(0, 20);
             this.label17.TabIndex = 26;
             // 
-            // txtMontoPago
-            // 
-            txtMontoPago.ReadOnly = true;
-            txtMontoPago.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            txtMontoPago.Location = new System.Drawing.Point(726, 232);
-            txtMontoPago.MaximumSize = new System.Drawing.Size(400, 40);
-            txtMontoPago.MinimumSize = new System.Drawing.Size(400, 40);
-            txtMontoPago.Name = "txtMontoPago";
-            txtMontoPago.Size = new System.Drawing.Size(400, 26);
-            txtMontoPago.TabIndex = 8;
-            // 
             // PagoSocioForm
             // 
             this.AcceptButton = this.btnValidarCuota;
@@ -396,7 +395,7 @@
             this.Controls.Add(this.panelLogin);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.txtMontoPago);
+            this.Controls.Add(txtMontoPago);
             this.Controls.Add(this.cbMedioPago);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.cbConceptoPago);

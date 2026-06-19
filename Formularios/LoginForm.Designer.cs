@@ -89,11 +89,12 @@ namespace ClubDeportivoApp
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtUsername.BackColor = System.Drawing.Color.OldLace;
+            this.txtUsername.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtUsername.Location = new System.Drawing.Point(194, 241);
             this.txtUsername.MaximumSize = new System.Drawing.Size(400, 30);
             this.txtUsername.MinimumSize = new System.Drawing.Size(250, 30);
             this.txtUsername.Name = "txtUsername";
-            this.txtUsername.Size = new System.Drawing.Size(308, 22);
+            this.txtUsername.Size = new System.Drawing.Size(308, 30);
             this.txtUsername.TabIndex = 0;
             // 
             // txtPassword
@@ -102,12 +103,13 @@ namespace ClubDeportivoApp
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtPassword.BackColor = System.Drawing.Color.OldLace;
+            this.txtPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtPassword.Location = new System.Drawing.Point(194, 326);
-            this.txtPassword.MaximumSize = new System.Drawing.Size(400, 45);
-            this.txtPassword.MinimumSize = new System.Drawing.Size(250, 35);
+            this.txtPassword.MaximumSize = new System.Drawing.Size(400, 30);
+            this.txtPassword.MinimumSize = new System.Drawing.Size(250, 30);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '*';
-            this.txtPassword.Size = new System.Drawing.Size(308, 22);
+            this.txtPassword.Size = new System.Drawing.Size(308, 30);
             this.txtPassword.TabIndex = 1;
             // 
             // btnLogin

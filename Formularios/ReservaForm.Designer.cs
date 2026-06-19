@@ -223,6 +223,7 @@
             this.txtDni.Name = "txtDni";
             this.txtDni.Size = new System.Drawing.Size(400, 26);
             this.txtDni.TabIndex = 38;
+            this.txtDni.TextChanged += new System.EventHandler(this.txtDni_TextChanged);
             // 
             // label17
             // 
@@ -391,17 +392,14 @@
             // 
             // btnValidarCliente
             // 
-            this.btnValidarCliente.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.btnValidarCliente.BackColor = System.Drawing.Color.LightGray;
             this.btnValidarCliente.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnValidarCliente.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnValidarCliente.ForeColor = System.Drawing.Color.DimGray;
-            this.btnValidarCliente.Location = new System.Drawing.Point(367, 264);
+            this.btnValidarCliente.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnValidarCliente.Location = new System.Drawing.Point(366, 264);
             this.btnValidarCliente.Name = "btnValidarCliente";
-            this.btnValidarCliente.Size = new System.Drawing.Size(187, 55);
+            this.btnValidarCliente.Size = new System.Drawing.Size(192, 46);
             this.btnValidarCliente.TabIndex = 42;
-            this.btnValidarCliente.Text = "VALIDAR CLIENTE";
-            this.btnValidarCliente.UseVisualStyleBackColor = false;
+            this.btnValidarCliente.Text = "Validar Cliente";
+            this.btnValidarCliente.UseVisualStyleBackColor = true;
             this.btnValidarCliente.Click += new System.EventHandler(this.btnValidarCliente_Click);
             // 
             // ReservaForm
