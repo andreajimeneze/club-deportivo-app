@@ -7,7 +7,7 @@
     <ProjectGuid>{1D353507-CA90-4B50-8363-FE5F53A971DC}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>ClubDeportivoApp</RootNamespace>
-    <AssemblyName>ClubDeportivoApp</AssemblyName>
+    <AssemblyName>club-deportivo-app</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -34,6 +34,10 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>EstrellaDelSur_FullArea.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup />
   <ItemGroup>
     <Reference Include="BouncyCastle.Cryptography, Version=2.0.0.0, Culture=neutral, PublicKeyToken=072edcf4a5328938, processorArchitecture=MSIL">
       <HintPath>packages\BouncyCastle.Cryptography.2.6.2\lib\net461\BouncyCastle.Cryptography.dll</HintPath>
@@ -65,8 +69,8 @@
     <Reference Include="MySqlConnector, Version=2.0.0.0, Culture=neutral, PublicKeyToken=d33d3e53aa5f8c92, processorArchitecture=MSIL">
       <HintPath>packages\MySqlConnector.2.5.0\lib\net471\MySqlConnector.dll</HintPath>
     </Reference>
-    <Reference Include="QuestPDF, Version=2026.5.0.0, Culture=neutral, PublicKeyToken=0f3c2b2315ff52c8, processorArchitecture=MSIL">
-      <HintPath>packages\QuestPDF.2026.5.0\lib\netstandard2.0\QuestPDF.dll</HintPath>
+    <Reference Include="QuestPDF, Version=2026.6.0.0, Culture=neutral, PublicKeyToken=0f3c2b2315ff52c8, processorArchitecture=MSIL">
+      <HintPath>packages\QuestPDF.2026.6.0\lib\netstandard2.0\QuestPDF.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -114,8 +118,9 @@
   <ItemGroup>
     <Compile Include="BaseDatos\Conexion.cs" />
     <Compile Include="BaseDatos\ConexionMySql.cs" />
-    <Compile Include="DTOS\ClienteDTO.cs" />
-    <Compile Include="DTOS\CuotaPendienteDTO.cs" />
+    <Compile Include="Documentos\GeneradorCarnet.cs" />
+    <Compile Include="Documentos\GeneradorComprobantes.cs" />
+    <Compile Include="DTOS\CuotaDTO.cs" />
     <Compile Include="DTOS\ReservaDTO.cs" />
     <Compile Include="Formularios\AccesoBDForm.cs">
       <SubType>Form</SubType>
@@ -123,6 +128,10 @@
     <Compile Include="Formularios\AccesoBDForm.Designer.cs">
       <DependentUpon>AccesoBDForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Formularios\CarnetForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\CarnetForm.Designer.cs" />
     <Compile Include="Formularios\DashboardForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -134,6 +143,12 @@
     </Compile>
     <Compile Include="Formularios\FormalizacionSocioForm.Designer.cs">
       <DependentUpon>FormalizacionSocioForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\PopUpPersonalizadoForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\PopUpPersonalizadoForm.Designer.cs">
+      <DependentUpon>PopUpPersonalizadoForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Formularios\ReservaForm.cs">
       <SubType>Form</SubType>
@@ -171,15 +186,14 @@
     <Compile Include="Formularios\VencimientosForm.Designer.cs">
       <DependentUpon>VencimientosForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Interfaces\IContrato.cs" />
+    <Compile Include="Helpers\ValidacionDatos.cs" />
     <Compile Include="Interfaces\IListado.cs" />
     <Compile Include="Interfaces\IPago.cs" />
-    <Compile Include="Interfaces\IRegistro.cs" />
     <Compile Include="Modelos\Actividad.cs" />
     <Compile Include="Modelos\Carnet.cs" />
     <Compile Include="Modelos\ConceptoPago.cs" />
     <Compile Include="Modelos\Cuota.cs" />
-    <Compile Include="Modelos\GeneradorContrato.cs" />
+    <Compile Include="Documentos\GeneradorContrato.cs" />
     <Compile Include="Modelos\Inscripcion.cs" />
     <Compile Include="Modelos\MetodoPago.cs" />
     <Compile Include="Modelos\Pago.cs" />
@@ -200,30 +214,38 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositorios\ActividadRepo.cs" />
+    <Compile Include="Repositorios\InscripcionRepo.cs" />
     <Compile Include="Repositorios\MetodoPagoRepo..cs" />
     <Compile Include="Repositorios\PagosRepo.cs" />
     <Compile Include="Repositorios\ConceptoPagoRepo.cs" />
     <Compile Include="Repositorios\ProgramacionRepo.cs" />
-    <Compile Include="Repositorios\RegistroRepo.cs" />
+    <Compile Include="Repositorios\ClienteRepo.cs" />
     <Compile Include="Repositorios\LoginRepo.cs" />
     <Compile Include="Repositorios\ReservaRepo.cs" />
-    <Compile Include="Repositorios\SocioRepo.cs" />
+    <Compile Include="Repositorios\CuotaRepo.cs" />
+    <Compile Include="Repositorios\VencimientoRepo.cs" />
     <Compile Include="Servicios\InscripcionSocioServ.cs" />
     <Compile Include="Servicios\ListadosMaestrosServ.cs" />
-    <Compile Include="Servicios\PagoServ.cs" />
+    <Compile Include="Servicios\PagoActividad.cs" />
+    <Compile Include="Servicios\PagoCuotaServ.cs" />
     <Compile Include="Servicios\ProgramacionServ.cs" />
-    <Compile Include="Servicios\RegistroServ.cs" />
+    <Compile Include="Servicios\ClienteServ.cs" />
     <Compile Include="Servicios\LoginServ.cs" />
     <Compile Include="Servicios\ReservaServ.cs" />
-    <Compile Include="Servicios\SocioServ.cs" />
+    <Compile Include="Servicios\CuotaServ.cs" />
     <EmbeddedResource Include="Formularios\AccesoBDForm.resx">
       <DependentUpon>AccesoBDForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\CarnetForm.resx" />
     <EmbeddedResource Include="Formularios\DashboardForm.resx">
       <DependentUpon>DashboardForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\FormalizacionSocioForm.resx">
       <DependentUpon>FormalizacionSocioForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\PopUpPersonalizadoForm.resx">
+      <DependentUpon>PopUpPersonalizadoForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\ReservaForm.resx">
       <DependentUpon>ReservaForm.cs</DependentUpon>
@@ -254,6 +276,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -269,12 +292,19 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="ClubDeportivoEstrellaDelSur.ico" />
+    <Content Include="ClubDeportivoEstrellaDelSur_Grande %281%29.ico" />
+    <Content Include="ClubDeportivoEstrellaDelSur_Maximo.ico" />
+    <Content Include="ClubDeportivoEstrellaDelSur_Maximo_v2.ico" />
+    <Content Include="EstrellaDelSur_FullArea.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="packages\QuestPDF.2026.5.0\build\net4\QuestPDF.targets" Condition="Exists('packages\QuestPDF.2026.5.0\build\net4\QuestPDF.targets')" />
+  <Import Project="packages\QuestPDF.2026.6.0\build\net4\QuestPDF.targets" Condition="Exists('packages\QuestPDF.2026.6.0\build\net4\QuestPDF.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>Este proyecto hace referencia a los paquetes NuGet que faltan en este equipo. Use la restauración de paquetes NuGet para descargarlos. Para obtener más información, consulte http://go.microsoft.com/fwlink/?LinkID=322105. El archivo que falta es {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('packages\QuestPDF.2026.5.0\build\net4\QuestPDF.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\QuestPDF.2026.5.0\build\net4\QuestPDF.targets'))" />
+    <Error Condition="!Exists('packages\QuestPDF.2026.6.0\build\net4\QuestPDF.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\QuestPDF.2026.6.0\build\net4\QuestPDF.targets'))" />
   </Target>
 </Project>

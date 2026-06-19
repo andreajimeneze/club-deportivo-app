@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using ClubDeportivoApp.Models;
+using ClubDeportivoApp.Modelos;
 using ClubDeportivoApp.Services;
-using ClubDeportivoApp.Repositories;
+using ClubDeportivoApp.Repositorios;
 
 
 namespace ClubDeportivoApp
@@ -56,9 +56,10 @@ namespace ClubDeportivoApp
 
             if(usuario != null)
             {
+                this.Hide();
                 DashboardForm dashboard = new DashboardForm(usuario, _conexion);
                 dashboard.Show();
-                this.Hide();
+                this.Close();
             }
             else
             {

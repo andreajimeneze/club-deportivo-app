@@ -1,35 +1,39 @@
-﻿using ClubDeportivoApp.Models;
+﻿using ClubDeportivoApp.Modelos;
 using ClubDeportivoApp.Repositorios;
 using System;
 
 
 namespace ClubDeportivoApp.Servicios
 {
-    internal class InscripcionSocioServ
+    public class InscripcionSocioServ
     {
-        private PagosRepo repo;
+        private InscripcionRepo _repo;
 
-        public InscripcionSocioServ(PagosRepo repo)
+        public InscripcionSocioServ(InscripcionRepo repo)
         {
-            this.repo = repo;
+            _repo = repo;
         }
 
-        public bool FormalizarSocio(int socioId, decimal montoCuota)
+        public (bool Ok, string mensaje, int idInscripcion) FormalizarSocio(Cliente cliente, Cuota cuota)
         {
             try
             {
-                if (socioId <= 0 || montoCuota <= 0)
+                if (cliente.IdCliente <= 0 || cuota.MontoCuota <= 0)
                 {
-                    return false;
+                    return (false, "Cliente o cuota no válidas", 0);
                 }
 
-                int result = repo.FormalizarContrato(socioId, montoCuota);
+                int idInscripcion = _repo.FormalizarInscripcion(cliente.IdCliente, cuota.MontoCuota);
 
-                if (result > 0)
+                if (idInscripcion <= 0)
                 {
-                    return true;
+                    return (false, "Error al realizar la inscripción del socio", 0);
                 }
-                return false;
+
+                //Inscripcion inscripcion = new Inscripcion(idInscripcion, socio);
+
+                return (true, "Cliente inscrito como socio de manera exitosa", idInscripcion);
+
             } catch(Exception ex)
             {
                 throw new Exception("Error service inscripción: " + ex.Message, ex);

@@ -1,9 +1,5 @@
-﻿using ClubDeportivoApp.Models;
+﻿
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ClubDeportivoApp.Modelos
 {
@@ -13,7 +9,8 @@ namespace ClubDeportivoApp.Modelos
         public Programacion Programacion { get; set; }
         public Cliente Cliente { get; set; }
         public DateTime FechaHoraReserva { get; set; }
-        public bool Pagada { get; set; }
+        public string Estado { get; set; }
+
     }
 }
 

@@ -1,6 +1,7 @@
-﻿using ClubDeportivoApp.DTOS;
+﻿using ClubDeportivoApp.Documentos;
+using ClubDeportivoApp.DTOS;
+using ClubDeportivoApp.Helpers;
 using ClubDeportivoApp.Modelos;
-using ClubDeportivoApp.Models;
 using ClubDeportivoApp.Repositorios;
 using ClubDeportivoApp.Servicios;
 using System;
@@ -13,10 +14,13 @@ namespace ClubDeportivoApp.Formularios
         private readonly ConexionMySql _conexion;
         private readonly ListadosMaestrosServ listasServ;
         private readonly ProgramacionServ progServ;
-        private readonly SocioServ socioServ;
         private readonly ReservaServ resServ;
+        private readonly ClienteServ cliServ;
         private Actividad actividad;
         private Programacion programacion;
+        private ReservaDTO reserva;
+        private Cliente clienteBuscado;
+
 
         public ReservaForm(ConexionMySql conexion)
         {
@@ -25,18 +29,18 @@ namespace ClubDeportivoApp.Formularios
 
             ActividadRepo actRepo = new ActividadRepo(_conexion);
             ProgramacionRepo progRepo = new ProgramacionRepo(_conexion);
-            SocioRepo socioRepo = new SocioRepo(_conexion);
+            CuotaRepo socioRepo = new CuotaRepo(_conexion);
             ReservaRepo resRepo = new ReservaRepo(_conexion);
+            ClienteRepo cliRepo = new ClienteRepo(_conexion);
             listasServ = new ListadosMaestrosServ(actRepo);
             progServ = new ProgramacionServ(progRepo);
-            socioServ = new SocioServ(socioRepo);
             resServ = new ReservaServ(resRepo);
+            cliServ = new ClienteServ(cliRepo);
 
-            //actividad = new Actividad();
-
-            lblFechaHoy.Text = $"Fecha y hora: {DateTime.Now.ToString("dd/MM/yyyy")}";
+            lblFechaHoy.Text = $"Fecha y hora: {DateTime.Now.ToString("dd/MM/yyyy HH:mm")}";
         }
 
+        // Carga actividades en combobox
         private void CargarActividades()
         {
             var lista = listasServ.ObtenerActividades();
@@ -52,6 +56,7 @@ namespace ClubDeportivoApp.Formularios
             cbActividades.ValueMember = "Id";
         }
 
+        // Carga programación por idActividad en combobox
         private void CargarProgramacion(int idActividad)
         {
             var lista = progServ.ObtenerProgramacionPorActividad(idActividad);
@@ -72,6 +77,7 @@ namespace ClubDeportivoApp.Formularios
             lblDisponibilidad.Text = "Disponibilidad:";
         }
 
+        // Carga nombre de actividad asociada a programación, en combobox
         private void cbActividades_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cbActividades.SelectedItem is Actividad act && act.Id != 0)
@@ -82,7 +88,8 @@ namespace ClubDeportivoApp.Formularios
                 lblPrecio.Text = $"Precio: {act.Precio}";
             }
         }
-
+               
+        // Carga fecha y hora de actividad asociada a programación, en combobox
         private void cbFechaHora_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cbFechaHora.SelectedItem is Programacion prog && prog.Id != 0)
@@ -92,17 +99,21 @@ namespace ClubDeportivoApp.Formularios
                 lblDisponibilidad.Text = $"{(prog.EstaDisponible() ? "Disponibilidad: Sí" : "Disponibilidad: No")}";
             }
         }
-        private void btnReserva_Click(object sender, EventArgs e)
-        {
-            string dni = txtDni.Text;
 
-            if (String.IsNullOrEmpty(dni))
+        private void btnValidarCliente_Click(object sender, EventArgs e)
+        {
+            string dni = txtDni.Text.Trim();
+
+            // Valida DNI con helper
+            if(!ValidacionDatos.ValidarDni(dni, out string mensaje))
             {
-                MessageBox.Show("Debe ingresar un DNI");
+                MessageBox.Show(mensaje);
                 return;
             }
+            // Busca cliente por dni
+            clienteBuscado = cliServ.BuscarClientePorDni(dni);
 
-            ClienteDTO clienteBuscado = socioServ.BuscarClientePorDni(dni);
+            // Validación 4: Si cliente viene nulo
 
             if (clienteBuscado == null)
             {
@@ -110,59 +121,80 @@ namespace ClubDeportivoApp.Formularios
                 return;
             }
 
+            // Validación 5: Si cliente no puede reservar
+            // Además da posibilidad de que presente el documento en ese momento para poder reservar.
+            if (!clienteBuscado.PuedeReservar())
+            {
+                MessageBox.Show("Cliente no ha presentado certificado de Apto Físico");
+                DialogResult respuesta = MessageBox.Show(
+                    "¿Cliente realiza entrega de certificado válido?",
+                    "Presentar certificado",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+                if (respuesta == DialogResult.Yes)
+                {
+                    cliServ.ActualizarAptoFisico(clienteBuscado);
+                    return;
+                }
+
+                return;
+            }
+
+            // Activa combos y botón tras validación de cliente
+            cbActividades.Enabled = true;
+            cbFechaHora.Enabled = true;
+            btnConfirmarReserva.Enabled = true;
+
+            // Imprime datos del cliente en label de formulario (para verificación visual de datos)
             lblNombre.Text = $"Nombre: {clienteBuscado.Nombre}";
             lblApellido.Text = $"Apellido: {clienteBuscado.Apellido}";
             lblDniSocio.Text = $"DNI: {clienteBuscado.Dni}";
-            lblEsSocio.Text = $"Tipo Cliente: {(clienteBuscado.EsSocio ? "Socio" : "No Socio")}";
 
-            if (clienteBuscado.EsSocio)
-            {                            
-                lblEstado.Text = $"Estado: {(clienteBuscado.Estado ? "Activo" : "Inactivo")}";
-                
-                MessageBox.Show("Cliente es socio");
-
-                if(!clienteBuscado.Estado)
-                {
-                    MessageBox.Show("Socio se encuentra inactivo no puede realizar reserva.");
-                } else
-                {
-                    
-                    MessageBox.Show("Reserva efectuada exitosamente. Socio no debe pagar");
-
-                    int idReserva = resServ.GenerarReserva(actividad.Id, clienteBuscado.IdCliente, programacion.FechaHora);
-                    
-                    if(idReserva <= 0)
-                    {
-                        MessageBox.Show("Error al crear la reserva");
-                        return;
-                    }
-
-                    
-                    // Ejecutar reserva
-                    // Debiera entregarse un comprobante de reserva
-                }
-
-
-                this.Close();
-
-            } else
+            if (clienteBuscado is Socio socio)
             {
-                MessageBox.Show("Cliente NO ES SOCIO");
-                int idReserva = resServ.GenerarReserva(actividad.Id, clienteBuscado.IdCliente, programacion.FechaHora);
-                if (idReserva <= 0)
-                {
-                    MessageBox.Show("Error al crear la reserva");
-                    return;
-                }
-                PagoNoSocioForm pagoNoSocio = new PagoNoSocioForm(_conexion);
+                lblEsSocio.Text = "Tipo Cliente: Socio";
+                lblEstado.Text = $"Estado Cliente: {(socio.Estado ? "Activo" : "Inactivo")}";
+            }
+            else
+            {
+                lblEsSocio.Text = "Tipo Cliente: No Socio";
+                lblEstado.Text = "Estado Cliente: N/A";
+            }
+            lblAptoFisico.Text = $"Apto Fisico: {(clienteBuscado.AptoFisico ? "SÍ" : "NO")}";
+
+        }
+        private void btnReserva_Click(object sender, EventArgs e)
+        {
+            // Aplica método generar reserva
+            var resultado = resServ.GenerarReserva(actividad, clienteBuscado, programacion);
+
+            // Envía menssaje según el caso (validaciones en el método)
+             MessageBox.Show(resultado.mensaje);
+           
+            if (!resultado.Ok)
+            {
+                 // Limpia el formulario
+                  LimpiarProgramacion();
+                  return;
+                           
+            }
+
+            // Se guarda item 3 de retorno de método GenerarReserva en variable reserva
+            reserva = resultado.reserva;
+
+            // Se muestra el comprobante de reserva
+            MostrarComprobanteReserva();
+
+            if (clienteBuscado is Socio)
+            {
+                this.Close();
+            } else 
+            { 
+                PagoNoSocioForm pagoNoSocio = new PagoNoSocioForm(_conexion, reserva.IdReserva);
                 this.Hide();
                 pagoNoSocio.ShowDialog();
                 this.Close();
-
-                // Reserva se ejecuta cuando el no socio realiza el pago en PagoNoSocioForm
-                // Pago no socio debiera llevar los datos del no socio y de la reserva para 
-                // cargar datos por defecto?
-
             }
         }
 
@@ -187,5 +219,46 @@ namespace ClubDeportivoApp.Formularios
         }
 
         
+        private void MostrarComprobanteReserva()
+        {
+            // Datos para ventana emergente
+            string titulo = "Datos Reserva";
+            string mensaje = GeneradorComprobantes.MostrarComprobanteReserva(reserva);
+            string textoBtn = "Imprimir";
+
+            PopUpPersonalizadoForm emergente = new PopUpPersonalizadoForm(titulo, mensaje, textoBtn);
+            emergente.ShowDialog();
+        }
+        
+        private void LimpiarDatosCliente()
+        {
+            // TextBox
+            txtDni.Clear();
+
+            // Labels cliente
+            lblNombre.Text = "Nombre:";
+            lblApellido.Text = "Apellido:";
+            lblDniSocio.Text = "DNI:";
+            lblEsSocio.Text = "Tipo Cliente:";
+            lblEstado.Text = "Estado Cliente:";
+            lblAptoFisico.Text = "Apto Físico:";
+        }
+        private void LimpiarProgramacion()
+        {           
+            // Labels actividad
+            lblActividad.Text = "Actividad:";
+            lblPrecio.Text = "Precio:";
+            lblFechaHora.Text = "Fecha y Hora:";
+            lblDisponibilidad.Text = "Disponibilidad:";
+
+            // Combos
+            cbActividades.SelectedIndex = 0;
+            cbFechaHora.DataSource = null;
+
+            // Variables internas
+            actividad = null;
+            programacion = null;
+            reserva = null;
+        }        
     }
 }

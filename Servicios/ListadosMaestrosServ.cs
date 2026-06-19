@@ -1,11 +1,7 @@
 ﻿using ClubDeportivoApp.Modelos;
 using ClubDeportivoApp.Repositorios;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+
 
 namespace ClubDeportivoApp.Servicios
 {
@@ -23,6 +19,12 @@ namespace ClubDeportivoApp.Servicios
         {
             _cPagorepo = cPagoRepo;
             _mPagoRepo = mPagoRepo;
+        }
+        public ListadosMaestrosServ(ConceptoPagoRepo cPagoRepo, MetodoPagoRepo mPagoRepo, ActividadRepo actRepo)
+        {
+            _cPagorepo = cPagoRepo;
+            _mPagoRepo = mPagoRepo;
+            _actRepo = actRepo;
         }
 
         public List<MetodoPago> ObtenerMetodosPago()

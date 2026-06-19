@@ -1,5 +1,7 @@
-﻿using ClubDeportivoApp.Forms;
-using ClubDeportivoApp.Models;
+﻿using ClubDeportivoApp.DTOS;
+using ClubDeportivoApp.Forms;
+using ClubDeportivoApp.Helpers;
+using ClubDeportivoApp.Modelos;
 using ClubDeportivoApp.Repositorios;
 using ClubDeportivoApp.Servicios;
 using ClubDeportivoApp.Utilidades;
@@ -13,31 +15,38 @@ namespace ClubDeportivoApp.Formularios
     public partial class FormalizacionSocioForm : Form
     {
         private readonly ConexionMySql _conexion;
-        private readonly Cliente _socio;
-        private decimal montoCuota;
-        private int _idSocio;
+        private Cliente _nuevoSocio;
+        private Cuota cuota;
+        private int montoCuota;
      
         private readonly InscripcionSocioServ servicio;
-        public FormalizacionSocioForm(Cliente socio, int idSocio, ConexionMySql conexion)
+
+        public FormalizacionSocioForm(Cliente nuevoSocio, ConexionMySql conexion)
         {
             InitializeComponent();
-            _socio = socio;
-            _idSocio = idSocio;
+            _nuevoSocio = nuevoSocio;
             _conexion = conexion;
-
-            PagosRepo repo = new PagosRepo(_conexion);
+    
+            InscripcionRepo repo = new InscripcionRepo(_conexion);
             servicio = new InscripcionSocioServ(repo);
 
-            lblNombre.Text = socio.Nombre;
-            lblApellido.Text = socio.Apellido;
-            lblDni.Text = socio.Dni;
+            lblNombre.Text = _nuevoSocio.Nombre;
+            lblApellido.Text = _nuevoSocio.Apellido;
+            lblDni.Text = _nuevoSocio.Dni;
             lblFechaHoy.Text = $"Fecha y hora: {DateTime.Now.ToString("dd/MM/yyyy HH:mm")}";
         }
 
-
         private void btnImprimir_Click(object sender, EventArgs e)
         {
-            montoCuota = decimal.Parse(txtMontoCuota.Text);
+            // Validación 6: Valida monto en helper
+            if (!ValidacionDatos.ValidarMonto(txtMontoCuota.Text.Trim(), out string mensaje))
+            {
+                MessageBox.Show(mensaje);
+                return;
+            }
+
+            montoCuota = Convert.ToInt32(txtMontoCuota.Text);
+            
             int diaPago = DateTime.Today.Day;
             string carpeta = @"C:\Contratos";        
 
@@ -47,9 +56,9 @@ namespace ClubDeportivoApp.Formularios
             string ruta = Path.Combine(carpeta, "ContratoSocio.pdf");
 
             GeneradorContrato.GenerarContrato(
-                _socio.Nombre,
-                _socio.Apellido,
-                _socio.Dni,
+                _nuevoSocio.Nombre,
+                _nuevoSocio.Apellido,
+                _nuevoSocio.Dni,
                 montoCuota,
                 diaPago,
                 ruta
@@ -66,7 +75,16 @@ namespace ClubDeportivoApp.Formularios
 
         private void btnAceptarContrato_Click(object sender, EventArgs e)
         {
-            servicio.FormalizarSocio(_idSocio, montoCuota);
+            cuota = new Cuota(montoCuota);
+            
+            var resultado = servicio.FormalizarSocio(_nuevoSocio, cuota);
+            
+           if (!resultado.Ok)
+            {
+                MessageBox.Show(resultado.mensaje);
+                return;
+            }
+            
             PagoSocioForm pagoSocio = new PagoSocioForm(_conexion);
             this.Hide();
             pagoSocio.ShowDialog();
@@ -92,7 +110,5 @@ namespace ClubDeportivoApp.Formularios
             registroClientes.ShowDialog();
             this.Close();
         }
-
-
     }
 }

@@ -28,8 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.txtMontoPago = new System.Windows.Forms.TextBox();
+            this.txtMontoPago.ReadOnly = true;
             this.components = new System.ComponentModel.Container();
-            //System.Windows.Forms.TextBox txtMontoPago;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PagoSocioForm));
             this.label1 = new System.Windows.Forms.Label();
             this.cbConceptoPago = new System.Windows.Forms.ComboBox();
@@ -65,17 +66,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panelLogin.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // txtMontoPago
-            // 
-            txtMontoPago.Enabled = false;
-            txtMontoPago.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            txtMontoPago.Location = new System.Drawing.Point(726, 232);
-            txtMontoPago.MaximumSize = new System.Drawing.Size(400, 40);
-            txtMontoPago.MinimumSize = new System.Drawing.Size(400, 40);
-            txtMontoPago.Name = "txtMontoPago";
-            txtMontoPago.Size = new System.Drawing.Size(400, 26);
-            txtMontoPago.TabIndex = 8;
             // 
             // label1
             // 
@@ -164,7 +154,6 @@
             // 
             this.panel1.Controls.Add(this.txtFechaVencimiento);
             this.panel1.Controls.Add(this.txtCuota);
-            this.panel1.Controls.Add(this.txtMontoPago);
             this.panel1.Controls.Add(this.txtEstado);
             this.panel1.Controls.Add(this.txtDniSocio);
             this.panel1.Controls.Add(this.txtApellido);
@@ -202,9 +191,9 @@
             this.txtEstado.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtEstado.Location = new System.Drawing.Point(61, 165);
             this.txtEstado.Name = "txtEstado";
-            this.txtEstado.Size = new System.Drawing.Size(66, 20);
+            this.txtEstado.Size = new System.Drawing.Size(133, 20);
             this.txtEstado.TabIndex = 29;
-            this.txtEstado.Text = "Estado:";
+            this.txtEstado.Text = "Estado Reserva:";
             // 
             // txtDniSocio
             // 
@@ -362,6 +351,7 @@
             this.txtDni.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtDni.Location = new System.Drawing.Point(258, 164);
             this.txtDni.MaximumSize = new System.Drawing.Size(400, 40);
+            this.txtDni.MaxLength = 10;
             this.txtDni.MinimumSize = new System.Drawing.Size(400, 40);
             this.txtDni.Name = "txtDni";
             this.txtDni.Size = new System.Drawing.Size(400, 26);
@@ -376,8 +366,20 @@
             this.label17.Size = new System.Drawing.Size(0, 20);
             this.label17.TabIndex = 26;
             // 
+            // txtMontoPago
+            // 
+            txtMontoPago.ReadOnly = true;
+            txtMontoPago.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            txtMontoPago.Location = new System.Drawing.Point(726, 232);
+            txtMontoPago.MaximumSize = new System.Drawing.Size(400, 40);
+            txtMontoPago.MinimumSize = new System.Drawing.Size(400, 40);
+            txtMontoPago.Name = "txtMontoPago";
+            txtMontoPago.Size = new System.Drawing.Size(400, 26);
+            txtMontoPago.TabIndex = 8;
+            // 
             // PagoSocioForm
             // 
+            this.AcceptButton = this.btnValidarCuota;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(250)))), ((int)(((byte)(200)))));

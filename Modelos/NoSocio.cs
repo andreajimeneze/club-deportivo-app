@@ -1,25 +1,27 @@
 ﻿
-namespace ClubDeportivoApp.Models
+namespace ClubDeportivoApp.Modelos
 {
     public class NoSocio : Cliente
     {
-        public new int Id { get; set; }
-        public bool accesoDiario { get; set; }
-    
+        public int IdNoSocio { get; set; }
+        public bool AccesoDiario { get; set; }
 
-        public NoSocio(string nombre, string apellido, string dni)
-            : base(nombre, apellido, dni)
+        public NoSocio(string nombre, string apellido, string dni, bool aptoFisico)
+      : base(nombre, apellido, dni, aptoFisico)
         {
-            accesoDiario = false;
+
         }
 
-        public override void VerificarAptoFisico()
+        public NoSocio(int id, string nombre, string apellido, string dni, bool aptoFisico)
+            : base(id, nombre, apellido, dni, aptoFisico)
         {
-            base.VerificarAptoFisico();
-            if(!AptoFisico)
-            {
-                accesoDiario = false;
-            }
+          
         }
+
+        public bool DebePagar()
+        {
+            return true;
+        }
+
     }
 }

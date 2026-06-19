@@ -24,8 +24,6 @@ namespace ClubDeportivoApp.Formularios
         {
             PagoNoSocioForm pagoActividad = new PagoNoSocioForm(_conexion);
             pagoActividad.ShowDialog();
-            //ReservaForm reserva = new ReservaForm(_conexion);
-            //reserva.ShowDialog();
             this.Close();
         }
 

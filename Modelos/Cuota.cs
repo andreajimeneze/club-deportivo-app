@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 
-namespace ClubDeportivoApp.Models
+namespace ClubDeportivoApp.Modelos
 {
     public class Cuota 
     {
@@ -17,6 +17,10 @@ namespace ClubDeportivoApp.Models
             List<Pago> pagos = new List<Pago>();
                 }
 
+        public Cuota(decimal montoCuota)
+        {
+            this.MontoCuota = montoCuota;
+        }
       
        public Cuota(decimal montoCuota, DateTime fechaVencimiento, string estadoPago, Socio socio)
         {

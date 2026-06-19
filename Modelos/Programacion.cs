@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ClubDeportivoApp.Modelos
 {
@@ -31,11 +27,21 @@ namespace ClubDeportivoApp.Modelos
 
         public bool EstaDisponible()
         {
+            return CuposDisponibles > 0;
+        }
+
+        public void DescontarCupo()
+        {
             if(CuposDisponibles <= 0)
             {
-                return false;
+                throw new Exception("No hay cupos disponibles");
             }
-            return true;
+            CuposDisponibles--;
+        }
+
+        public bool EstaVigente()
+        {
+            return FechaHora > DateTime.Now;
         }
     }
 }

@@ -38,8 +38,8 @@ namespace ClubDeportivoApp
             this.txtPassword = new System.Windows.Forms.TextBox();
             this.btnLogin = new System.Windows.Forms.Button();
             this.panelLogin = new System.Windows.Forms.Panel();
-            this.btnCerrar = new System.Windows.Forms.Button();
             this.btnMinimizar = new System.Windows.Forms.Button();
+            this.btnCerrar = new System.Windows.Forms.Button();
             this.panelLogin.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -90,8 +90,8 @@ namespace ClubDeportivoApp
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtUsername.BackColor = System.Drawing.Color.OldLace;
             this.txtUsername.Location = new System.Drawing.Point(194, 241);
-            this.txtUsername.MaximumSize = new System.Drawing.Size(400, 45);
-            this.txtUsername.MinimumSize = new System.Drawing.Size(250, 45);
+            this.txtUsername.MaximumSize = new System.Drawing.Size(400, 30);
+            this.txtUsername.MinimumSize = new System.Drawing.Size(250, 30);
             this.txtUsername.Name = "txtUsername";
             this.txtUsername.Size = new System.Drawing.Size(308, 22);
             this.txtUsername.TabIndex = 0;
@@ -136,22 +136,6 @@ namespace ClubDeportivoApp
             this.panelLogin.Size = new System.Drawing.Size(677, 50);
             this.panelLogin.TabIndex = 5;
             // 
-            // btnCerrar
-            // 
-            this.btnCerrar.BackColor = System.Drawing.Color.White;
-            this.btnCerrar.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnCerrar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCerrar.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.btnCerrar.Location = new System.Drawing.Point(624, 0);
-            this.btnCerrar.MaximumSize = new System.Drawing.Size(50, 50);
-            this.btnCerrar.MinimumSize = new System.Drawing.Size(50, 50);
-            this.btnCerrar.Name = "btnCerrar";
-            this.btnCerrar.Size = new System.Drawing.Size(50, 50);
-            this.btnCerrar.TabIndex = 5;
-            this.btnCerrar.Text = "X";
-            this.btnCerrar.UseVisualStyleBackColor = false;
-            this.btnCerrar.Click += new System.EventHandler(this.btnCerrar_Click);
-            // 
             // btnMinimizar
             // 
             this.btnMinimizar.BackColor = System.Drawing.Color.White;
@@ -167,6 +151,22 @@ namespace ClubDeportivoApp
             this.btnMinimizar.Text = "-";
             this.btnMinimizar.UseVisualStyleBackColor = false;
             this.btnMinimizar.Click += new System.EventHandler(this.btnMinimizar_Click);
+            // 
+            // btnCerrar
+            // 
+            this.btnCerrar.BackColor = System.Drawing.Color.White;
+            this.btnCerrar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnCerrar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCerrar.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.btnCerrar.Location = new System.Drawing.Point(624, 0);
+            this.btnCerrar.MaximumSize = new System.Drawing.Size(50, 50);
+            this.btnCerrar.MinimumSize = new System.Drawing.Size(50, 50);
+            this.btnCerrar.Name = "btnCerrar";
+            this.btnCerrar.Size = new System.Drawing.Size(50, 50);
+            this.btnCerrar.TabIndex = 5;
+            this.btnCerrar.Text = "X";
+            this.btnCerrar.UseVisualStyleBackColor = false;
+            this.btnCerrar.Click += new System.EventHandler(this.btnCerrar_Click);
             // 
             // LoginForm
             // 

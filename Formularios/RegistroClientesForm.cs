@@ -1,8 +1,11 @@
 ﻿using ClubDeportivoApp.Formularios;
-using ClubDeportivoApp.Models;
-using ClubDeportivoApp.Repositories;
-using ClubDeportivoApp.Services;
+using ClubDeportivoApp.Helpers;
+using ClubDeportivoApp.Modelos;
+using ClubDeportivoApp.Repositorios;
+using ClubDeportivoApp.Servicios;
+using MySqlX.XDevAPI;
 using System;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace ClubDeportivoApp.Forms
@@ -10,29 +13,61 @@ namespace ClubDeportivoApp.Forms
     public partial class RegistroClientesForm : Form
     {
         private readonly ConexionMySql _conexion;
-        private string nombre;
-        private string apellido;
-        private string dni;
-        private readonly RegistroServ servicio;
+        private readonly ClienteServ servicio;
+           
         public RegistroClientesForm(ConexionMySql conexion)
         {
             InitializeComponent();
             _conexion = conexion;
-            RegistroRepo repo = new RegistroRepo(_conexion);
-            servicio = new RegistroServ(repo);
+            ClienteRepo repo = new ClienteRepo(_conexion);
+            servicio = new ClienteServ(repo);
+        
             lblFechaHoy.Text = $"Fecha y hora: {DateTime.Now.ToString("dd/MM/yyyy HH:mm")}";
         }
 
  
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-            if(txtNombre.Text == "" || txtApellido.Text == "" || txtDni.Text == "")
+            // Campos ingresados en formulario se guardan en variables
+            string nombre = txtNombre.Text.Trim();
+            string apellido = txtApellido.Text.Trim();
+            string dni = txtDni.Text.Trim();
+            bool quiereSerSocio = rbSocio.Checked;
+            bool noSocio = rbNoSocio.Checked;
+            bool aptoFisico = cbAptoFisico.Checked;
+
+            // Validación 1: los campos del formulario son obligatorios.
+            if (nombre == "" || apellido == "" || dni == "")
             {
                 MessageBox.Show("Debe completar todos los campos para poder realizar el registro");
                 return;
             }
 
-            if (!rbSocio.Checked && !rbNoSocio.Checked)
+            // Validación 2: Valida DNI con helper
+            if (!ValidacionDatos.ValidarDni(dni, out string mensaje))
+            {
+                MessageBox.Show(mensaje);
+                return;
+            }
+
+            // Validación 3: Nombre y apellido no deben contener números:
+            if (!ValidacionDatos.SoloLetras(nombre) || !ValidacionDatos.SoloLetras(apellido))
+            {
+                MessageBox.Show("Nombre y apellido no deben contener números ni caracteres especial");
+                return;
+            }
+
+
+            Cliente clienteBuscado = servicio.BuscarClientePorDni(dni);
+
+            if (clienteBuscado != null)
+            {
+                MessageBox.Show("Cliente ya se encuentra registrado");
+                return;
+            }
+
+            // Validación 4: Debe seleccionar si será socio o no socio
+            if (!quiereSerSocio && !noSocio)
             {
                 MessageBox.Show(
                     "Debe seleccionar si el cliente será socio o no socio."
@@ -41,46 +76,41 @@ namespace ClubDeportivoApp.Forms
                 return;
             }
 
-            if (cbAptoFisico == null )
-            {
-                MessageBox.Show("No puede acceder a los servicios hasta que no presente el documento");
-            }
 
-            nombre = txtNombre.Text.Trim();
-            apellido = txtApellido.Text.Trim();
-            dni = txtDni.Text.Trim();
-            bool esSocio = rbSocio.Checked;
-            bool aptoFisico = cbAptoFisico.Checked;
+            try {
 
-            try { 
-               int id = servicio.RealizarRegistro(nombre, apellido, dni, aptoFisico, esSocio);
+                Cliente cliente;
 
-            
-               
-                if(esSocio)
+                if (quiereSerSocio)
                 {
-                    int idSocio = servicio.AsignarTipoSocio(id, esSocio);
-                    Cliente socio = new Cliente(nombre, apellido, dni);
-                    MessageBox.Show($"Registro de CLIENTE SOCIO N° {idSocio}: {socio.Nombre}{socio.Apellido} exitoso");
-                    FormalizacionSocioForm inscripcionSocio = new FormalizacionSocioForm(socio, idSocio,_conexion);
-                    // AsignarTipoSocio debiera retornar al socio para poder setear el estado en caso de que no haya
-                    // presentado el aptoFisico --- Puede continuar con la formalización y pago de cuota.
-                    //Pregunta: dónde presenta aptoFísico nuevamente?
+                    cliente = new Socio(nombre, apellido, dni, aptoFisico);
+                }
+                else
+                {
+                    cliente = new NoSocio(nombre, apellido, dni, aptoFisico);
+                }
+
+                // Se realiza registro de cliente: Socio / No socio
+                var registrado = servicio.RealizarRegistro(cliente, quiereSerSocio);
+               
+
+                if (!registrado.Ok)
+                {
+                    MessageBox.Show(registrado.mensaje);
+                    return;
+                }
+
+                MessageBox.Show($"Registro exitoso de CLIENTE {(registrado.cliente is Socio ? "SOCIO" : "NO SOCIO")} N° {registrado.cliente.IdCliente}: {registrado.cliente.Nombre} {registrado.cliente.Apellido}");
+                
+                if (quiereSerSocio)
+                {
+                    FormalizacionSocioForm inscripcionSocio = new FormalizacionSocioForm(registrado.cliente, _conexion);
                     this.Hide();
                     inscripcionSocio.ShowDialog();
                     this.Close();
                 } else
                 {
-                    int idSocio = servicio.AsignarTipoSocio(id, esSocio);
-                    Cliente noSocio = new Cliente(nombre, apellido, dni);
-                    MessageBox.Show($"Registro de CLIENTE NO SOCIO {noSocio.Nombre}{noSocio.Apellido} exitoso");
-                    // AsignarTipoSocio debiera retornar al socio para poder setear el accesoDiario en caso de que no haya
-                    // presentado el aptoFisico --- No puede reservar. Fin del proceso. Pregunta: dónde presenta aptoFísico nuevamente?
-                    ReservaForm reserva = new ReservaForm(_conexion);
-                    this.Hide();
-                    reserva.ShowDialog();
                     this.Close();
-                    LimpiarFormulario();
                 }
                
             } catch(Exception ex)
@@ -106,5 +136,6 @@ namespace ClubDeportivoApp.Forms
         {
             this.Close();
         }
+
     }
 }
