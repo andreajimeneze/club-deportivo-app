@@ -13,6 +13,17 @@ namespace ClubDeportivoApp.Helpers
             return texto.All(c => char.IsLetter(c) || char.IsWhiteSpace(c));
         }
 
+        public static bool SoloNumeros(string texto, out string mensaje)
+        {
+            if(!int.TryParse(texto, out _))
+            {
+                mensaje = "Debe ingresar solo números";
+                return false;
+            }
+
+            mensaje = "";
+            return true;
+        }
         public static bool ValidarDni(string dni, out string mensaje)
         {
             if(string.IsNullOrEmpty(dni))

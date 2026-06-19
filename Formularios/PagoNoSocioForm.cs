@@ -35,6 +35,10 @@ namespace ClubDeportivoApp.Formularios
             pagoServ = new PagoActividad(pagoRepo);
             
             lblFechaHoy.Text = $"Fecha y hora: {DateTime.Now.ToString("dd/MM/yyyy HH:mm")}";
+            txtMontoPago.Enabled = false;
+            cbConceptoPago.Enabled = false;
+            cbMetodosPago.Enabled = false;
+            btnConfirmarPago.Enabled = false;
         }
 
         // Carga de métodos de pago
@@ -99,12 +103,42 @@ namespace ClubDeportivoApp.Formularios
 
             // Búsqueda por reserva: Si el campo id reserva no está vacío, busca por id.
             // De lo contrario, busca por DNI
-            if (!string.IsNullOrWhiteSpace(txtReserva.Text.Trim()))
+
+            bool esReserva = !string.IsNullOrWhiteSpace(txtReserva.Text.Trim());
+            bool esDni = !string.IsNullOrWhiteSpace(txtDni.Text.Trim());
+
+            if(esReserva && esDni)
             {
+                MessageBox.Show("Debe ingresar nro de reserva o de dni, no ambos");
+                return;
+            }
+
+            if (!esReserva && !esDni)
+            {
+                MessageBox.Show("Debe ingresar uno de los dos campos");
+                return;
+            }
+            if (esReserva)
+            {
+                //txtDni.Enabled = false;
+                //cbActividades.Enabled = false;
+
+                if(!ValidacionDatos.SoloNumeros(txtReserva.Text.Trim(), out string mensaje))
+                {
+                    MessageBox.Show(mensaje);
+                    return;
+                }
+
                 int idRes = Convert.ToInt32(txtReserva.Text.Trim());
                 resultado = resServ.BuscarReservaPendientePagoPorId(idRes);
+
+                txtDni.Text = resultado.reserva.Dni;
+                cbActividades.Text = resultado.reserva.Actividad;
             } else
             {
+                //txtDni.Enabled = true;
+                //cbActividades.Enabled = true;
+
                 string dni = txtDni.Text.Trim();
                 // Validación 1: Valida DNI con helper
                 if (!ValidacionDatos.ValidarDni(dni, out string mensaje))
@@ -113,9 +147,18 @@ namespace ClubDeportivoApp.Formularios
                     return;
                 }
 
+                if (cbActividades.SelectedIndex == 0)
+                {
+                    MessageBox.Show("Debe seleccionar una actividad");
+                    return;
+                }
+
                 _idActividad = Convert.ToInt32(cbActividades.SelectedValue);
                 
-                resultado = resServ.BuscarReservaPendientePorDniYActividad(dni, _idActividad); 
+                resultado = resServ.BuscarReservaPendientePorDniYActividad(dni, _idActividad);
+
+                txtReserva.Text = Convert.ToString(resultado.reserva.IdReserva);
+                cbActividades.Text = resultado.reserva.Actividad;
             }
 
             if (!resultado.Ok)
@@ -128,6 +171,9 @@ namespace ClubDeportivoApp.Formularios
 
             txtMontoPago.Text = reserva.Precio.ToString();
             txtMontoPago.ReadOnly = true;
+            cbConceptoPago.Enabled = true;
+            cbMetodosPago.Enabled = true;
+            btnConfirmarPago.Enabled = true;
 
             MessageBox.Show(resultado.mensaje);
         }
@@ -160,8 +206,8 @@ namespace ClubDeportivoApp.Formularios
 
             MostrarComprobantePago();
           
-            this.Hide();
-            this.Close();
+            //this.Hide();
+            //this.Close();
         }
 
         private void btnVolver_Click(object sender, EventArgs e)

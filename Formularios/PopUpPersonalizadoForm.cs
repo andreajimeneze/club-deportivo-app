@@ -41,7 +41,7 @@ namespace ClubDeportivoApp.Formularios
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
-           this.Close();
+            this.Close();
         }
     }
 }

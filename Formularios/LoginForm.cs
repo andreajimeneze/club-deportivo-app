@@ -56,9 +56,10 @@ namespace ClubDeportivoApp
 
             if(usuario != null)
             {
+                this.Hide();
                 DashboardForm dashboard = new DashboardForm(usuario, _conexion);
                 dashboard.Show();
-                this.Hide();
+                this.Close();
             }
             else
             {

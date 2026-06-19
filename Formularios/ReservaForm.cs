@@ -138,11 +138,13 @@ namespace ClubDeportivoApp.Formularios
                     return;
                 }
 
-                // Limpia el textBox
-               // txtDni.Clear();
-
                 return;
             }
+
+            // Activa combos y botón tras validación de cliente
+            cbActividades.Enabled = true;
+            cbFechaHora.Enabled = true;
+            btnConfirmarReserva.Enabled = true;
 
             // Imprime datos del cliente en label de formulario (para verificación visual de datos)
             lblNombre.Text = $"Nombre: {clienteBuscado.Nombre}";

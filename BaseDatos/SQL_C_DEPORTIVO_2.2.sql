@@ -730,34 +730,100 @@ DELIMITER ;
 -- =========================================
 -- PROCEDIMIENTO GENERAR CUOTAS MENSUALES
 -- =========================================
+-- 1. Activar el scheduler para la sesión
+SET GLOBAL event_scheduler = ON;
+
+DROP PROCEDURE IF EXISTS InsertarNuevaCuota;
+
+DROP PROCEDURE IF EXISTS InsertarNuevaCuota;
 
 DELIMITER //
-CREATE PROCEDURE InsertarNuevaCuota(
-)
+
+CREATE PROCEDURE InsertarNuevaCuota()
 BEGIN
-		INSERT INTO cuotas (
-		socio_id,
-		monto_cuota,
-		fecha_vencimiento,
-		estado_cuota
-	)
-	SELECT
-		s.id,
-		c.monto_cuota, 
-		DATE_FORMAT(CURDATE(), '%Y-%m-05'),
-		'Pendiente'
-	FROM socios s
-    INNER JOIN cuotas c 
-    ON c.socio_id = s.id
-	WHERE NOT EXISTS (
-		SELECT 1
-		FROM cuotas c
-		WHERE c.socio_id = s.id
-		  AND YEAR(c.fecha_vencimiento) = YEAR(CURDATE())
-		  AND MONTH(c.fecha_vencimiento) = MONTH(CURDATE())
-);
+
+    INSERT INTO cuotas (
+        socio_id,
+        monto_cuota,
+        fecha_vencimiento,
+        estado_cuota
+    )
+    SELECT
+        ultima.socio_id,
+        ultima.monto_cuota,
+
+        DATE_ADD(
+            DATE_ADD(
+                ultima.fecha_vencimiento,
+                INTERVAL 1 MONTH
+            ),
+            INTERVAL
+                CASE
+                    WHEN ultima.fecha_pago IS NOT NULL
+                         AND ultima.fecha_pago > ultima.fecha_vencimiento
+                    THEN 1
+                    ELSE 0
+                END DAY
+        ),
+
+        'Pendiente'
+
+    FROM
+    (
+        SELECT
+            c1.socio_id,
+            c1.monto_cuota,
+            c1.fecha_vencimiento,
+            p.fecha_pago
+        FROM cuotas c1
+
+        LEFT JOIN pagos p
+            ON p.cuota_id = c1.id
+
+        WHERE c1.fecha_vencimiento =
+        (
+            SELECT MAX(c2.fecha_vencimiento)
+            FROM cuotas c2
+            WHERE c2.socio_id = c1.socio_id
+        )
+
+    ) ultima
+
+    WHERE ultima.fecha_vencimiento <= CURDATE()
+
+    AND NOT EXISTS
+    (
+        SELECT 1
+        FROM cuotas c
+        WHERE c.socio_id = ultima.socio_id
+        AND c.fecha_vencimiento =
+            DATE_ADD(
+                DATE_ADD(
+                    ultima.fecha_vencimiento,
+                    INTERVAL 1 MONTH
+                ),
+                INTERVAL
+                    CASE
+                        WHEN ultima.fecha_pago IS NOT NULL
+                             AND ultima.fecha_pago > ultima.fecha_vencimiento
+                        THEN 1
+                        ELSE 0
+                    END DAY
+            )
+    );
+
 END //
+
 DELIMITER ;
+
+DROP EVENT IF EXISTS ev_generar_cuotas;
+
+CREATE EVENT ev_generar_cuotas
+ON SCHEDULE EVERY 1 DAY
+STARTS '2026-06-18 06:00:00'
+DO
+    CALL InsertarNuevaCuota();
+  
 	
 -- =========================================
 -- PROCEDIMIENTO ESTADO CUOTA POR SOCIO

@@ -40,10 +40,10 @@ namespace ClubDeportivoApp.Formularios
                     return;
                 }
 
-
                 this.Hide();
                 LoginForm login = new LoginForm(conexion);
                 login.Show();
+                
             } catch(Exception ex)
             {
                 MessageBox.Show(ex.ToString());

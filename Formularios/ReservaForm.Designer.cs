@@ -184,6 +184,7 @@
             // 
             // cbActividades
             // 
+            this.cbActividades.Enabled = false;
             this.cbActividades.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbActividades.FormattingEnabled = true;
             this.cbActividades.ItemHeight = 25;
@@ -201,6 +202,7 @@
             this.btnConfirmarReserva.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.btnConfirmarReserva.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(48)))), ((int)(((byte)(144)))));
             this.btnConfirmarReserva.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnConfirmarReserva.Enabled = false;
             this.btnConfirmarReserva.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnConfirmarReserva.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.btnConfirmarReserva.Location = new System.Drawing.Point(341, 576);
@@ -374,6 +376,7 @@
             // 
             // cbFechaHora
             // 
+            this.cbFechaHora.Enabled = false;
             this.cbFechaHora.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbFechaHora.FormattingEnabled = true;
             this.cbFechaHora.ItemHeight = 25;
