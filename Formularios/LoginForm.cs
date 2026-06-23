@@ -25,7 +25,8 @@ namespace ClubDeportivoApp
         public LoginForm(ConexionMySql conexion)
         {
             _conexion = conexion;
-            InitializeComponent();          
+            InitializeComponent();        
+            
             LoginRepo repository = new LoginRepo(conexion);
             service = new LoginServ(repository);
         }

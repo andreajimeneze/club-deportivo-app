@@ -293,6 +293,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="BaseDatos\BD_SEED_SP_CLUB_DEPORTIVO_2.3.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="ClubDeportivoEstrellaDelSur.ico" />
     <Content Include="ClubDeportivoEstrellaDelSur_Grande %281%29.ico" />
     <Content Include="ClubDeportivoEstrellaDelSur_Maximo.ico" />

@@ -36,7 +36,7 @@ namespace ClubDeportivoApp.Helpers
                 mensaje = "DNI debe contener solo números";
                 return false;
             }
-            if(dni.Length > 8)
+            if(dni.Length != 8)
             {
                 mensaje = "DNI solo puede contener 8 dígitos";
                 return false;

@@ -189,7 +189,7 @@
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 7;
             this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
+            //this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // AccesoBDForm
             // 
@@ -212,7 +212,7 @@
             this.Name = "AccesoBDForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "AccesoBDForm";
-            this.Load += new System.EventHandler(this.AccesoBDForm_Load);
+            //this.Load += new System.EventHandler(this.AccesoBDForm_Load);
             this.panelLogin.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);

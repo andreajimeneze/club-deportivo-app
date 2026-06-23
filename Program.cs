@@ -1,4 +1,5 @@
-﻿using ClubDeportivoApp.Formularios;
+﻿
+using ClubDeportivoApp.Formularios;
 using System;
 using System.Windows.Forms;
 
@@ -7,6 +8,7 @@ namespace ClubDeportivoApp
 {
     internal static class Program
     {
+        
         /// <summary>
         /// Punto de entrada principal para la aplicación.
         /// </summary>

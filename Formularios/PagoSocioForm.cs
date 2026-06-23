@@ -196,10 +196,6 @@ namespace ClubDeportivoApp.Formularios
                     this.Close();
                     return;
                  }
-                //Falta imprimir comprobante pago
-                //this.Hide();
-                //DashboardForm dashboard = new DashboardForm();
-                //dashboard.Show();
                 this.Close();
 
             }
