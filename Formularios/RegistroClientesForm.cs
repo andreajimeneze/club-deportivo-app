@@ -101,7 +101,12 @@ namespace ClubDeportivoApp.Forms
                 }
 
                 MessageBox.Show($"Registro exitoso de CLIENTE {(registrado.cliente is Socio ? "SOCIO" : "NO SOCIO")} N° {registrado.cliente.IdCliente}: {registrado.cliente.Nombre} {registrado.cliente.Apellido}");
-                
+               
+                if(!aptoFisico)
+                {
+                    MessageBox.Show("Cliente no presentó apto físico. Recuerde que debe presentarlo al realizar la reserva de actividades");
+                }
+
                 if (quiereSerSocio)
                 {
                     FormalizacionSocioForm inscripcionSocio = new FormalizacionSocioForm(registrado.cliente, _conexion);
