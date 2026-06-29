@@ -17,7 +17,7 @@ namespace ClubDeportivoApp.Formularios
         private readonly ConexionMySql _conexion;
         private Cliente _nuevoSocio;
         private Cuota cuota;
-        private int montoCuota;
+        private decimal montoCuota;
      
         private readonly InscripcionSocioServ servicio;
 
@@ -76,6 +76,7 @@ namespace ClubDeportivoApp.Formularios
         private void btnAceptarContrato_Click(object sender, EventArgs e)
         {
             cuota = new Cuota(montoCuota);
+
             
             var resultado = servicio.FormalizarSocio(_nuevoSocio, cuota);
             

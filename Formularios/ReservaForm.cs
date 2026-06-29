@@ -134,7 +134,7 @@ namespace ClubDeportivoApp.Formularios
                 if (respuesta == DialogResult.Yes)
                 {
                     cliServ.ActualizarAptoFisico(clienteBuscado);
-                    return;
+                    //return;
                 }
 
                 return;
