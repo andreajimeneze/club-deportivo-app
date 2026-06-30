@@ -15,7 +15,7 @@ namespace ClubDeportivoApp.Formularios
 
         private void btnIngresar_Click(object sender, EventArgs e)
         {
-            if(txtServidor.Text == "" || txtBD.Text == "" || txtUsuario.Text == "" || txtPass.Text == "")
+            if(String.IsNullOrEmpty(txtServidor.Text) || String.IsNullOrEmpty(txtBD.Text) || String.IsNullOrEmpty(txtUsuario.Text) || String.IsNullOrEmpty(txtPass.Text))
             {
                 MessageBox.Show("Debe completar todos los campos para poder acceder a la base de datos");
                 return;

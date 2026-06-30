@@ -119,27 +119,7 @@ namespace ClubDeportivoApp.Formularios
                 MessageBox.Show("Cliente no existe, verifique el número de DNI");
                 return;
             }
-
-            // Validación 5: Si cliente no puede reservar
-            // Además da posibilidad de que presente el documento en ese momento para poder reservar.
-            if (!clienteBuscado.PuedeReservar())
-            {
-                MessageBox.Show("Cliente no ha presentado certificado de Apto Físico");
-                DialogResult respuesta = MessageBox.Show(
-                    "¿Cliente realiza entrega de certificado válido?",
-                    "Presentar certificado",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question);
-
-                if (respuesta == DialogResult.Yes)
-                {
-                    cliServ.ActualizarAptoFisico(clienteBuscado);
-                    //return;
-                }
-
-                return;
-            }
-
+            
             // Imprime datos del cliente en label de formulario (para verificación visual de datos)
             lblNombre.Text = $"Nombre: {clienteBuscado.Nombre}";
             lblApellido.Text = $"Apellido: {clienteBuscado.Apellido}";
@@ -157,8 +137,29 @@ namespace ClubDeportivoApp.Formularios
             }
             lblAptoFisico.Text = $"Apto Fisico: {(clienteBuscado.AptoFisico ? "SÍ" : "NO")}";
 
-        }
-        private void btnReserva_Click(object sender, EventArgs e)
+         // Validación 5: Si cliente no puede reservar
+            // Además da posibilidad de que presente el documento en ese momento para poder reservar.
+            if (!clienteBuscado.PuedeReservar())
+            {
+                MessageBox.Show("Cliente no ha presentado certificado de Apto Físico");
+                DialogResult respuesta = MessageBox.Show(
+                    "¿Cliente realiza entrega de certificado válido?",
+                    "Presentar certificado",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+                if (respuesta == DialogResult.Yes)
+                {
+                    cliServ.ActualizarAptoFisico(clienteBuscado);
+                    clienteBuscado = cliServ.BuscarClientePorDni(dni);
+                    lblAptoFisico.Text = $"Apto Fisico: {(clienteBuscado.AptoFisico ? "SÍ" : "NO")}";
+                    //MessageBox.Show("Debe validar cliente nuevamente");
+                }
+
+                return;
+            }
+}
+private void btnReserva_Click(object sender, EventArgs e)
         {
             // Validaciones antes de llamar al servicio
             if (clienteBuscado == null)
@@ -167,6 +168,7 @@ namespace ClubDeportivoApp.Formularios
                 return;
             }
 
+         
             if (actividad == null || actividad.Id == 0)
             {
                 MessageBox.Show("Debe seleccionar una actividad.");
@@ -187,11 +189,8 @@ namespace ClubDeportivoApp.Formularios
            
             if (!resultado.Ok)
             {
-                // Limpia el formulario
-                //LimpiarProgramacion();
                 txtDni.Clear();
-                  return;
-                           
+                  return;                           
             }
 
             // Se guarda item 3 de retorno de método GenerarReserva en variable reserva
@@ -243,37 +242,6 @@ namespace ClubDeportivoApp.Formularios
             PopUpPersonalizadoForm emergente = new PopUpPersonalizadoForm(titulo, mensaje, textoBtn);
             emergente.ShowDialog();
         }
-        
-        //private void LimpiarDatosCliente()
-        //{
-        //    // TextBox
-        //    txtDni.Clear();
-
-        //    // Labels cliente
-        //    lblNombre.Text = "Nombre:";
-        //    lblApellido.Text = "Apellido:";
-        //    lblDniSocio.Text = "DNI:";
-        //    lblEsSocio.Text = "Tipo Cliente:";
-        //    lblEstado.Text = "Estado Cliente:";
-        //    lblAptoFisico.Text = "Apto Físico:";
-        //}
-        //private void LimpiarProgramacion()
-        //{           
-        //    // Labels actividad
-        //    lblActividad.Text = "Actividad:";
-        //    lblPrecio.Text = "Precio:";
-        //    lblFechaHora.Text = "Fecha y Hora:";
-        //    lblDisponibilidad.Text = "Disponibilidad:";
-
-        //    // Combos
-        //    cbActividades.SelectedIndex = 0;
-        //    cbFechaHora.DataSource = null;
-
-        //    // Variables internas
-        //    actividad = null;
-        //    programacion = null;
-        //    reserva = null;
-        //}
 
         private void txtDni_TextChanged(object sender, EventArgs e)
         {
