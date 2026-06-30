@@ -82,6 +82,12 @@ namespace ClubDeportivoApp
             Application.Exit();
         }
 
- 
+        private void btnNominaClientes_Click(object sender, EventArgs e)
+        {
+            NominaClientesForm nomina = new NominaClientesForm(_conexion);
+            this.Hide();
+            nomina.ShowDialog();
+            this.Show();
+        }
     }
 }

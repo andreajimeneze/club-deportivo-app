@@ -1,6 +1,7 @@
 ﻿using ClubDeportivoApp.Modelos;
 using MySql.Data.MySqlClient;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Security.Cryptography;
@@ -144,6 +145,43 @@ namespace ClubDeportivoApp.Repositorios
                     return filasAfectadas > 0;
                 }
             }
+        }
+
+        public List<Cliente> BuscarClientesRepo()
+        {
+            List<Cliente> listaClientes = new List<Cliente>();
+            string query = "SELECT cl.id, p.nombre, p.apellido, p.dni, cl.apto_fisico," +
+                    " s.id AS socio_id" +
+                    " FROM personas p" +
+                    " INNER JOIN clientes cl ON p.id = cl.persona_id" +
+                    " LEFT JOIN socios s ON cl.id = s.cliente_id" +
+                    " LEFT JOIN no_socios ns ON cl.id = ns.cliente_id" +
+                    " ORDER BY cl.id ASC"; ;
+
+            using (MySqlConnection conn = _conexionDatabase.GetMySqlConnection())
+            using (MySqlCommand cmd = new MySqlCommand(query, conn))
+            using (MySqlDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    bool esSocio = reader["socio_id"] != DBNull.Value;
+
+                    Cliente cliente = esSocio
+                        ? new Socio() :
+                        new Cliente();
+
+                    cliente.IdCliente = Convert.ToInt32(reader["id"]);
+                    cliente.Nombre = reader["nombre"].ToString();
+                    cliente.Apellido = reader["apellido"].ToString();
+                    cliente.Dni = reader["dni"].ToString();
+                    cliente.AptoFisico = Convert.ToBoolean(reader["apto_fisico"]);
+                    
+
+                    listaClientes.Add(cliente);
+                }
+            }
+
+            return listaClientes;
         }
 
         public int AsignarANoSocio(Cliente cliente)

@@ -30,6 +30,8 @@ namespace ClubDeportivoApp
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.Label lblFechaHoy;
+            System.Windows.Forms.Button btnSalir;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DashboardForm));
             this.btnRegistro = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
@@ -38,11 +40,45 @@ namespace ClubDeportivoApp
             this.btnMorosos = new System.Windows.Forms.Button();
             this.lblUsuario = new System.Windows.Forms.Label();
             this.lblFechaHoy = new System.Windows.Forms.Label();
-            this.btnSalir = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnReservas = new System.Windows.Forms.Button();
+            this.btnNominaClientes = new System.Windows.Forms.Button();
+            lblFechaHoy = new System.Windows.Forms.Label();
+            btnSalir = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
+            // 
+            // lblFechaHoy
+            // 
+            lblFechaHoy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            lblFechaHoy.AutoSize = true;
+            lblFechaHoy.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            lblFechaHoy.Location = new System.Drawing.Point(59, 605);
+            lblFechaHoy.Margin = new System.Windows.Forms.Padding(3, 3, 3, 15);
+            lblFechaHoy.Name = "lblFechaHoy";
+            lblFechaHoy.Size = new System.Drawing.Size(137, 25);
+            lblFechaHoy.TabIndex = 15;
+            lblFechaHoy.Text = "Fecha y hora: ";
+            // 
+            // btnSalir
+            // 
+            btnSalir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            btnSalir.AutoSize = true;
+            btnSalir.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(145)))), ((int)(((byte)(0)))), ((int)(((byte)(23)))));
+            btnSalir.Cursor = System.Windows.Forms.Cursors.Hand;
+            btnSalir.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            btnSalir.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            btnSalir.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            btnSalir.Location = new System.Drawing.Point(1173, 607);
+            btnSalir.Margin = new System.Windows.Forms.Padding(3, 3, 3, 15);
+            btnSalir.MaximumSize = new System.Drawing.Size(180, 57);
+            btnSalir.MinimumSize = new System.Drawing.Size(180, 42);
+            btnSalir.Name = "btnSalir";
+            btnSalir.Size = new System.Drawing.Size(180, 42);
+            btnSalir.TabIndex = 16;
+            btnSalir.Text = "Salir";
+            btnSalir.UseVisualStyleBackColor = false;
+            btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
             // 
             // btnRegistro
             // 
@@ -87,7 +123,7 @@ namespace ClubDeportivoApp
             this.btnCarnet.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.btnCarnet.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCarnet.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.btnCarnet.Location = new System.Drawing.Point(320, 396);
+            this.btnCarnet.Location = new System.Drawing.Point(320, 370);
             this.btnCarnet.Margin = new System.Windows.Forms.Padding(50);
             this.btnCarnet.MaximumSize = new System.Drawing.Size(800, 80);
             this.btnCarnet.MinimumSize = new System.Drawing.Size(450, 42);
@@ -107,7 +143,7 @@ namespace ClubDeportivoApp
             this.btnPagos.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.btnPagos.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnPagos.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.btnPagos.Location = new System.Drawing.Point(320, 216);
+            this.btnPagos.Location = new System.Drawing.Point(320, 211);
             this.btnPagos.Margin = new System.Windows.Forms.Padding(50);
             this.btnPagos.MaximumSize = new System.Drawing.Size(800, 80);
             this.btnPagos.MinimumSize = new System.Drawing.Size(450, 42);
@@ -127,7 +163,7 @@ namespace ClubDeportivoApp
             this.btnMorosos.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.btnMorosos.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnMorosos.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.btnMorosos.Location = new System.Drawing.Point(320, 486);
+            this.btnMorosos.Location = new System.Drawing.Point(320, 532);
             this.btnMorosos.Margin = new System.Windows.Forms.Padding(50);
             this.btnMorosos.MaximumSize = new System.Drawing.Size(800, 80);
             this.btnMorosos.MinimumSize = new System.Drawing.Size(450, 42);
@@ -150,38 +186,6 @@ namespace ClubDeportivoApp
             this.lblUsuario.TabIndex = 9;
             this.lblUsuario.Text = "Bienvenido, ";
             // 
-            // lblFechaHoy
-            // 
-            this.lblFechaHoy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.lblFechaHoy.AutoSize = true;
-            this.lblFechaHoy.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFechaHoy.Location = new System.Drawing.Point(65, 552);
-            this.lblFechaHoy.Margin = new System.Windows.Forms.Padding(3, 3, 3, 15);
-            this.lblFechaHoy.Name = "lblFechaHoy";
-            this.lblFechaHoy.Size = new System.Drawing.Size(137, 25);
-            this.lblFechaHoy.TabIndex = 15;
-            this.lblFechaHoy.Text = "Fecha y hora: ";
-            // 
-            // btnSalir
-            // 
-            this.btnSalir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSalir.AutoSize = true;
-            this.btnSalir.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(195)))), ((int)(((byte)(32)))), ((int)(((byte)(23)))));
-            this.btnSalir.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnSalir.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
-            this.btnSalir.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSalir.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.btnSalir.Location = new System.Drawing.Point(1159, 575);
-            this.btnSalir.Margin = new System.Windows.Forms.Padding(3, 3, 3, 15);
-            this.btnSalir.MaximumSize = new System.Drawing.Size(180, 57);
-            this.btnSalir.MinimumSize = new System.Drawing.Size(180, 42);
-            this.btnSalir.Name = "btnSalir";
-            this.btnSalir.Size = new System.Drawing.Size(180, 42);
-            this.btnSalir.TabIndex = 16;
-            this.btnSalir.Text = "Salir";
-            this.btnSalir.UseVisualStyleBackColor = false;
-            this.btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
-            // 
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
@@ -201,7 +205,7 @@ namespace ClubDeportivoApp
             this.btnReservas.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.btnReservas.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnReservas.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.btnReservas.Location = new System.Drawing.Point(320, 306);
+            this.btnReservas.Location = new System.Drawing.Point(320, 290);
             this.btnReservas.Margin = new System.Windows.Forms.Padding(50);
             this.btnReservas.MaximumSize = new System.Drawing.Size(800, 80);
             this.btnReservas.MinimumSize = new System.Drawing.Size(450, 42);
@@ -212,6 +216,26 @@ namespace ClubDeportivoApp
             this.btnReservas.UseVisualStyleBackColor = false;
             this.btnReservas.Click += new System.EventHandler(this.btnReservas_Click);
             // 
+            // btnNominaClientes_Click
+            // 
+            this.btnNominaClientes.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnNominaClientes.AutoSize = true;
+            this.btnNominaClientes.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(136)))), ((int)(((byte)(73)))), ((int)(((byte)(148)))));
+            this.btnNominaClientes.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnNominaClientes.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.btnNominaClientes.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnNominaClientes.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.btnNominaClientes.Location = new System.Drawing.Point(320, 450);
+            this.btnNominaClientes.Margin = new System.Windows.Forms.Padding(50);
+            this.btnNominaClientes.MaximumSize = new System.Drawing.Size(800, 80);
+            this.btnNominaClientes.MinimumSize = new System.Drawing.Size(450, 42);
+            this.btnNominaClientes.Name = "btnNominaClientes_Click";
+            this.btnNominaClientes.Size = new System.Drawing.Size(800, 80);
+            this.btnNominaClientes.TabIndex = 18;
+            this.btnNominaClientes.Text = "Nómina Clientes";
+            this.btnNominaClientes.UseVisualStyleBackColor = false;
+            this.btnNominaClientes.Click += new System.EventHandler(this.btnNominaClientes_Click);
+            // 
             // DashboardForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 16F);
@@ -219,10 +243,11 @@ namespace ClubDeportivoApp
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(235)))), ((int)(((byte)(222)))));
             this.ClientSize = new System.Drawing.Size(1369, 654);
             this.ControlBox = false;
+            this.Controls.Add(this.btnNominaClientes);
             this.Controls.Add(this.btnReservas);
             this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.btnSalir);
-            this.Controls.Add(this.lblFechaHoy);
+            this.Controls.Add(btnSalir);
+            this.Controls.Add(lblFechaHoy);
             this.Controls.Add(this.lblUsuario);
             this.Controls.Add(this.btnMorosos);
             this.Controls.Add(this.btnPagos);
@@ -251,8 +276,8 @@ namespace ClubDeportivoApp
         private System.Windows.Forms.Button btnMorosos;
         private Label lblUsuario;
         private Label lblFechaHoy;
-        private Button btnSalir;
         private PictureBox pictureBox1;
         private Button btnReservas;
+        private Button btnNominaClientes;
     }
 }

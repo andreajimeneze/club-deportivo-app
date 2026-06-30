@@ -22,6 +22,8 @@ namespace ClubDeportivoApp.Modelos
             AptoFisico = aptoFisico;
         }
 
+        public string TipoCliente => this is Socio ? "Socio" : "No Socio";
+
         public override string ToString()
         {
             return $"{Apellido}, {Nombre}, {Dni}";

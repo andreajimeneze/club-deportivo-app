@@ -3,9 +3,7 @@ using ClubDeportivoApp.Helpers;
 using ClubDeportivoApp.Modelos;
 using ClubDeportivoApp.Repositorios;
 using ClubDeportivoApp.Servicios;
-using MySqlX.XDevAPI;
 using System;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace ClubDeportivoApp.Forms
@@ -37,7 +35,7 @@ namespace ClubDeportivoApp.Forms
             bool aptoFisico = cbAptoFisico.Checked;
 
             // Validación 1: los campos del formulario son obligatorios.
-            if (nombre == "" || apellido == "" || dni == "")
+            if (String.IsNullOrEmpty(nombre) || String.IsNullOrEmpty(apellido) || String.IsNullOrEmpty(dni))
             {
                 MessageBox.Show("Debe completar todos los campos para poder realizar el registro");
                 return;

@@ -152,6 +152,12 @@
     <Compile Include="Formularios\PopUpPersonalizadoForm.Designer.cs">
       <DependentUpon>PopUpPersonalizadoForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Formularios\NominaClientesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\NominaClientesForm.Designer.cs">
+      <DependentUpon>NominaClientesForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Formularios\ReservaForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -248,6 +254,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\PopUpPersonalizadoForm.resx">
       <DependentUpon>PopUpPersonalizadoForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\NominaClientesForm.resx">
+      <DependentUpon>NominaClientesForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Formularios\ReservaForm.resx">
       <DependentUpon>ReservaForm.cs</DependentUpon>

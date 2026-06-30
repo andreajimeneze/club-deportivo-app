@@ -1,6 +1,8 @@
 ﻿
 using ClubDeportivoApp.Modelos;
 using ClubDeportivoApp.Repositorios;
+using System.Collections.Generic;
+using System.Linq;
 
 
 namespace ClubDeportivoApp.Servicios
@@ -64,5 +66,24 @@ namespace ClubDeportivoApp.Servicios
         {
             return _repo.AsignarANoSocio(cliente);
         }
+
+        public List<Cliente> BuscarClientes()
+        {
+            return _repo.BuscarClientesRepo();
+        }
+
+        public List<Cliente> BuscarClientePorDniONombreOApellido(string filtro)
+        {
+            List<Cliente> listaClientes = _repo.BuscarClientesRepo();
+
+            if (string.IsNullOrWhiteSpace(filtro)) return listaClientes;
+
+            string filtroNormalizado = filtro.Trim().ToUpper();
+
+            return listaClientes.
+                Where(cli => cli.Dni.ToUpper().Contains(filtroNormalizado) || cli.Nombre.ToUpper().Contains(filtroNormalizado) || cli.Apellido.ToUpper().Contains(filtroNormalizado)).ToList();
+                
+        }
+
     }
 }

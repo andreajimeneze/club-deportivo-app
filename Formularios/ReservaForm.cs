@@ -153,7 +153,6 @@ namespace ClubDeportivoApp.Formularios
                     cliServ.ActualizarAptoFisico(clienteBuscado);
                     clienteBuscado = cliServ.BuscarClientePorDni(dni);
                     lblAptoFisico.Text = $"Apto Fisico: {(clienteBuscado.AptoFisico ? "SÍ" : "NO")}";
-                    //MessageBox.Show("Debe validar cliente nuevamente");
                 }
 
                 return;
