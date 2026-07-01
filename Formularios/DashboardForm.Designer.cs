@@ -30,7 +30,6 @@ namespace ClubDeportivoApp
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.Label lblFechaHoy;
             System.Windows.Forms.Button btnSalir;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DashboardForm));
             this.btnRegistro = new System.Windows.Forms.Button();
@@ -39,7 +38,7 @@ namespace ClubDeportivoApp
             this.btnPagos = new System.Windows.Forms.Button();
             this.btnMorosos = new System.Windows.Forms.Button();
             this.lblUsuario = new System.Windows.Forms.Label();
-            this.lblFechaHoy = new System.Windows.Forms.Label();
+            //this.lblFechaHoy = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnReservas = new System.Windows.Forms.Button();
             this.btnNominaClientes = new System.Windows.Forms.Button();

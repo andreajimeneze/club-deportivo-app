@@ -2,7 +2,8 @@
 using ClubDeportivoApp.Modelos;
 using ClubDeportivoApp.Repositorios;
 using System;
-using System.Windows.Forms;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ClubDeportivoApp.Servicios
 {
@@ -27,7 +28,26 @@ namespace ClubDeportivoApp.Servicios
             return reserva;
         }
 
+        public (bool Ok, string mensaje, List<ReservaDTO> reservas) BuscarReservasPendientesPorIdODni(ReservaDTO reserva)
+        {
+            List<ReservaDTO> reservas = _repo.BuscarReservas();
+
+           List<ReservaDTO> reservasBuscadas = reservas.Where(res => (res.Dni == reserva.Dni || res.IdReserva == reserva.IdReserva) && res.EstadoReserva == "Pendiente de pago").ToList();
         
+            if(reservasBuscadas.Count == 0)
+            {
+                return (false, "Reserva no existe o se encuentra pagada", null);
+            }
+
+            //bool hayReservaPendiente = reservasBuscadas.Any(r => r.EstadoReserva == "Pendiente de pago");
+
+            //if(!hayReservaPendiente)
+            //{
+            //    return (false, "Reserva se encuentra pagada", null);
+            //}
+            return (true, "Reserva obtenida exitosamente", reservasBuscadas);
+        }
+
         public (bool Ok, string mensaje, ReservaDTO reserva) BuscarReservaPendientePagoPorId(int idReserva)
         {
             ReservaDTO reserva = _repo.BuscarReservaPorId(idReserva);
@@ -48,6 +68,26 @@ namespace ClubDeportivoApp.Servicios
             return (true, "Reserva obtenida exitosamente", reserva);
         }
 
+        //public (bool Ok, string mensaje, List<ReservaDTO> reservas) BuscarReservasPorIdODni(ReservaDTO reserva)
+        //{
+        //    List<ReservaDTO> reservas = _repo.BuscarReservas();
+
+        //    List<ReservaDTO> reservasBuscadas = reservas.Where(res => res.Dni == reserva.Dni || res.IdReserva == reserva.IdReserva).ToList();
+
+        //    if (reservasBuscadas.Count == 0)
+        //    {
+        //        return (false, "Reserva no existe", null);
+        //    }
+
+        //    bool hayReservaPagada = reservasBuscadas.Any(r => r.EstadoReserva == "Pendiente de pago");
+
+        //    if (hayReservaPagada)
+        //    {
+        //        return (false, "Reserva se encuentra pagada", null);
+        //    }
+        //    return (true, "Reserva obtenida exitosamente", reservas);
+        //}
+
         public (bool Ok, string mensaje, ReservaDTO reserva) BuscarReservaExistentePorDniYActividad(string dni, int idActividad)
         {
             ReservaDTO reserva = _repo.BuscarReservaPorDniYActividadRepo(dni, idActividad);
@@ -58,16 +98,18 @@ namespace ClubDeportivoApp.Servicios
             }
             return (true, "Reserva obtenida exitosamente", reserva);
         }
+
+
         public (bool Ok, string mensaje, ReservaDTO reserva) BuscarReservaPendientePorDniYActividad(string dni, int idActividad)
         {
             ReservaDTO reserva = _repo.BuscarReservaPorDniYActividadRepo(dni, idActividad);
 
-            if(reserva == null)
+            if (reserva == null)
             {
                 return (false, "Reserva no existe", null);
             }
 
-            if(reserva != null && reserva.EstadoReserva != "Pendiente de pago")
+            if (reserva != null && reserva.EstadoReserva != "Pendiente de pago")
             {
                 return (false, "Reserva se encuentra pagada", null);
             }
@@ -77,6 +119,7 @@ namespace ClubDeportivoApp.Servicios
 
             return (true, "Reserva obtenida exitosamente", reserva);
         }
+
         public (bool Ok, string mensaje, ReservaDTO reserva) GenerarReserva(
             Actividad actividad, Cliente cliente, Programacion programacion)
         {

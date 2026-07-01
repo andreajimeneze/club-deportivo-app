@@ -10,6 +10,10 @@ namespace ClubDeportivoApp.Modelos
 
         public Cliente() { }
 
+        public Cliente(string nombre, string apellido, string dni)
+       : base(nombre, apellido, dni)
+        {
+        }
         public Cliente(string nombre, string apellido, string dni, bool aptoFisico)
         : base(nombre, apellido, dni)
         {

@@ -1326,8 +1326,6 @@ SET GLOBAL event_scheduler = ON;
 
 DROP PROCEDURE IF EXISTS InsertarNuevaCuota;
 
-DROP PROCEDURE IF EXISTS InsertarNuevaCuota;
-
 DELIMITER //
 
 CREATE PROCEDURE InsertarNuevaCuota()
@@ -1685,6 +1683,39 @@ BEGIN
         ON cl.persona_id = p.id
     WHERE p.dni = p_dni
       AND a.id = p_id_actividad
+    ORDER BY pr.fecha_hora;
+END //
+
+DELIMITER ;
+
+
+-- =================================================
+-- PROCEDIMIENTO BUSCAR RESERVAS
+-- =================================================
+DELIMITER //
+
+CREATE PROCEDURE BuscarReservas()
+BEGIN
+    SELECT
+        r.id AS id_reserva,
+        cl.id AS id_cliente,
+        p.nombre,
+        p.apellido,
+        p.dni,
+        a.id AS id_actividad,
+        a.nombre AS actividad,
+        a.precio,
+        r.estado,
+        pr.fecha_hora
+    FROM reservas r
+    INNER JOIN programaciones pr
+        ON r.programacion_id = pr.id
+    INNER JOIN actividades a
+        ON pr.actividad_id = a.id
+    INNER JOIN clientes cl
+        ON r.cliente_id = cl.id
+    INNER JOIN personas p
+        ON cl.persona_id = p.id
     ORDER BY pr.fecha_hora;
 END //
 

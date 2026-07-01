@@ -22,8 +22,7 @@ namespace ClubDeportivoApp.Formularios
 
         private void btnNoSocio_Click(object sender, EventArgs e)
         {
-            PagoNoSocioForm pagoActividad = new PagoNoSocioForm(_conexion);
-            pagoActividad.ShowDialog();
+            PagoNoSocioForm pagoActividad = new PagoNoSocioForm(_conexion);            pagoActividad.ShowDialog();
             this.Close();
         }
 

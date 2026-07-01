@@ -1,6 +1,7 @@
 ﻿using ClubDeportivoApp.DTOS;
 using MySql.Data.MySqlClient;
 using System;
+using System.Collections.Generic;
 using System.Data;
 
 namespace ClubDeportivoApp.Repositorios
@@ -14,6 +15,41 @@ namespace ClubDeportivoApp.Repositorios
             _conexionDatabase = conexionDatabase;
         }
 
+        public List<ReservaDTO> BuscarReservas()
+        {
+            using(MySqlConnection conn = _conexionDatabase.GetMySqlConnection())
+            {
+               using(MySqlCommand cmd = new MySqlCommand("BuscarReservas", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    using(MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        List<ReservaDTO> listaReservas = new List<ReservaDTO>();
+
+                        while(reader.Read())
+                        {
+                            ReservaDTO reserva = new ReservaDTO
+                            {
+                                IdReserva = Convert.ToInt32(reader["id_reserva"]),
+                                IdCliente = Convert.ToInt32(reader["id_cliente"]),
+                                NombreCliente = reader["nombre"].ToString(),
+                                ApellidoCliente = reader["apellido"].ToString(),
+                                Dni = reader["dni"].ToString(),
+                                Actividad = reader["actividad"].ToString(),
+                                Precio = Convert.ToDecimal(reader["precio"]),
+                                FechaHora = Convert.ToDateTime(reader["fecha_hora"]),
+                                EstadoReserva = reader["estado"].ToString()
+                            };
+
+                            listaReservas.Add(reserva);
+                        }
+
+                        return listaReservas;
+                    }
+                }
+            }
+        }
         public ReservaDTO BuscarReservaPorId(int idReserva)
         {
             ReservaDTO reserva = null;

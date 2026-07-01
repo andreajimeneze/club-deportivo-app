@@ -203,7 +203,7 @@ private void btnReserva_Click(object sender, EventArgs e)
                 this.Close();
             } else 
             { 
-                PagoNoSocioForm pagoNoSocio = new PagoNoSocioForm(_conexion, reserva.IdReserva);
+                PagoNoSocioForm pagoNoSocio = new PagoNoSocioForm(_conexion);
                 this.Hide();
                 pagoNoSocio.ShowDialog();
                 this.Close();
