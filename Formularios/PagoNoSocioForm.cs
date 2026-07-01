@@ -111,7 +111,7 @@ namespace ClubDeportivoApp.Formularios
 
             if (reservasEncontradas.Ok)
             {
-                MessageBox.Show($"Reserva encontrada para cliente:\n  Nombre: {cliente.Nombre}\n Apellido:{cliente.Apellido}\n DNI: {cliente.Dni}");
+                MessageBox.Show($"Reserva encontrada para cliente:\n  Nombre: {cliente.Nombre}\n Apellido: {cliente.Apellido}\n DNI: {cliente.Dni}");
                 CargarActividadesReservadas(reservasCliente);     
             }
         }
@@ -194,6 +194,8 @@ namespace ClubDeportivoApp.Formularios
             txtReserva.Clear();
             txtMontoPago.Clear();
             cbActividades.SelectedItem = "Seleccione actividad";
+            cbMetodosPago.SelectedIndex = 0;
+            cbConceptoPago.SelectedIndex = 0;
         }
     }
 }

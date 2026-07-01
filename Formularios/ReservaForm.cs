@@ -198,6 +198,9 @@ private void btnReserva_Click(object sender, EventArgs e)
             // Se muestra el comprobante de reserva
             MostrarComprobanteReserva();
 
+            // Limpia formulario
+
+
             if (clienteBuscado is Socio)
             {
                 this.Close();
