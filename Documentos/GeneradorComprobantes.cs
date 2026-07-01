@@ -1,5 +1,7 @@
 ﻿using ClubDeportivoApp.DTOS;
 using System;
+using System.Globalization;
+using System.Windows.Forms;
 
 
 namespace ClubDeportivoApp.Documentos
@@ -48,13 +50,15 @@ namespace ClubDeportivoApp.Documentos
 
         public static string MostrarComprobantePagoCuota(CuotaDTO cuota, string metodoPago)
         {
+            var cultura = new CultureInfo("es-AR");
             return
+            $"Concepto: Cuota {cuota.FechaVencimiento.ToString("MMMM yyyy", cultura)}\n" +
             $"Nombre: {cuota.Nombre}\n" +
             $"Apellido: {cuota.Apellido}\n" +
             $"DNI: {cuota.Dni}\n" +
             $"Monto Pagado: $ {Convert.ToString(cuota.MontoCuota)}\n" +
             $"Método Pago: {Convert.ToString(metodoPago)}\n" +
-            $"Fecha Pago: {Convert.ToString(DateTime.Now)}\n";
+            $"Fecha Pago: {Convert.ToString(DateTime.Now)}\n";        
         }
     }
 }

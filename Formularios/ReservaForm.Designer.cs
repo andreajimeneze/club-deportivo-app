@@ -168,9 +168,9 @@
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.Location = new System.Drawing.Point(388, 89);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(441, 39);
+            this.label8.Size = new System.Drawing.Size(501, 39);
             this.label8.TabIndex = 26;
-            this.label8.Text = "RESERVA ACTIVIDADES";
+            this.label8.Text = "RESERVA DE ACTIVIDADES";
             // 
             // label9
             // 

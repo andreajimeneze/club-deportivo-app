@@ -1,6 +1,8 @@
 ﻿using ClubDeportivoApp.DTOS;
 using ClubDeportivoApp.Repositorios;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 
 
@@ -9,7 +11,12 @@ namespace ClubDeportivoApp.Servicios
     public class CuotaServ
     {
         private readonly CuotaRepo _socioRepo;
+        private readonly VencimientoRepo _vencRepo;
 
+        public CuotaServ(VencimientoRepo vencRepo)
+        {
+            _vencRepo = vencRepo;
+        }
         public CuotaServ(CuotaRepo socioRepo)
         {
             _socioRepo = socioRepo;

@@ -40,6 +40,7 @@
             this.btnCerrar = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panelLogin = new System.Windows.Forms.Panel();
+            this.lblTitulo = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panelLogin.SuspendLayout();
@@ -48,21 +49,21 @@
             // btnLimpiarForm_Click
             // 
             this.btnLimpiarForm_Click.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLimpiarForm_Click.Location = new System.Drawing.Point(926, 213);
+            this.btnLimpiarForm_Click.Location = new System.Drawing.Point(926, 273);
             this.btnLimpiarForm_Click.Name = "btnLimpiarForm_Click";
             this.btnLimpiarForm_Click.Size = new System.Drawing.Size(150, 60);
             this.btnLimpiarForm_Click.TabIndex = 1;
-            this.btnLimpiarForm_Click.Text = "Limpiar formulario";
+            this.btnLimpiarForm_Click.Text = "Limpiar selección";
             this.btnLimpiarForm_Click.UseVisualStyleBackColor = true;
             this.btnLimpiarForm_Click.Click += new System.EventHandler(this.BtnLimpiarForm_Click);
             // 
             // txtBusqueda
             // 
-            this.txtBusqueda.Location = new System.Drawing.Point(377, 157);
+            this.txtBusqueda.Location = new System.Drawing.Point(413, 219);
             this.txtBusqueda.MaximumSize = new System.Drawing.Size(400, 40);
             this.txtBusqueda.MinimumSize = new System.Drawing.Size(400, 40);
             this.txtBusqueda.Name = "txtBusqueda";
-            this.txtBusqueda.Size = new System.Drawing.Size(400, 22);
+            this.txtBusqueda.Size = new System.Drawing.Size(400, 40);
             this.txtBusqueda.TabIndex = 2;
             // 
             // btnBuscar_Click
@@ -70,7 +71,7 @@
             this.btnBuscar_Click.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(104)))), ((int)(((byte)(48)))), ((int)(((byte)(144)))));
             this.btnBuscar_Click.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnBuscar_Click.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.btnBuscar_Click.Location = new System.Drawing.Point(461, 204);
+            this.btnBuscar_Click.Location = new System.Drawing.Point(497, 265);
             this.btnBuscar_Click.MaximumSize = new System.Drawing.Size(241, 75);
             this.btnBuscar_Click.MinimumSize = new System.Drawing.Size(241, 75);
             this.btnBuscar_Click.Name = "btnBuscar_Click";
@@ -83,10 +84,10 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(378, 126);
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(414, 188);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(255, 18);
+            this.label1.Size = new System.Drawing.Size(290, 18);
             this.label1.TabIndex = 4;
             this.label1.Text = "Búsqueda por nombre, apellido o DNI";
             // 
@@ -95,7 +96,7 @@
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(85, 322);
+            this.dataGridView1.Location = new System.Drawing.Point(85, 357);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersVisible = false;
@@ -111,7 +112,7 @@
             this.btnVolver.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnVolver.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnVolver.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.btnVolver.Location = new System.Drawing.Point(1006, 702);
+            this.btnVolver.Location = new System.Drawing.Point(1006, 726);
             this.btnVolver.Margin = new System.Windows.Forms.Padding(5);
             this.btnVolver.Name = "btnVolver";
             this.btnVolver.Size = new System.Drawing.Size(153, 58);
@@ -125,7 +126,7 @@
             this.lblFechaHoy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblFechaHoy.AutoSize = true;
             this.lblFechaHoy.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFechaHoy.Location = new System.Drawing.Point(45, 721);
+            this.lblFechaHoy.Location = new System.Drawing.Point(45, 745);
             this.lblFechaHoy.Name = "lblFechaHoy";
             this.lblFechaHoy.Size = new System.Drawing.Size(116, 20);
             this.lblFechaHoy.TabIndex = 22;
@@ -183,6 +184,17 @@
             this.panelLogin.Size = new System.Drawing.Size(1187, 50);
             this.panelLogin.TabIndex = 23;
             // 
+            // lblTitulo
+            // 
+            this.lblTitulo.AutoSize = true;
+            this.lblTitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTitulo.Location = new System.Drawing.Point(408, 91);
+            this.lblTitulo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblTitulo.Name = "lblTitulo";
+            this.lblTitulo.Size = new System.Drawing.Size(418, 39);
+            this.lblTitulo.TabIndex = 25;
+            this.lblTitulo.Text = "LISTADO DE CLIENTES";
+            // 
             // NominaClientesForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -190,6 +202,7 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(250)))), ((int)(((byte)(200)))));
             this.ClientSize = new System.Drawing.Size(1200, 800);
             this.ControlBox = false;
+            this.Controls.Add(this.lblTitulo);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.panelLogin);
             this.Controls.Add(this.lblFechaHoy);
@@ -223,5 +236,6 @@
         private System.Windows.Forms.Button btnCerrar;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Panel panelLogin;
+        private System.Windows.Forms.Label lblTitulo;
     }
 }
